@@ -10,4 +10,9 @@ then
 cd frontend
 npm i
 
+to run the project
+
+in the root directory
+
+npm run dev
 
