@@ -3,16 +3,16 @@ Pasteez | Paste Bin
 first in the root directory
 run
 
-npm i
+```npm i```
 
 then 
 
-cd frontend
-npm i
+```cd frontend```
+```npm i```
 
 to run the project
 
-in the root directory
+cd to the root directory
 
-npm run dev
+```npm run dev```
 
