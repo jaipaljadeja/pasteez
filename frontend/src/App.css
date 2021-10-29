@@ -1,0 +1,242 @@
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  min-height: 70vh;
+}
+
+.pasteez-editor {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 40px;
+}
+
+.exportableFrame {
+  background: linear-gradient(90deg, #d0f4ff 0%, #2b8389 100%);
+  padding: 50px;
+}
+
+.frame-header {
+  border-radius: 10px 10px 0px 0px;
+  background: rgba(0, 0, 0, 0.65);
+  height: 30px;
+  display: flex;
+  padding-top: 8px;
+}
+
+.frame-header-buttons {
+  display: flex;
+  align-items: center;
+  width: 4em;
+  padding-left: 20px;
+}
+
+.frame-header-circle {
+  margin: 0px 10px 0px 0px;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+}
+.red-circle {
+  background-color: #ff9191;
+}
+.yellow-circle {
+  background-color: #fdff71;
+}
+.green-circle {
+  background-color: #9eff71;
+}
+
+.frame-header-title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.frame-header-title input {
+  font-size: 15px;
+  font-family: monospace;
+  text-align: center;
+  background: transparent;
+  outline: none;
+  color: rgba(255, 255, 255, 0.5);
+  border: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#code-editor {
+  border: none;
+  outline: none;
+}
+
+.code-editor-wrapper {
+  font-family: "Fira code", "Fira Mono", monospace;
+  font-size: 15px;
+  min-width: 42em;
+  max-width: 60em;
+  background: rgba(0, 0, 0, 0.65);
+  overflow-wrap: break-word;
+  border-radius: 0px 0px 10px 10px;
+  letter-spacing: 0.5px;
+}
+
+.frame-footer-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 18px;
+}
+
+.editor-frame {
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.6) 2px 10px 50px;
+}
+
+.settings-btn {
+  justify-content: space-between;
+  display: flex;
+}
+
+.features-btn {
+  display: flex;
+}
+
+.Dropdown-root {
+  margin-right: 10px;
+}
+.btn,
+.Dropdown-menu {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.8);
+  font-family: monospace;
+  font-size: 13px;
+  border: none;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn {
+  margin-bottom: 5px;
+  border-radius: 5px;
+  width: 10em;
+}
+
+.btn:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  transition: all 0.5s ease 0s;
+  cursor: pointer;
+}
+
+.export-btn {
+  color: #ff9191;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.share-btn {
+  color: #fdff71;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #33b4ff;
+}
+
+.Dropdown-menu {
+  width: 13em;
+  box-shadow: rgba(0, 0, 0, 0.6) 2px 10px 50px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 5px;
+  margin: 5px 0;
+  bottom: 100%;
+  left: -15%;
+  top: auto;
+  -webkit-animation: fadein 0.3s ease;
+  animation: fadein 0.3s ease;
+  transition: 0.3s ease-out;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.Dropdown-menu::-webkit-scrollbar {
+  display: none;
+}
+
+.Dropdown-option {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  #root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: -20px;
+  }
+
+  .home-container {
+    align-items: unset;
+  }
+
+  .code-editor-wrapper {
+    min-width: unset;
+    max-width: unset;
+  }
+
+  .frame-footer {
+    display: flex;
+    justify-content: center;
+  }
+
+  .frame-footer-buttons {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .settings-btn {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .btn {
+    height: 40px;
+    width: 20.5em;
+  }
+
+  header {
+    font-size: 1.5em;
+  }
+
+  header .navlinks {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
