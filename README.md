@@ -8,6 +8,7 @@ run
 then 
 
 ```cd frontend```
+
 ```npm i```
 
 to run the project
