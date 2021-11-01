@@ -4,13 +4,17 @@ import "./styles/form.css";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../actions/userActions";
 import Navbar from "./Navbar";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import FormError from "../components/FormError";
 
 export default function Login({ history }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+  const loginValidationSchema = Yup.object().shape({
+    email: Yup.string().required().email().label("Email"),
+    password: Yup.string().required().label("Password"),
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
-
   const userLogin = useSelector((state) => state.userLogin);
 
   const { error, userInfo } = userLogin;
@@ -23,8 +27,8 @@ export default function Login({ history }) {
     }
   }, [history, userInfo]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
+  const formSubmitHandler = ({ email, password }) => {
+    setIsSubmitting(true);
     toast.promise(
       dispatch(login(email, password)),
       {
@@ -39,6 +43,7 @@ export default function Login({ history }) {
         },
       }
     );
+    setIsSubmitting(false);
   };
 
   return (
@@ -51,38 +56,63 @@ export default function Login({ history }) {
           </div>
           <div className="form-container">
             <div className="form-title">Sign in</div>
-            <form className="form" onSubmit={submitHandler}>
-              <label htmlFor="email">email</label>
-              <br />
-              <input
-                type="text"
-                name="email"
-                pattern="[^ @]*@[^ @]*"
-                defaultValue={email}
-                onInvalid={(e) => {
-                  e.target.setCustomValidity("Enter a valid Email Address");
-                }}
-                required
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <br />
-              <label htmlFor="password">password</label>
-              <br />
-              <input
-                type="password"
-                name="password"
-                defaultValue={password}
-                required
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <br />
+            <Formik
+              initialValues={{
+                email: "",
+                password: "",
+              }}
+              onSubmit={formSubmitHandler}
+              validationSchema={loginValidationSchema}
+            >
+              {({
+                handleChange,
+                errors,
+                setFieldTouched,
+                touched,
+                handleSubmit,
+              }) => {
+                return (
+                  <Form className="form">
+                    <label htmlFor="email">email</label>
+                    <br />
+                    <input
+                      type="text"
+                      name="email"
+                      onBlur={() => setFieldTouched("email")}
+                      required
+                      onChange={handleChange("email")}
+                    />
+                    <FormError error={errors.email} visible={touched.email} />
+                    <br />
 
-              <div id="form-button">
-                <button className="submit-btn" type="submit">
-                  Login
-                </button>
-              </div>
-            </form>
+                    <label htmlFor="password">password</label>
+                    <br />
+                    <input
+                      type="password"
+                      name="password"
+                      onBlur={() => setFieldTouched("password")}
+                      required
+                      onChange={handleChange("password")}
+                    />
+                    <FormError
+                      error={errors.password}
+                      visible={touched.password}
+                    />
+                    <br />
+                    <div id="form-button">
+                      <button
+                        className="submit-btn"
+                        type="submit"
+                        disabled={isSubmitting}
+                        onClick={handleSubmit}
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </Form>
+                );
+              }}
+            </Formik>
           </div>
         </div>
       </div>
