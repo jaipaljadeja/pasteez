@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -23,12 +24,12 @@ export default function Navbar() {
           <i className="fas fa-bars hamburger"></i>
           <ul className="navlinks">
             <li>
-              <a href="/">{userInfo.username}</a>
+              <Link to="/">{userInfo.username}</Link>
             </li>
             <li>
-              <a href="/" onClick={logoutHandler}>
-                Log Out
-              </a>
+              <Link to="/" onClick={logoutHandler}>
+                Logout
+              </Link>
             </li>
           </ul>
         </nav>
@@ -37,10 +38,10 @@ export default function Navbar() {
           <i className="fas fa-bars hamburger"></i>
           <ul className="navlinks">
             <li>
-              <a href="/signup">Sign Up</a>
+              <Link to="/signup">Signup</Link>
             </li>
             <li>
-              <a href="/login">Login</a>
+              <Link to="/login">Login</Link>
             </li>
           </ul>
         </nav>
