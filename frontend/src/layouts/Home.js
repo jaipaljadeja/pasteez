@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PasteezCodeEditor from "../components/PasteezCodeEditor";
 import { decodeURL } from "../utils/UrlUtils";
 import { syntaxStyles, languages } from "../config/config";
+import Navbar from "./Navbar";
 let { titleExample, codeExample, syntaxStyleExample, langExample } =
   require("../config/config").examples;
 
@@ -44,12 +45,17 @@ function Home({ history }) {
   });
 
   return (
-    <PasteezCodeEditor
-      languages={languages}
-      syntaxStyles={syntaxStyles}
-      data={data}
-      setData={setData}
-    />
+    <>
+      <Navbar />
+      <div className="home-container">
+        <PasteezCodeEditor
+          languages={languages}
+          syntaxStyles={syntaxStyles}
+          data={data}
+          setData={setData}
+        />
+      </div>
+    </>
   );
 }
 

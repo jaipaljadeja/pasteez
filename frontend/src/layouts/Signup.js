@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import "./styles/form.css";
+import Navbar from "./Navbar";
 
 export default function Signup({ history }) {
   const [email, setEmail] = useState("");
@@ -78,80 +79,85 @@ export default function Signup({ history }) {
   };
 
   return (
-    <div className="container">
-      <div>
-        <Toaster />
-      </div>
-      <div className="form-container">
-        <div className="form-title">Sign up</div>
-        <form className="form">
-          <label htmlFor="name">name</label>
-          <br />
-          <input
-            type="text"
-            name="name"
-            required
-            defaultValue={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <br />
-          <label htmlFor="username">username</label>
-          <br />
-          <input
-            type="text"
-            name="username"
-            defaultValue={username}
-            required
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <br />
-          <label htmlFor="email">email</label>
-          <br />
-          <input
-            type="text"
-            name="email"
-            pattern="[^ @]*@[^ @]*"
-            onInvalid={(e) => {
-              e.target.setCustomValidity("Enter a valid Email Address");
-            }}
-            required
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <br />
-
-          <label htmlFor="password">password</label>
-          <br />
-          <input
-            type="password"
-            name="password"
-            defaultValue={password}
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <br />
-
-          <label htmlFor="password-confirm">confirm password</label>
-          <br />
-          <input
-            type="text"
-            name="password-confirm"
-            defaultValue={confirmPassword}
-            required
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          <br />
-          <div id="form-button">
-            <button
-              className="submit-btn"
-              type="submit"
-              onClick={submitHandler}
-              disabled={isSubmitting}
-            >
-              Submit
-            </button>
+    <>
+      <Navbar />
+      <div className="home-container">
+        <div className="container">
+          <div>
+            <Toaster />
           </div>
-        </form>
+          <div className="form-container">
+            <div className="form-title">Sign up</div>
+            <form className="form">
+              <label htmlFor="name">name</label>
+              <br />
+              <input
+                type="text"
+                name="name"
+                required
+                defaultValue={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <br />
+              <label htmlFor="username">username</label>
+              <br />
+              <input
+                type="text"
+                name="username"
+                defaultValue={username}
+                required
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <br />
+              <label htmlFor="email">email</label>
+              <br />
+              <input
+                type="text"
+                name="email"
+                pattern="[^ @]*@[^ @]*"
+                onInvalid={(e) => {
+                  e.target.setCustomValidity("Enter a valid Email Address");
+                }}
+                required
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <br />
+
+              <label htmlFor="password">password</label>
+              <br />
+              <input
+                type="password"
+                name="password"
+                defaultValue={password}
+                required
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <br />
+
+              <label htmlFor="password-confirm">confirm password</label>
+              <br />
+              <input
+                type="text"
+                name="password-confirm"
+                defaultValue={confirmPassword}
+                required
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <br />
+              <div id="form-button">
+                <button
+                  className="submit-btn"
+                  type="submit"
+                  onClick={submitHandler}
+                  disabled={isSubmitting}
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
