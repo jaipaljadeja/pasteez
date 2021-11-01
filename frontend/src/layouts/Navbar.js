@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../actions/userActions";
 
 export default function Navbar() {
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  if (localStorage.getItem("userInfo")) {
-    return (
-      <header>
-        <a href="/" className="pasteezLogo">
-          &lt;/&gt; Pasteez
-        </a>
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
+
+  useEffect(() => {}, [userInfo]);
+
+  return (
+    <header>
+      <a href="/" className="pasteezLogo">
+        &lt;/&gt; Pasteez
+      </a>
+      {userInfo ? (
         <nav>
           <i className="fas fa-bars hamburger"></i>
           <ul className="navlinks">
@@ -15,26 +26,13 @@ export default function Navbar() {
               <a href="/">{userInfo.username}</a>
             </li>
             <li>
-              <a
-                href="/"
-                onClick={() => {
-                  localStorage.removeItem("userInfo");
-                  window.location.reload();
-                }}
-              >
+              <a href="/" onClick={logoutHandler}>
                 Log Out
               </a>
             </li>
           </ul>
         </nav>
-      </header>
-    );
-  } else {
-    return (
-      <header>
-        <a href="/" className="pasteezLogo">
-          &lt;/&gt; Pasteez
-        </a>
+      ) : (
         <nav>
           <i className="fas fa-bars hamburger"></i>
           <ul className="navlinks">
@@ -46,7 +44,7 @@ export default function Navbar() {
             </li>
           </ul>
         </nav>
-      </header>
-    );
-  }
+      )}
+    </header>
+  );
 }

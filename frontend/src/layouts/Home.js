@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PasteezCodeEditor from "../components/PasteezCodeEditor";
 import { decodeURL } from "../utils/UrlUtils";
 import { syntaxStyles, languages } from "../config/config";
-import axios from "axios";
 let { titleExample, codeExample, syntaxStyleExample, langExample } =
   require("../config/config").examples;
 
@@ -11,7 +10,6 @@ function Home({ history }) {
   // useEffect(() => {
   //   const userInfo = localStorage.getItem("userInfo");
   //   if (userInfo) {
-  //     history.push("/");
   //   }
   // }, [history]);
 
