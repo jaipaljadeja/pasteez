@@ -1,57 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import "./styles/form.css";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../actions/userActions";
 
 export default function Login({ history }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // useEffect(() => {
-  //   const userInfo = localStorage.getItem("userInfo");
-  //   if (userInfo) {
-  //     history.push("/");
-  //   }
-  // }, [history]);
+  const dispatch = useDispatch();
 
-  let loginPromise = (e) => {
-    return new Promise(async (resolve, reject) => {
-      e.preventDefault();
-      try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-        const { data } = await axios.post(
-          "/api/users/login",
-          {
-            email,
-            password,
-          },
-          config
-        );
-        console.log(data);
-        localStorage.setItem("userInfo", JSON.stringify(data));
-        resolve("Login Success");
-      } catch (error) {
-        reject(error.response.data.message);
-      }
-    });
-  };
+  const userLogin = useSelector((state) => state.userLogin);
+
+  const { error, userInfo } = userLogin;
+
+  useEffect(() => {
+    if (userInfo) {
+      setTimeout(() => {
+        history.push("/");
+      }, 1500);
+    }
+  }, [history, userInfo]);
 
   const submitHandler = (e) => {
+    e.preventDefault();
     toast.promise(
-      loginPromise(e).then(
-        setTimeout(() => {
-          history.push("/");
-          window.location.reload();
-        }, 1500)
-      ),
+      dispatch(login(email, password)),
       {
         loading: "Checking your credentials",
         success: "Login Success! Redirecting...",
-        error: "Email or Password is incorrect!",
+        error: `${error || "Invalid Email or Password!"}`,
       },
       {
         style: {
