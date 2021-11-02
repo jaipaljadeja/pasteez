@@ -99,7 +99,7 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
                   language: data.lang,
                 }).value
               }
-              autoFocus={true}
+              autoFocus={false}
               padding={20}
               textareaId="code-editor"
               className="code-editor-wrapper"

@@ -1,157 +1,194 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
+import { motion } from "framer-motion";
 import "./styles/form.css";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../actions/userActions";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import FormError from "../components/FormError";
 
 export default function Signup({ history }) {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const signupValidationSchema = Yup.object().shape({
+    name: Yup.string().required().label("Name"),
+    username: Yup.string().required().label("Username"),
+    email: Yup.string().required().email().label("Email"),
+    password: Yup.string().required().min(8).label("Password"),
+    confirmPassword: Yup.string()
+      .required()
+      .oneOf([Yup.ref("password"), null], "Passwords do not match")
+      .label("Password"),
+  });
 
-  let signupPromise = (e) => {
-    return new Promise(async (resolve, reject) => {
-      setIsSubmitting(true);
-      try {
-        confirm.setCustomValidity("");
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-        const { data } = await axios.post(
-          "/api/users/",
-          {
-            name,
-            username,
-            email,
-            password,
-          },
-          config
-        );
-        console.log(data);
-        localStorage.setItem("userInfo", JSON.stringify(data));
-        resolve("success");
-      } catch (error) {
-        reject(error.response.data.message);
-        setIsSubmitting(false);
-      }
-    });
-  };
-  const confirm = document.querySelector("input[name=password-confirm]");
-  const submitHandler = (e) => {
-    console.log("Form Submit Clicked");
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      confirm.setCustomValidity("Passwords do not match");
-      confirm.reportValidity();
-    } else if (
-      (password === confirmPassword) !== "" &&
-      email !== "" &&
-      name !== "" &&
-      username !== ""
-    ) {
-      toast.promise(
-        signupPromise(e).then((status) => {
-          if (status === "success") {
-            setTimeout(() => {
-              history.push("/");
-              window.location.reload();
-            }, 1500);
-          }
-        }),
-        {
-          loading: "Signing you up...",
-          success: "Sign Up Success! Redirecting...",
-          error: "Error Occured, try again!",
-        },
-        {
-          style: {
-            fontFamily: "Monospace",
-            marginTop: "10px",
-          },
-        }
-      );
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const dispatch = useDispatch();
+  const userRegister = useSelector((state) => state.userRegister);
+  const { error, userInfo } = userRegister;
+
+  useEffect(() => {
+    if (userInfo) {
+      setTimeout(() => {
+        history.push("/");
+      }, 2000);
     }
+  }, [userInfo, history]);
+
+  const formSubmitHandler = ({ name, username, email, password }) => {
+    setIsSubmitting(true);
+    toast.promise(
+      dispatch(register(name, username, email, password)),
+      {
+        loading: "Signing you up...",
+        success: "Sign Up Success! Redirecting...",
+        error: error || "User Already Exist",
+      },
+      {
+        style: {
+          fontFamily: "Monospace",
+          marginTop: "15px",
+        },
+      }
+    );
+    setIsSubmitting(false);
+  };
+
+  const containerVariants = {
+    hidden: {
+      x: "100vw",
+    },
+    visible: {
+      x: 0,
+      transition: {
+        type: "spring",
+      },
+    },
+    exit: {
+      x: "-100vw",
+      transition: {
+        ease: "easeInOut",
+      },
+    },
   };
 
   return (
-    <div className="container">
-      <div>
-        <Toaster />
-      </div>
-      <div className="form-container">
-        <div className="form-title">Sign up</div>
-        <form className="form">
-          <label htmlFor="name">name</label>
-          <br />
-          <input
-            type="text"
-            name="name"
-            required
-            defaultValue={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <br />
-          <label htmlFor="username">username</label>
-          <br />
-          <input
-            type="text"
-            name="username"
-            defaultValue={username}
-            required
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <br />
-          <label htmlFor="email">email</label>
-          <br />
-          <input
-            type="text"
-            name="email"
-            pattern="[^ @]*@[^ @]*"
-            onInvalid={(e) => {
-              e.target.setCustomValidity("Enter a valid Email Address");
-            }}
-            required
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <br />
-
-          <label htmlFor="password">password</label>
-          <br />
-          <input
-            type="password"
-            name="password"
-            defaultValue={password}
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <br />
-
-          <label htmlFor="password-confirm">confirm password</label>
-          <br />
-          <input
-            type="text"
-            name="password-confirm"
-            defaultValue={confirmPassword}
-            required
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          <br />
-          <div id="form-button">
-            <button
-              className="submit-btn"
-              type="submit"
-              onClick={submitHandler}
-              disabled={isSubmitting}
+    <>
+      <Toaster />
+      <motion.div
+        className="main-container"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
+        <div className="container">
+          <div className="form-container">
+            <div className="form-title">Sign up</div>
+            <Formik
+              initialValues={{
+                name: "",
+                username: "",
+                email: "",
+                password: "",
+                confirmPassword: "",
+              }}
+              onSubmit={formSubmitHandler}
+              validationSchema={signupValidationSchema}
             >
-              Submit
-            </button>
+              {({
+                handleChange,
+                errors,
+                setFieldTouched,
+                touched,
+                handleSubmit,
+              }) => {
+                return (
+                  <Form className="form">
+                    <label htmlFor="name">name</label>
+                    <br />
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      onBlur={() => setFieldTouched("name")}
+                      onChange={handleChange("name")}
+                    />
+                    <FormError error={errors.name} visible={touched.name} />
+                    <br />
+
+                    <label htmlFor="username">username</label>
+                    <br />
+                    <input
+                      type="text"
+                      name="username"
+                      onBlur={() => setFieldTouched("username")}
+                      required
+                      onChange={handleChange("username")}
+                    />
+                    <FormError
+                      error={errors.username}
+                      visible={touched.username}
+                    />
+                    <br />
+
+                    <label htmlFor="email">email</label>
+                    <br />
+                    <input
+                      type="text"
+                      name="email"
+                      onBlur={() => setFieldTouched("email")}
+                      required
+                      onChange={handleChange("email")}
+                    />
+                    <FormError error={errors.email} visible={touched.email} />
+                    <br />
+
+                    <label htmlFor="password">password</label>
+                    <br />
+                    <input
+                      type="password"
+                      name="password"
+                      onBlur={() => setFieldTouched("password")}
+                      required
+                      onChange={handleChange("password")}
+                    />
+                    <FormError
+                      error={errors.password}
+                      visible={touched.password}
+                    />
+                    <br />
+
+                    <label htmlFor="confirmPassword">confirm password</label>
+                    <br />
+                    <input
+                      type="password"
+                      name="confirmPassword"
+                      onBlur={() => setFieldTouched("confirmPassword")}
+                      required
+                      onChange={handleChange("confirmPassword")}
+                    />
+                    <FormError
+                      error={errors.confirmPassword}
+                      visible={touched.confirmPassword}
+                    />
+                    <br />
+
+                    <div id="form-button">
+                      <button
+                        className="submit-btn"
+                        type="submit"
+                        disabled={isSubmitting}
+                        onClick={handleSubmit}
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </Form>
+                );
+              }}
+            </Formik>
           </div>
-        </form>
-      </div>
-    </div>
+        </div>
+      </motion.div>
+    </>
   );
 }

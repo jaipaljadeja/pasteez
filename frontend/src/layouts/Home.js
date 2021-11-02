@@ -1,58 +1,51 @@
-import React, { useState, useEffect } from "react";
-import PasteezCodeEditor from "../components/PasteezCodeEditor";
-import { decodeURL } from "../utils/UrlUtils";
-import { syntaxStyles, languages } from "../config/config";
-import axios from "axios";
-let { titleExample, codeExample, syntaxStyleExample, langExample } =
-  require("../config/config").examples;
+import React from "react";
+import Typewriter from "typewriter-effect";
+import { motion } from "framer-motion";
 
-function Home({ history }) {
-  // Taking Query params from URL
-  // useEffect(() => {
-  //   const userInfo = localStorage.getItem("userInfo");
-  //   if (userInfo) {
-  //     history.push("/");
-  //   }
-  // }, [history]);
-
-  const url_string = window.location.href;
-  const url = new URL(url_string);
-  const paramTitle = url.searchParams.get("title");
-  const paramLang = url.searchParams.get("lang");
-  const paramStyle = url.searchParams.get("style");
-  const encryptedCode = url.searchParams.get("code");
-  const decryptedCode = decodeURL(encryptedCode);
-
-  // Setting default values for the query params if they are present
-  if (paramTitle) {
-    titleExample = paramTitle;
-  }
-  if (paramLang) {
-    langExample = paramLang;
-  }
-  if (paramStyle) {
-    syntaxStyleExample = paramStyle;
-  }
-  if (encryptedCode) {
-    codeExample = decryptedCode;
-  }
-
-  // Setting state for the all the values
-  const [data, setData] = useState({
-    code: codeExample,
-    lang: langExample,
-    syntaxStyle: syntaxStyleExample,
-    title: titleExample,
-  });
+export default function Home() {
+  const containerVariants = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: {
+      opacity: 1,
+      transition: { duration: 2 },
+    },
+    exit: {
+      x: "-100vw",
+      transition: {
+        ease: "easeInOut",
+      },
+    },
+  };
 
   return (
-    <PasteezCodeEditor
-      languages={languages}
-      syntaxStyles={syntaxStyles}
-      data={data}
-      setData={setData}
-    />
+    <motion.div
+      className="main-container"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
+      <div className="home-container">
+        <Typewriter
+          options={{
+            strings: [
+              "< Create, Paste & Share >",
+              "AES256 & BASE64 Encryption",
+              "Beautiful and Aesthetic Design",
+              "Different Themes and Styles",
+              "Syntax Highlighting",
+              "20+ Languages Support",
+              "Export Beautiful Code Images",
+            ],
+            autoStart: true,
+            loop: true,
+            delay: 50,
+          }}
+        />
+        <div></div>
+      </div>
+    </motion.div>
   );
 }
-
-export default Home;
