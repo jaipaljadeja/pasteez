@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { motion } from "framer-motion";
 import "./styles/form.css";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../actions/userActions";
-import Navbar from "./Navbar";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormError from "../components/FormError";
@@ -46,76 +46,97 @@ export default function Login({ history }) {
     setIsSubmitting(false);
   };
 
-  return (
-    <>
-      <Navbar />
-      <div className="home-container">
-        <div className="container">
-          <div>
-            <Toaster />
-          </div>
-          <div className="form-container">
-            <div className="form-title">Sign in</div>
-            <Formik
-              initialValues={{
-                email: "",
-                password: "",
-              }}
-              onSubmit={formSubmitHandler}
-              validationSchema={loginValidationSchema}
-            >
-              {({
-                handleChange,
-                errors,
-                setFieldTouched,
-                touched,
-                handleSubmit,
-              }) => {
-                return (
-                  <Form className="form">
-                    <label htmlFor="email">email</label>
-                    <br />
-                    <input
-                      type="text"
-                      name="email"
-                      onBlur={() => setFieldTouched("email")}
-                      required
-                      onChange={handleChange("email")}
-                    />
-                    <FormError error={errors.email} visible={touched.email} />
-                    <br />
+  const containerVariants = {
+    hidden: {
+      x: "100vw",
+    },
+    visible: {
+      x: 0,
+      transition: {
+        type: "spring",
+      },
+    },
+    exit: {
+      x: "-100vw",
+      transition: {
+        ease: "easeInOut",
+      },
+    },
+  };
 
-                    <label htmlFor="password">password</label>
-                    <br />
-                    <input
-                      type="password"
-                      name="password"
-                      onBlur={() => setFieldTouched("password")}
-                      required
-                      onChange={handleChange("password")}
-                    />
-                    <FormError
-                      error={errors.password}
-                      visible={touched.password}
-                    />
-                    <br />
-                    <div id="form-button">
-                      <button
-                        className="submit-btn"
-                        type="submit"
-                        disabled={isSubmitting}
-                        onClick={handleSubmit}
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </Form>
-                );
-              }}
-            </Formik>
-          </div>
+  return (
+    <motion.div
+      className="main-container"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
+      <div className="container">
+        <div>
+          <Toaster />
+        </div>
+        <div className="form-container">
+          <div className="form-title">Sign in</div>
+          <Formik
+            initialValues={{
+              email: "",
+              password: "",
+            }}
+            onSubmit={formSubmitHandler}
+            validationSchema={loginValidationSchema}
+          >
+            {({
+              handleChange,
+              errors,
+              setFieldTouched,
+              touched,
+              handleSubmit,
+            }) => {
+              return (
+                <Form className="form">
+                  <label htmlFor="email">email</label>
+                  <br />
+                  <input
+                    type="text"
+                    name="email"
+                    onBlur={() => setFieldTouched("email")}
+                    required
+                    onChange={handleChange("email")}
+                  />
+                  <FormError error={errors.email} visible={touched.email} />
+                  <br />
+
+                  <label htmlFor="password">password</label>
+                  <br />
+                  <input
+                    type="password"
+                    name="password"
+                    onBlur={() => setFieldTouched("password")}
+                    required
+                    onChange={handleChange("password")}
+                  />
+                  <FormError
+                    error={errors.password}
+                    visible={touched.password}
+                  />
+                  <br />
+                  <div id="form-button">
+                    <button
+                      className="submit-btn"
+                      type="submit"
+                      disabled={isSubmitting}
+                      onClick={handleSubmit}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </Form>
+              );
+            }}
+          </Formik>
         </div>
       </div>
-    </>
+    </motion.div>
   );
 }

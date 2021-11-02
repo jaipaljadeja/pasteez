@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { motion } from "framer-motion";
 import "./styles/form.css";
-import Navbar from "./Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../actions/userActions";
 import { Formik, Form } from "formik";
@@ -52,10 +52,33 @@ export default function Signup({ history }) {
     setIsSubmitting(false);
   };
 
+  const containerVariants = {
+    hidden: {
+      x: "100vw",
+    },
+    visible: {
+      x: 0,
+      transition: {
+        type: "spring",
+      },
+    },
+    exit: {
+      x: "-100vw",
+      transition: {
+        ease: "easeInOut",
+      },
+    },
+  };
+
   return (
     <>
-      <Navbar />
-      <div className="home-container">
+      <motion.div
+        className="main-container"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
         <div className="container">
           <div>
             <Toaster />
@@ -139,7 +162,7 @@ export default function Signup({ history }) {
                     <label htmlFor="confirmPassword">confirm password</label>
                     <br />
                     <input
-                      type="text"
+                      type="password"
                       name="confirmPassword"
                       onBlur={() => setFieldTouched("confirmPassword")}
                       required
@@ -167,7 +190,7 @@ export default function Signup({ history }) {
             </Formik>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }

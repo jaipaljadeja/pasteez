@@ -1,4 +1,4 @@
-.home-container {
+.main-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -188,6 +188,21 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
+/* Home Page */
+
+.Typewriter__wrapper {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 3em;
+}
+
+.Typewriter__cursor {
+  font-size: 3em;
+  letter-spacing: -10px;
+}
+
+/* End of Home Page */
+
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   #root {
@@ -197,7 +212,7 @@
     margin-right: -20px;
   }
 
-  .home-container {
+  .main-container {
     align-items: unset;
   }
 
