@@ -45,7 +45,7 @@ export default function Signup({ history }) {
       {
         style: {
           fontFamily: "Monospace",
-          marginTop: "10px",
+          marginTop: "15px",
         },
       }
     );
@@ -72,6 +72,7 @@ export default function Signup({ history }) {
 
   return (
     <>
+      <Toaster />
       <motion.div
         className="main-container"
         variants={containerVariants}
@@ -80,9 +81,6 @@ export default function Signup({ history }) {
         exit="exit"
       >
         <div className="container">
-          <div>
-            <Toaster />
-          </div>
           <div className="form-container">
             <div className="form-title">Sign up</div>
             <Formik
