@@ -4,11 +4,13 @@ const generateToken = require("../utils/generateToken");
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, username, email, password } = req.body;
-  const userExist = await User.findOne({ email });
+  const userExist = await User.findOne({
+    $or: [{ email: email }, { username: username }],
+  });
 
   if (userExist) {
     res.status(400);
-    throw new Error("User already exist");
+    throw new Error("User Already Exist");
   }
 
   const user = await User.create({
