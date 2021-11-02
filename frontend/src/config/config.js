@@ -6,17 +6,15 @@ module.exports.base = {
 
 // Default Example data
 module.exports.examples = {
-  codeExample: `module.exports = leftpad;
-  function leftpad(str, len, ch) {
-    str = String(str);
-    var i = -1;
-    if (!ch && ch !== 0) ch = ' ';
-    len = len - str.length;
-    while (i++ < len) {
-    str = ch + str;
-    }
-    return str;
-  }`,
+  codeExample: `const number = parseInt(prompt('Enter the number of terms: '));
+let n1 = 0, n2 = 1, nextTerm;
+console.log('Fibonacci Series:');
+for (let i = 1; i <= number; i++) {
+  console.log(n1);
+  nextTerm = n1 + n2;
+  n1 = n2;
+   n2 = nextTerm;
+}`,
   titleExample: "title",
   syntaxStyleExample: "agate",
   langExample: "javascript",

@@ -5,7 +5,7 @@ export default function Footer() {
     <footer>
       <div className="footer-container">
         <div className="footer-content">
-          made by team <b>RamenCoders</b>
+          made by team <b>TheRamenCoders</b>
         </div>
       </div>
     </footer>
