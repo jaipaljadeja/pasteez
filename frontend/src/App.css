@@ -15,7 +15,8 @@
 }
 
 .exportableFrame {
-  background: linear-gradient(90deg, #d0f4ff 0%, #2b8389 100%);
+  /* background: linear-gradient(90deg, #d0f4ff 0%, #2b8389 100%); */
+  /* background: #ff2525; */
   padding: 50px;
 }
 
@@ -118,7 +119,6 @@
 }
 
 .btn {
-  margin-bottom: 5px;
   border-radius: 5px;
   width: 10em;
 }
@@ -143,6 +143,8 @@
   align-items: center;
   justify-content: center;
   color: #33b4ff;
+  margin-right: 10px;
+  height: 100%;
 }
 
 .Dropdown-menu {
@@ -187,6 +189,38 @@
 .Dropdown-option {
   color: rgba(255, 255, 255, 0.8);
 }
+
+/* Color Picker CSS */
+
+.pcr-app .pcr-interaction .pcr-save {
+  background: #ff3759;
+}
+
+.pickr .pcr-button {
+  height: 2em;
+  width: 2em;
+  outline: none;
+  border: none;
+}
+
+.pickr .pcr-button::after {
+  border-radius: 50%;
+  outline: none;
+  border: none;
+}
+
+.pickr .pcr-button::before {
+  border-radius: 50%;
+  border: none;
+  outline: none;
+}
+
+.pickr .pcr-button:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+/* END of Color Picker CSS */
 
 /* Home Page */
 
