@@ -3,6 +3,7 @@ import Typewriter from "typewriter-effect";
 import { motion } from "framer-motion";
 
 export default function Home() {
+  // Framer motion animation (fade in)
   const containerVariants = {
     hidden: {
       opacity: 0,

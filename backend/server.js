@@ -10,14 +10,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 dotenv.config();
-const PORT = process.env.PORT || 4000;
 
+const PORT = process.env.PORT || 4000;
+// Connect to database
 connectDB();
 
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
+// Routes
 app.use("/api/users", userRoutes);
 app.use(notFound);
 app.use(errorHandler);

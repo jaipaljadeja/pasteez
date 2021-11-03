@@ -1,24 +1,39 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
 import toast, { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
-import "./styles/form.css";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../actions/userActions";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import FormError from "../components/FormError";
 
-export default function Login({ history }) {
+import { login } from "../actions/userActions";
+import FormError from "../components/FormError";
+import "./styles/form.css";
+
+export default function Login({ containerVariants }) {
+  // for pushing to different route
+  const history = useHistory();
+
+  // Yup validation for login info
   const loginValidationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
     password: Yup.string().required().label("Password"),
   });
+
+  // isSubmitting for disabling the form submit until a response has been recieved by clicking submit once
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Declaring dispatch for redux
   const dispatch = useDispatch();
+
+  // Making Login State in redux
   const userLogin = useSelector((state) => state.userLogin);
 
+  // Error and userinfo if returned by the userLogin state
   const { error, userInfo } = userLogin;
 
+  // after successful login wait for 2 secs then redirect to home screen
   useEffect(() => {
     if (userInfo) {
       setTimeout(() => {
@@ -27,14 +42,15 @@ export default function Login({ history }) {
     }
   }, [history, userInfo]);
 
+  // The function when form is submitted
   const formSubmitHandler = ({ email, password }) => {
-    setIsSubmitting(true);
+    setIsSubmitting(true); // Disables the form submit btn
     toast.promise(
-      dispatch(login(email, password)),
+      dispatch(login(email, password)), // Dispatches the email and username
       {
-        loading: "Checking your credentials",
-        success: "Login Success! Redirecting...",
-        error: `${error || "Invalid Email or Password!"}`,
+        loading: "Checking your credentials", //when logging in
+        success: "Login Success! Redirecting...", //if login is success
+        error: `${error || "Invalid Email or Password!"}`, //when login is failed
       },
       {
         style: {
@@ -43,25 +59,7 @@ export default function Login({ history }) {
         },
       }
     );
-    setIsSubmitting(false);
-  };
-
-  const containerVariants = {
-    hidden: {
-      x: "100vw",
-    },
-    visible: {
-      x: 0,
-      transition: {
-        type: "spring",
-      },
-    },
-    exit: {
-      x: "-100vw",
-      transition: {
-        ease: "easeInOut",
-      },
-    },
+    setIsSubmitting(false); //enable the form submit btn again
   };
 
   return (

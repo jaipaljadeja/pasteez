@@ -20,6 +20,7 @@ for (let i = 1; i <= number; i++) {
   langExample: "javascript",
 };
 
+// Array of all the languages available
 module.exports.languages = [
   "1C",
   "ABNF",

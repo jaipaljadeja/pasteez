@@ -6,9 +6,8 @@ import { motion } from "framer-motion";
 let { titleExample, codeExample, syntaxStyleExample, langExample } =
   require("../config/config").examples;
 
-function Editor({ history }) {
+function Editor({ containerVariants }) {
   // Taking Query params from URL
-
   const url_string = window.location.href;
   const url = new URL(url_string);
   const paramTitle = url.searchParams.get("title");
@@ -38,24 +37,6 @@ function Editor({ history }) {
     syntaxStyle: syntaxStyleExample,
     title: titleExample,
   });
-
-  const containerVariants = {
-    hidden: {
-      x: "100vw",
-    },
-    visible: {
-      x: 0,
-      transition: {
-        type: "spring",
-      },
-    },
-    exit: {
-      x: "-100vw",
-      transition: {
-        ease: "easeInOut",
-      },
-    },
-  };
 
   return (
     <motion.div

@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import toast, { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
-import "./styles/form.css";
-import { useDispatch, useSelector } from "react-redux";
-import { register } from "../actions/userActions";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import FormError from "../components/FormError";
 
-export default function Signup({ history }) {
+import { register } from "../actions/userActions";
+import FormError from "../components/FormError";
+import "./styles/form.css";
+
+export default function Signup({ containerVariants }) {
+  // for pushing to different route
+  const history = useHistory();
+
+  // Yup validation for login info
   const signupValidationSchema = Yup.object().shape({
     name: Yup.string().required().label("Name"),
     username: Yup.string().required().label("Username"),
@@ -20,11 +27,18 @@ export default function Signup({ history }) {
       .label("Password"),
   });
 
+  // isSubmitting for disabling the form submit until a response has been recieved by clicking submit once
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Declaring dispatch for redux
   const dispatch = useDispatch();
+  // Making Register State in redux
   const userRegister = useSelector((state) => state.userRegister);
+
+  // Error and userinfo if returned by the userRegister state
   const { error, userInfo } = userRegister;
 
+  // after successful signup wait for 2 secs then redirect to home screen
   useEffect(() => {
     if (userInfo) {
       setTimeout(() => {
@@ -33,14 +47,15 @@ export default function Signup({ history }) {
     }
   }, [userInfo, history]);
 
+  // The function when form is submitted
   const formSubmitHandler = ({ name, username, email, password }) => {
-    setIsSubmitting(true);
+    setIsSubmitting(true); // Disables the form submit btn
     toast.promise(
-      dispatch(register(name, username, email, password)),
+      dispatch(register(name, username, email, password)), // Dispatches the userinfo
       {
-        loading: "Signing you up...",
-        success: "Sign Up Success! Redirecting...",
-        error: error || "User Already Exist",
+        loading: "Signing you up...", //when signing up
+        success: "Sign Up Success! Redirecting...", //if signup is success
+        error: error || "User Already Exist", //if signup fails
       },
       {
         style: {
@@ -49,25 +64,7 @@ export default function Signup({ history }) {
         },
       }
     );
-    setIsSubmitting(false);
-  };
-
-  const containerVariants = {
-    hidden: {
-      x: "100vw",
-    },
-    visible: {
-      x: 0,
-      transition: {
-        type: "spring",
-      },
-    },
-    exit: {
-      x: "-100vw",
-      transition: {
-        ease: "easeInOut",
-      },
-    },
+    setIsSubmitting(false); //enable the form submit btn again
   };
 
   return (
