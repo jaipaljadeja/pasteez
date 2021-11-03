@@ -9,6 +9,7 @@ import {
   USER_REGISTER_SUCCESS,
 } from "../constants/userConstants";
 
+// function to authenticate user
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST });
@@ -30,6 +31,7 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 
     console.log(data);
+    // Save userinfo to localstorage
     localStorage.setItem("userInfo", JSON.stringify(data));
     return Promise.resolve(true);
   } catch (error) {
@@ -41,11 +43,14 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
+// function to logout
 export const logout = () => async (dispatch) => {
+  // Remove userinfo from localstorage
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
 };
 
+// function to register user
 export const register =
   (name, username, email, password) => async (dispatch) => {
     try {
@@ -67,6 +72,7 @@ export const register =
       );
       dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
       dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+      // Save userinfo to localstorage
       localStorage.setItem("userInfo", JSON.stringify(data));
       return Promise.resolve(true);
     } catch (error) {
