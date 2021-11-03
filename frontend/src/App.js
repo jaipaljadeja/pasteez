@@ -1,7 +1,9 @@
 import React from "react";
+import { AnimatePresence } from "framer-motion";
 import { Route, Switch, useLocation } from "react-router-dom";
 
-import { AnimatePresence } from "framer-motion";
+import "react-dropdown/style.css";
+import "./App.css";
 
 import Footer from "./layouts/Footer";
 import Editor from "./layouts/Editor";
@@ -9,9 +11,7 @@ import Home from "./layouts/Home";
 import Login from "./layouts/Login";
 import Signup from "./layouts/Signup";
 import Navbar from "./layouts/Navbar";
-
-import "react-dropdown/style.css";
-import "./App.css";
+import Profile from "./layouts/Profile";
 
 function App() {
   // To let Framer motion know when routes are changed
@@ -54,8 +54,15 @@ function App() {
           <Route exact path="/login">
             <Login containerVariants={containerVariants} />
           </Route>
+          <Route exact path="/Profile">
+            <Profile containerVariants={containerVariants} />
+          </Route>
           <Route path="*">
-            <h1>Error! Such page doesnt exist.</h1>
+            <div className="main-container">
+              <h1 style={{ textAlign: "center", color: "white" }}>
+                Oops! Are you lost babygirl?
+              </h1>
+            </div>
           </Route>
         </Switch>
       </AnimatePresence>

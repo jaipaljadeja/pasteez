@@ -24,11 +24,14 @@ export default function Navbar() {
           <i className="fas fa-bars hamburger"></i>
           <ul className="navlinks">
             <li>
-              <Link to="/">{userInfo.username}</Link>
-            </li>
-            <li>
+              {/* <Link to="/">{userInfo.username}</Link> */}
               <Link to="/" onClick={logoutHandler}>
                 Logout
+              </Link>
+            </li>
+            <li>
+              <Link to="/profile">
+                <i style={{ fontSize: 36 }} className="fas fa-user-circle" />
               </Link>
             </li>
           </ul>

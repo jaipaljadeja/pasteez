@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Typewriter from "typewriter-effect";
 import { motion } from "framer-motion";
+import ArrowButton from "../components/ArrowButton";
 
 export default function Home() {
   // Framer motion animation (fade in)
@@ -45,8 +46,14 @@ export default function Home() {
             delay: 50,
           }}
         />
-        <div></div>
       </div>
+      <motion.div
+        className="arrow-button"
+        whileHover={{ scale: 1.25 }}
+        transition={{ type: "spring", stiffness: 300 }}
+      >
+        <ArrowButton />
+      </motion.div>
     </motion.div>
   );
 }
