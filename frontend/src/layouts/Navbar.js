@@ -16,9 +16,9 @@ export default function Navbar() {
 
   return (
     <header>
-      <a href="/" className="pasteezLogo">
+      <Link to="/" className="pasteezLogo">
         &lt;/&gt; Pasteez
-      </a>
+      </Link>
       {userInfo ? (
         <nav>
           <i className="fas fa-bars hamburger"></i>
