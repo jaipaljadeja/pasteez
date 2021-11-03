@@ -7,19 +7,24 @@ import download from "downloadjs";
 import toast, { Toaster } from "react-hot-toast";
 import { generateURL } from "../utils/UrlUtils";
 const hljs = require("highlight.js");
+
 export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
+  // This is required to use multiple CSS Files
   const { switcher, themes } = useThemeSwitcher();
 
+  // When a user changes language from the editor
   const handleLangChange = (lang) => {
     setData({ ...data, lang: lang });
   };
 
+  // When a user changes the syntax theme from the editor
   const handleSyntaxThemeChange = (syntaxStyle) => {
     console.log(syntaxStyle);
     switcher({ theme: themes[syntaxStyle] });
     setData({ ...data, syntaxStyle: syntaxStyle });
   };
 
+  // When a user clicks export button to export code in image format
   const handleImageExport = () => {
     toast.promise(
       htmlToImage
@@ -43,8 +48,9 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
     );
   };
 
+  // When a user clicks copy url button
   const handleCopyUrl = () => {
-    const currentURL = window.location.href.toLowerCase();
+    const currentURL = window.location.origin.toLowerCase() + "/editor";
     const urlContent = generateURL(data);
     const url = currentURL.concat(urlContent);
     console.log(url);
