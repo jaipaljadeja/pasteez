@@ -36,6 +36,7 @@ function Editor({ containerVariants }) {
     lang: langExample,
     syntaxStyle: syntaxStyleExample,
     title: titleExample,
+    frameBG: "linear-gradient(90deg, #d0f4ff 0%, #2b8389 100%)",
   });
 
   return (

@@ -6,6 +6,7 @@ import * as htmlToImage from "html-to-image";
 import download from "downloadjs";
 import toast, { Toaster } from "react-hot-toast";
 import { generateURL } from "../utils/UrlUtils";
+import ColorPicker from "./ColorPicker";
 const hljs = require("highlight.js");
 
 export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
@@ -72,7 +73,12 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
       <div>
         <Toaster />
       </div>
-      <div className="exportableFrame">
+      <div
+        className="exportableFrame"
+        style={{
+          background: data.frameBG,
+        }}
+      >
         <div className="editor-frame">
           <div className="frame-header">
             <div className="frame-header-buttons">
@@ -144,6 +150,7 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
                 className="far fa-link"
               ></i>
             </button>
+            <ColorPicker data={data} setData={setData} />
           </div>
           <div className="features-btn">
             <button className="btn export-btn" onClick={handleImageExport}>
