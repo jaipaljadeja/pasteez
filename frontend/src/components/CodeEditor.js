@@ -4,7 +4,7 @@ import Editor from "react-simple-code-editor";
 import { useThemeSwitcher } from "react-css-theme-switcher";
 import * as htmlToImage from "html-to-image";
 import download from "downloadjs";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { generateURL } from "../utils/UrlUtils";
 import ColorPicker from "./ColorPicker";
 const hljs = require("highlight.js");
@@ -43,7 +43,7 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
       {
         style: {
           fontFamily: "Monospace",
-          marginTop: "10px",
+          marginTop: "15px",
         },
       }
     );
@@ -59,7 +59,7 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
     toast.success("URL Copied", {
       style: {
         fontFamily: "Monospace",
-        marginTop: "10px",
+        marginTop: "15px",
       },
       iconTheme: {
         primary: "#33b4ff",
@@ -70,9 +70,6 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
 
   return (
     <div className="pasteez-editor">
-      <div>
-        <Toaster />
-      </div>
       <div
         className="exportableFrame"
         style={{

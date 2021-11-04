@@ -3,6 +3,7 @@ import PasteezCodeEditor from "../components/PasteezCodeEditor";
 import { decodeURL } from "../utils/UrlUtils";
 import { syntaxStyles, languages } from "../config/config";
 import { motion } from "framer-motion";
+import { Toaster } from "react-hot-toast";
 let { titleExample, codeExample, syntaxStyleExample, langExample } =
   require("../config/config").examples;
 
@@ -40,20 +41,23 @@ function Editor({ containerVariants }) {
   });
 
   return (
-    <motion.div
-      className="main-container"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-    >
-      <PasteezCodeEditor
-        languages={languages}
-        syntaxStyles={syntaxStyles}
-        data={data}
-        setData={setData}
-      />
-    </motion.div>
+    <>
+      <Toaster />
+      <motion.div
+        className="main-container"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
+        <PasteezCodeEditor
+          languages={languages}
+          syntaxStyles={syntaxStyles}
+          data={data}
+          setData={setData}
+        />
+      </motion.div>
+    </>
   );
 }
 
