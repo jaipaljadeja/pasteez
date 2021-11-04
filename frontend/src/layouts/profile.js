@@ -7,10 +7,7 @@ export default function Profile() {
         <div className="profile-header-upper">
           <div className="contents-left">
             <div className="profile-image-container">
-              <img
-                src={"https://i.imgur.com/MVN67Dv.jpg"}
-                alt="profile-image"
-              />
+              <img src={"https://i.imgur.com/MVN67Dv.jpg"} alt="profile-pic" />
             </div>
           </div>
           <div className="contents-right">
