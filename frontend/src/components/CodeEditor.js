@@ -51,21 +51,31 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
 
   // When a user clicks copy url button
   const handleCopyUrl = () => {
+    console.log(data);
     const currentURL = window.location.origin.toLowerCase() + "/editor";
-    const urlContent = generateURL(data);
-    const url = currentURL.concat(urlContent);
-    console.log(url);
-    navigator.clipboard.writeText(url);
-    toast.success("URL Copied", {
-      style: {
-        fontFamily: "Monospace",
-        marginTop: "15px",
-      },
-      iconTheme: {
-        primary: "#33b4ff",
-        secondary: "#FFFFFF",
-      },
-    });
+    if (data.code !== "") {
+      const urlContent = generateURL(data);
+      const url = currentURL.concat(urlContent);
+      console.log(url);
+      navigator.clipboard.writeText(url);
+      toast.success("URL Copied", {
+        style: {
+          fontFamily: "Monospace",
+          marginTop: "15px",
+        },
+        iconTheme: {
+          primary: "#33b4ff",
+          secondary: "#FFFFFF",
+        },
+      });
+    } else if (data.code === "") {
+      toast.error("Code cannot be empty", {
+        style: {
+          fontFamily: "Monospace",
+          marginTop: "15px",
+        },
+      });
+    }
   };
 
   return (
@@ -73,7 +83,7 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
       <div
         className="exportableFrame"
         style={{
-          background: data.frameBG,
+          background: data.framebg,
         }}
       >
         <div className="editor-frame">
@@ -147,7 +157,9 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
                 className="far fa-link"
               ></i>
             </button>
-            <ColorPicker data={data} setData={setData} />
+            <ColorPicker
+              onChange={(color) => setData({ ...data, framebg: color })}
+            />
           </div>
           <div className="features-btn">
             <button className="btn export-btn" onClick={handleImageExport}>

@@ -4,8 +4,13 @@ import { decodeURL } from "../utils/UrlUtils";
 import { syntaxStyles, languages } from "../config/config";
 import { motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
-let { titleExample, codeExample, syntaxStyleExample, langExample } =
-  require("../config/config").examples;
+let {
+  titleExample,
+  codeExample,
+  syntaxStyleExample,
+  langExample,
+  defaultFrameBG,
+} = require("../config/config").examples;
 
 function Editor({ containerVariants }) {
   // Taking Query params from URL
@@ -37,7 +42,7 @@ function Editor({ containerVariants }) {
     lang: langExample,
     syntaxStyle: syntaxStyleExample,
     title: titleExample,
-    frameBG: "linear-gradient(90deg, #d0f4ff 0%, #2b8389 100%)",
+    framebg: defaultFrameBG,
   });
 
   return (
