@@ -48,7 +48,7 @@ function App() {
           <Route exact path="/editor">
             <Editor containerVariants={containerVariants} />
           </Route>
-          <Route exact path="/signup" component={Signup}>
+          <Route exact path="/signup">
             <Signup containerVariants={containerVariants} />
           </Route>
           <Route exact path="/login">
