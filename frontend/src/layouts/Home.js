@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Typewriter from "typewriter-effect";
 import { motion } from "framer-motion";
 import ArrowButton from "../components/ArrowButton";
