@@ -328,21 +328,20 @@
 
 .profile-image-container {
   position: absolute;
+  left: 3em;
   top: 50%;
+  display: flex;
   transform: translateY(-50%);
-  border-radius: 80px;
-  border: 2.5px solid white;
-  margin: 0 3em;
-  width: 10em;
-  height: 10em;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
 .profile-image-container img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
+  width: 10em;
+  height: 10em;
   border-radius: 50%;
+  border: 2.5px solid white;
 }
 
 .contents-right {
