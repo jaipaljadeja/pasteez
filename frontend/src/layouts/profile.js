@@ -4,12 +4,15 @@ export default function Profile() {
   return (
     <div className="main-container">
       <div className="profile-header">
+        <div className="profile-image-container">
+          <img
+            src={"https://i.imgur.com/MVN67Dv.jpg"}
+            alt="profile-pic"
+            className="profile-header-pic"
+          />
+        </div>
         <div className="profile-header-upper">
-          <div className="contents-left">
-            <div className="profile-image-container">
-              <img src={"https://i.imgur.com/MVN67Dv.jpg"} alt="profile-pic" />
-            </div>
-          </div>
+          <div className="contents-left"></div>
           <div className="contents-right">
             <ul>
               <li>Bhavya Gosai</li>
