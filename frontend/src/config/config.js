@@ -18,8 +18,10 @@ for (let i = 1; i <= number; i++) {
   titleExample: "title",
   syntaxStyleExample: "agate",
   langExample: "javascript",
+  defaultFrameBG: "linear-gradient(90deg, #d0f4ff 0%, #2b8389 100%)",
 };
 
+// Array of all the languages available
 module.exports.languages = [
   "1C",
   "ABNF",

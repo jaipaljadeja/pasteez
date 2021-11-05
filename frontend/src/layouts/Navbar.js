@@ -31,7 +31,7 @@ export default function Navbar() {
             </li>
             <li>
               <Link to="/profile">
-                <i style={{ fontSize: 36 }} className="fas fa-user-circle" />
+                <i style={{ fontSize: 30 }} className="fas fa-user-circle" />
               </Link>
             </li>
           </ul>

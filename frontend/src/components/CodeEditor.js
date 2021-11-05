@@ -4,22 +4,28 @@ import Editor from "react-simple-code-editor";
 import { useThemeSwitcher } from "react-css-theme-switcher";
 import * as htmlToImage from "html-to-image";
 import download from "downloadjs";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { generateURL } from "../utils/UrlUtils";
+import ColorPicker from "./ColorPicker";
 const hljs = require("highlight.js");
+
 export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
+  // This is required to use multiple CSS Files
   const { switcher, themes } = useThemeSwitcher();
 
+  // When a user changes language from the editor
   const handleLangChange = (lang) => {
     setData({ ...data, lang: lang });
   };
 
+  // When a user changes the syntax theme from the editor
   const handleSyntaxThemeChange = (syntaxStyle) => {
     console.log(syntaxStyle);
     switcher({ theme: themes[syntaxStyle] });
     setData({ ...data, syntaxStyle: syntaxStyle });
   };
 
+  // When a user clicks export button to export code in image format
   const handleImageExport = () => {
     toast.promise(
       htmlToImage
@@ -37,36 +43,49 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
       {
         style: {
           fontFamily: "Monospace",
-          marginTop: "10px",
+          marginTop: "15px",
         },
       }
     );
   };
 
+  // When a user clicks copy url button
   const handleCopyUrl = () => {
-    const currentURL = window.location.href.toLowerCase();
-    const urlContent = generateURL(data);
-    const url = currentURL.concat(urlContent);
-    console.log(url);
-    navigator.clipboard.writeText(url);
-    toast.success("URL Copied", {
-      style: {
-        fontFamily: "Monospace",
-        marginTop: "10px",
-      },
-      iconTheme: {
-        primary: "#33b4ff",
-        secondary: "#FFFFFF",
-      },
-    });
+    console.log(data);
+    const currentURL = window.location.origin.toLowerCase() + "/editor";
+    if (data.code !== "") {
+      const urlContent = generateURL(data);
+      const url = currentURL.concat(urlContent);
+      console.log(url);
+      navigator.clipboard.writeText(url);
+      toast.success("URL Copied", {
+        style: {
+          fontFamily: "Monospace",
+          marginTop: "15px",
+        },
+        iconTheme: {
+          primary: "#33b4ff",
+          secondary: "#FFFFFF",
+        },
+      });
+    } else if (data.code === "") {
+      toast.error("Code cannot be empty", {
+        style: {
+          fontFamily: "Monospace",
+          marginTop: "15px",
+        },
+      });
+    }
   };
 
   return (
     <div className="pasteez-editor">
-      <div>
-        <Toaster />
-      </div>
-      <div className="exportableFrame">
+      <div
+        className="exportableFrame"
+        style={{
+          background: data.framebg,
+        }}
+      >
         <div className="editor-frame">
           <div className="frame-header">
             <div className="frame-header-buttons">
@@ -138,6 +157,9 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
                 className="far fa-link"
               ></i>
             </button>
+            <ColorPicker
+              onChange={(color) => setData({ ...data, framebg: color })}
+            />
           </div>
           <div className="features-btn">
             <button className="btn export-btn" onClick={handleImageExport}>
