@@ -1,13 +1,16 @@
-import { useEffect, useRef } from "react";
+import React from "react";
 import Pickr from "@simonwep/pickr";
 import "@simonwep/pickr/dist/themes/monolith.min.css";
 
-export default function ColorPicker({ data, setData }) {
-  const pickrElement = document.getElementsByClassName("color-picker");
-  // creating a Pickr instance
-  const pickr = () => {
+class ColorPicker extends React.Component {
+  handleChange(newColor) {
+    console.log(newColor, "from the pickerjs");
+    this.props.onChange(newColor);
+  }
+
+  componentDidMount() {
     Pickr.create({
-      el: ".color-picker",
+      el: ".pickr",
       theme: "monolith",
       default: "#00DCF3", // or 'classic', or 'nano'
       swatches: [
@@ -41,24 +44,14 @@ export default function ColorPicker({ data, setData }) {
         },
       },
     }).on("save", (color, instance) => {
-      console.log('Event: "save"', color, instance);
-      const newColor = color.toHEXA().toString();
-      setData({ ...data, frameBG: newColor });
+      let newColor = color.toHEXA().toString();
+      this.handleChange(newColor);
     });
-  };
+  }
 
-  const pickrRef = useRef(); // create a ref object
-  pickrRef.current = pickr; // assign the pickr function to the ref object
-
-  useEffect(() => {
-    if (pickrElement) {
-      return pickrRef.current();
-    }
-  }, [pickrElement]);
-
-  return (
-    <>
-      <div className="color-picker"></div>
-    </>
-  );
+  render() {
+    return <div className="pickr"></div>;
+  }
 }
+
+export default ColorPicker;
