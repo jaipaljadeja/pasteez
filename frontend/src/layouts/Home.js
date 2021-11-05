@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Typewriter from "typewriter-effect";
 import { motion } from "framer-motion";
 import ArrowButton from "../components/ArrowButton";
 
 export default function Home() {
+  // Framer motion animation (fade in)
   const containerVariants = {
     hidden: {
       opacity: 0,

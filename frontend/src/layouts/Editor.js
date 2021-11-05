@@ -3,12 +3,17 @@ import PasteezCodeEditor from "../components/PasteezCodeEditor";
 import { decodeURL } from "../utils/UrlUtils";
 import { syntaxStyles, languages } from "../config/config";
 import { motion } from "framer-motion";
-let { titleExample, codeExample, syntaxStyleExample, langExample } =
-  require("../config/config").examples;
+import { Toaster } from "react-hot-toast";
+let {
+  titleExample,
+  codeExample,
+  syntaxStyleExample,
+  langExample,
+  defaultFrameBG,
+} = require("../config/config").examples;
 
-function Editor({ history }) {
+function Editor({ containerVariants }) {
   // Taking Query params from URL
-
   const url_string = window.location.href;
   const url = new URL(url_string);
   const paramTitle = url.searchParams.get("title");
@@ -37,41 +42,27 @@ function Editor({ history }) {
     lang: langExample,
     syntaxStyle: syntaxStyleExample,
     title: titleExample,
+    framebg: defaultFrameBG,
   });
 
-  const containerVariants = {
-    hidden: {
-      x: "100vw",
-    },
-    visible: {
-      x: 0,
-      transition: {
-        type: "spring",
-      },
-    },
-    exit: {
-      x: "-100vw",
-      transition: {
-        ease: "easeInOut",
-      },
-    },
-  };
-
   return (
-    <motion.div
-      className="main-container"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-    >
-      <PasteezCodeEditor
-        languages={languages}
-        syntaxStyles={syntaxStyles}
-        data={data}
-        setData={setData}
-      />
-    </motion.div>
+    <>
+      <Toaster />
+      <motion.div
+        className="main-container"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
+        <PasteezCodeEditor
+          languages={languages}
+          syntaxStyles={syntaxStyles}
+          data={data}
+          setData={setData}
+        />
+      </motion.div>
+    </>
   );
 }
 

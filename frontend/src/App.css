@@ -15,7 +15,8 @@
 }
 
 .exportableFrame {
-  background: linear-gradient(90deg, #d0f4ff 0%, #2b8389 100%);
+  /* background: linear-gradient(90deg, #d0f4ff 0%, #2b8389 100%); */
+  /* background: #ff2525; */
   padding: 50px;
 }
 
@@ -74,7 +75,7 @@
 }
 
 .code-editor-wrapper {
-  font-family: "Fira code", "Fira Mono", monospace;
+  font-family: 'Fira code', 'Fira Mono', monospace;
   font-size: 15px;
   min-width: 42em;
   max-width: 60em;
@@ -118,7 +119,6 @@
 }
 
 .btn {
-  margin-bottom: 5px;
   border-radius: 5px;
   width: 10em;
 }
@@ -143,6 +143,8 @@
   align-items: center;
   justify-content: center;
   color: #33b4ff;
+  margin-right: 10px;
+  height: 100%;
 }
 
 .Dropdown-menu {
@@ -188,10 +190,42 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
+/* Color Picker CSS */
+
+.pcr-app .pcr-interaction .pcr-save {
+  background: #ff3759;
+}
+
+.pickr .pcr-button {
+  height: 2em;
+  width: 2em;
+  outline: none;
+  border: none;
+}
+
+.pickr .pcr-button::after {
+  border-radius: 50%;
+  outline: none;
+  border: none;
+}
+
+.pickr .pcr-button::before {
+  border-radius: 50%;
+  border: none;
+  outline: none;
+}
+
+.pickr .pcr-button:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+/* END of Color Picker CSS */
+
 /* Home Page */
 
 .Typewriter__wrapper {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 3em;
 }
@@ -265,9 +299,10 @@
 
 .profile-header {
   display: flex;
+  position: relative;
   flex-direction: column;
-  height: 400px;
-  width: 75%;
+  height: 320px;
+  width: 65%;
   margin: 0px 10%;
   /* border: 1px solid black; */
   border-radius: 15px;
@@ -279,56 +314,62 @@
   width: calc(100% - 6em);
   display: flex;
   padding: 0 3em;
-  background-color: rgba(0, 0, 0, 0.7);
   border-bottom: 1px solid white;
   border-radius: 15px 15px 0 0;
+}
+
+.profile-header-upper {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.profile-header-lower {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .contents-left {
   display: flex;
   height: 100%;
-  width: 15%;
+  width: 20%;
   /* border: 1px solid white; */
 }
+
 .profile-image-container {
-  position: relative;
-  top: 120px;
-  height: 160px;
-  width: 160px;
-  border-radius: 80px;
-  border: 2.5px solid white;
-  z-index: 1;
+  position: absolute;
+  left: 3em;
+  top: 50%;
+  display: flex;
+  transform: translateY(-50%);
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
+
 .profile-image-container img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
+  width: 10em;
+  height: 10em;
+  border-radius: 50%;
+  border: 2.5px solid white;
 }
 
 .contents-right {
   display: flex;
   height: 100%;
-  width: 85%;
+  width: 80%;
   /* border: 1px solid white; */
 }
 .contents-right ul {
   display: flex;
-  height: 100%;
   width: 100%;
   justify-content: space-between;
 }
 .contents-right ul li {
   align-self: flex-end;
-  padding-bottom: 1em;
 }
 .contents-right ul li:nth-child(1) {
-  font-size: 1.8em;
+  font-size: 1.4em;
   font-weight: bold;
 }
 .contents-right ul li:nth-child(2) {
-  padding-bottom: 1.5em;
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 .profile-header-lower {
@@ -338,7 +379,66 @@
 }
 
 .contents-right p {
+  font-weight: 200;
+  letter-spacing: 1px;
+  font-size: 0.8em;
   text-align: justify;
+}
+
+.profile-main {
+  display: flex;
+  height: 320px;
+  width: 65%;
+  margin: 5% 10% 0 10%;
+  border: 1px solid black;
+}
+
+.profile-posts {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 100%;
+  border: 1px solid black;
+}
+
+.profile-posts-list {
+  display: flex;
+  width: 30%;
+  height: 100%;
+  /* border: 1px solid black; */
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  margin-top: 2em;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
+  padding: 2em;
+}
+
+.post-container-top {
+  display: flex;
+  border: 1px solid white;
+}
+
+.small-profile-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 1em 0 0;
+}
+
+.small-profile-image-container img {
+  width: 5em;
+  height: 5em;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.post-container-top ul {
+  color: black;
 }
 
 /* Profile Page End */
