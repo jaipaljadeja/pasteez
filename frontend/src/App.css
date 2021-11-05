@@ -75,7 +75,7 @@
 }
 
 .code-editor-wrapper {
-  font-family: "Fira code", "Fira Mono", monospace;
+  font-family: 'Fira code', 'Fira Mono', monospace;
   font-size: 15px;
   min-width: 42em;
   max-width: 60em;
@@ -225,7 +225,7 @@
 /* Home Page */
 
 .Typewriter__wrapper {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 3em;
 }
@@ -383,6 +383,62 @@
   letter-spacing: 1px;
   font-size: 0.8em;
   text-align: justify;
+}
+
+.profile-main {
+  display: flex;
+  height: 320px;
+  width: 65%;
+  margin: 5% 10% 0 10%;
+  border: 1px solid black;
+}
+
+.profile-posts {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 100%;
+  border: 1px solid black;
+}
+
+.profile-posts-list {
+  display: flex;
+  width: 30%;
+  height: 100%;
+  /* border: 1px solid black; */
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  margin-top: 2em;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
+  padding: 2em;
+}
+
+.post-container-top {
+  display: flex;
+  border: 1px solid white;
+}
+
+.small-profile-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 1em 0 0;
+}
+
+.small-profile-image-container img {
+  width: 5em;
+  height: 5em;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.post-container-top ul {
+  color: black;
 }
 
 /* Profile Page End */

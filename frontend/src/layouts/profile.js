@@ -1,12 +1,19 @@
-import React from "react";
+import React from 'react';
+import { motion } from 'framer-motion';
 
-export default function Profile() {
+export default function Profile({ containerVariants }) {
   return (
-    <div className="main-container">
+    <motion.div
+      className="main-container"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <div className="profile-header">
         <div className="profile-image-container">
           <img
-            src={"https://i.imgur.com/MVN67Dv.jpg"}
+            src={'https://i.imgur.com/MVN67Dv.jpg'}
             alt="profile-pic"
             className="profile-header-pic"
           />
@@ -38,6 +45,37 @@ export default function Profile() {
           </div>
         </div>
       </div>
-    </div>
+
+      <div className="profile-main">
+        <div className="profile-posts">
+          <h2>Posts</h2>
+          <div className="post-container">
+            <div className="post-container-top">
+              <div className="small-profile-image-container">
+                <img
+                  src={'https://i.imgur.com/MVN67Dv.jpg'}
+                  alt="profile-pic"
+                  className="small-profile-header-pic"
+                />
+              </div>
+              <ul>
+                <li>
+                  <ul>
+                    <li>Bhavya Gosai</li>
+                    <li>@bbSempai</li>
+                  </ul>
+                </li>
+                <li>
+                  Today i am sharing a python code to generate a fibonacci
+                  series using recursion.
+                </li>
+              </ul>
+            </div>
+            <div className="post-container-main"></div>
+          </div>
+        </div>
+        <div className="profile-posts-list"></div>
+      </div>
+    </motion.div>
   );
 }
