@@ -61,7 +61,7 @@ export const register =
         },
       };
       const { data } = await axios.post(
-        "/api/users/",
+        "/api/users/signup",
         {
           name,
           username,

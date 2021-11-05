@@ -3,8 +3,8 @@ const router = express.Router();
 const { registerUser, authUser } = require("../controllers/userControllers");
 
 // Api for registering users
-// @route   POST api/users/
-router.route("/").post(registerUser);
+// @route   POST api/users/signup
+router.route("/signup").post(registerUser);
 
 // Api for authenticating users
 // @route   POST api/users/login
