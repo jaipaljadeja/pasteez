@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
-const pasteSchema = mongoose.Schema(
+const postSchema = mongoose.Schema(
   {
     username: {
       type: String,
       required: true,
       ref: "User",
     },
-    title: {
+    caption: {
       type: String,
       required: true,
     },
@@ -21,6 +21,6 @@ const pasteSchema = mongoose.Schema(
   }
 );
 
-const Paste = mongoose.model("Paste", pasteSchema);
+const Post = mongoose.model("Post", postSchema);
 
-module.exports = Paste;
+module.exports = Post;
