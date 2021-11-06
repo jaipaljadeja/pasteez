@@ -14,9 +14,8 @@ router.route("/").get(protect, getPastes);
 router.route("/create").post(protect, createPaste);
 router
   .route("/:id")
-  .get(getPasteByID)
+  .get(protect, getPasteByID)
   .put(protect, updatePaste)
   .delete(protect, deletePaste);
-// .put().delete();
 
 module.exports = router;
