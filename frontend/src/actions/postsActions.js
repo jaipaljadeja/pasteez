@@ -15,17 +15,13 @@ import {
 
 import axios from "axios";
 
-export const listPosts = () => async (dispatch, getState) => {
+export const listPosts = (username) => async (dispatch, getState) => {
   try {
     dispatch({
       type: POSTS_LIST_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const { data } = await axios.get(`/api/posts/user/${userInfo.username}`);
+    const { data } = await axios.get(`/api/posts/user/${username}`);
 
     dispatch({
       type: POSTS_LIST_SUCCESS,
@@ -44,7 +40,7 @@ export const listPosts = () => async (dispatch, getState) => {
 };
 
 export const createPostAction =
-  (caption, encryptedCode) => async (dispatch, getState) => {
+  (caption, encryptedCode, lang) => async (dispatch, getState) => {
     try {
       dispatch({
         type: POSTS_CREATE_REQUEST,
@@ -63,7 +59,7 @@ export const createPostAction =
 
       const { data } = await axios.post(
         `/api/posts/create`,
-        { caption, encryptedCode },
+        { caption, encryptedCode, lang },
         config
       );
       dispatch({
@@ -117,7 +113,7 @@ export const deletePostAction = (id) => async (dispatch, getState) => {
 };
 
 export const updatePostAction =
-  (id, caption, encryptedCode) => async (dispatch, getState) => {
+  (id, caption, encryptedCode, lang) => async (dispatch, getState) => {
     try {
       dispatch({
         type: POSTS_UPDATE_REQUEST,
@@ -136,7 +132,7 @@ export const updatePostAction =
 
       const { data } = await axios.put(
         `/api/posts/${id}`,
-        { caption, encryptedCode },
+        { caption, encryptedCode, lang },
         config
       );
 

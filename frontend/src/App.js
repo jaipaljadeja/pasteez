@@ -54,7 +54,7 @@ function App() {
           <Route exact path="/login">
             <Login containerVariants={containerVariants} />
           </Route>
-          <Route exact path="/Profile">
+          <Route exact path="/:username">
             <Profile containerVariants={containerVariants} />
           </Route>
           <Route path="*">
