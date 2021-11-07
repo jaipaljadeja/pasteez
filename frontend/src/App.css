@@ -363,13 +363,15 @@
 }
 .contents-right ul li {
   align-self: flex-end;
+  margin-bottom: 10px;
 }
 .contents-right ul li:nth-child(1) {
   font-size: 1.4em;
   font-weight: bold;
 }
 .contents-right ul li:nth-child(2) {
-  font-size: 1em;
+  font-size: 0.9em;
+  font-weight: 300;
 }
 
 .profile-header-lower {
@@ -379,6 +381,7 @@
 }
 
 .contents-right p {
+  margin-top: 0.8em;
   font-weight: 200;
   letter-spacing: 1px;
   font-size: 0.8em;
@@ -387,7 +390,6 @@
 
 .profile-main {
   display: flex;
-  height: 320px;
   width: 65%;
   margin: 5% 10% 0 10%;
   border: 1px solid black;
@@ -411,7 +413,7 @@
 .post-container {
   display: flex;
   flex-direction: column;
-  height: 600px;
+  /* height: 600px; */
   margin-top: 2em;
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 15px;
@@ -420,7 +422,8 @@
 
 .post-container-top {
   display: flex;
-  border: 1px solid white;
+  align-items: center;
+  /* border: 1px solid white; */
 }
 
 .small-profile-image-container {
@@ -431,14 +434,43 @@
 }
 
 .small-profile-image-container img {
-  width: 5em;
-  height: 5em;
+  width: 4em;
+  height: 4em;
   border-radius: 50%;
   border: 2px solid white;
 }
 
-.post-container-top ul {
-  color: black;
+.post-container-top ul:nth-child(1) {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.post-container-top ul:nth-child(1) li:nth-child(1) {
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+
+.post-container-top ul:nth-child(1) li:nth-child(2) {
+  font-size: 0.8em;
+  font-weight: 300;
+}
+
+.post-container-top ul:nth-child(2) li:nth-child(2) p {
+  margin-top: 0.5em;
+  font-weight: 300;
+  /* letter-spacing: 1px; */
+  font-size: 0.8em;
+  text-align: justify;
+  /* border: 1px solid white; */
+}
+
+.post-container-main {
+  margin-left: 5em;
+  margin-top: 1em;
+  border-radius: 15px;
+  height: 300px;
+  border: 1px solid white;
 }
 
 /* Profile Page End */
