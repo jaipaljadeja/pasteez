@@ -30,7 +30,7 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <Link to="/profile">
+              <Link to={`/${userInfo.username}`}>
                 <i style={{ fontSize: 30 }} className="fas fa-user-circle" />
               </Link>
             </li>

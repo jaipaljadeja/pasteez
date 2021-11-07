@@ -1,25 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { listPosts } from "../actions/postsActions";
+import Editor from "react-simple-code-editor";
+import { decodeURL } from "../utils/UrlUtils";
+import { useParams } from "react-router-dom";
+import "./styles/agate.css";
+import axios from "axios";
+const hljs = require("highlight.js");
 
-export default function Profile({ containerVariants }) {
-  const [allPosts, setAllPosts] = useState([]);
+export default function Profile({ containerVariants, match }) {
+  const dispatch = useDispatch();
+  const postList = useSelector((state) => state.postList);
+  const { posts, error, loading } = postList;
 
-  const posts = [
-    {
-      id: 1,
-      caption: "Today i am sharing a python code to generate a fibonacci series using recursion. I have tried my best to keep it as efficent as possible!",
-      encryptedCode:""
-    },
-    {
-      id: 2,
-      caption: "Today i am sharing a python code to generate a fibonacci series using recursion. I have tried my best to keep it as efficent as possible!",
-      encryptedCode:""
-    }
-  ]
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const [paramsUser, setParamsUser] = useState({
+    name: "",
+    profileIcon:
+      "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+    username: "",
+    about: "",
+  });
+  const { username } = useParams();
 
   useEffect(() => {
-    setAllPosts(posts)
-  }, [])
+    const fetchParamsUser = async () => {
+      const { data } = await axios.get(`/api/users/${username}`);
+      setParamsUser(data);
+    };
+    fetchParamsUser();
+    dispatch(listPosts(username));
+  }, [username, dispatch]);
 
   return (
     <motion.div
@@ -32,7 +46,7 @@ export default function Profile({ containerVariants }) {
       <div className="profile-header">
         <div className="profile-image-container">
           <img
-            src={'https://i.imgur.com/MVN67Dv.jpg'}
+            src={paramsUser?.profileIcon}
             alt="profile-pic"
             className="profile-header-pic"
           />
@@ -41,26 +55,15 @@ export default function Profile({ containerVariants }) {
           <div className="contents-left"></div>
           <div className="contents-right">
             <ul>
-              <li>Bhavya Gosai</li>
-              <li>@bbSempai</li>
+              <li>{paramsUser?.name}</li>
+              <li>@{paramsUser?.username}</li>
             </ul>
           </div>
         </div>
         <div className="profile-header-lower">
           <div className="contents-left" />
           <div className="contents-right">
-            <p>
-              Enthusiastic and hard-working sophmore impassionately studying
-              Computer Science and have a deep inquisitiveness for coding. Love
-              making highly attractive user interfaces including efficiently
-              working websites/applications and other artwork. Spending my major
-              time sheltering in music, reading books, gathering knowledge and
-              trying to contribute towards open source, no matter tech/non-tech,
-              I aspire to be the best version of myself and make a positive
-              impact on the world. Apart from coding, I also love researching
-              about space and astronomy. I am a professional Swimmer, Badminton
-              player and love playing Football too.
-            </p>
+            <p>{paramsUser?.about}</p>
           </div>
         </div>
       </div>
@@ -68,18 +71,20 @@ export default function Profile({ containerVariants }) {
       <div className="profile-main">
         <div className="profile-posts">
           <h2>Posts</h2>
-          {allPosts.length !== 0 ? (
-                allPosts.map((post) => (
-                  <Post
-                    id={post.id}
-                    caption={post.caption}
-                    encryptedCode={post.encryptedCode}
-                  />
-                ))
+          {posts?.length !== 0 ? (
+            posts?.map((post) => (
+              <Post
+                key={post._id}
+                caption={post.caption}
+                encryptedCode={post.encryptedCode}
+                username={post.username}
+                decryptedCode={decodeURL(post.encryptedCode)}
+                lang={post.lang}
+                paramsUser={paramsUser}
+              />
+            ))
           ) : (
-              <div>
-                Wow, such empty!
-              </div>
+            <p>No posts yet</p>
           )}
         </div>
         <div className="profile-posts-list"></div>
@@ -94,7 +99,7 @@ function Post(props) {
       <div className="post-container-top">
         <div className="small-profile-image-container">
           <img
-            src={'https://i.imgur.com/MVN67Dv.jpg'}
+            src={props.paramsUser.profileIcon}
             alt="profile-pic"
             className="small-profile-header-pic"
           />
@@ -102,18 +107,31 @@ function Post(props) {
         <ul>
           <li>
             <ul>
-              <li>Bhavya Gosai</li>
-              <li>@bbSempai</li>
+              <li>{props.paramsUser.name}</li>
+              <li>@{props.username}</li>
             </ul>
           </li>
           <li>
-            <p>
-              {props.caption}
-            </p>
+            <p>{props.caption}</p>
           </li>
         </ul>
       </div>
-      <div className="post-container-main"></div>
+      <div className="post-container-main">
+        <Editor
+          value={props.decryptedCode}
+          highlight={(code) =>
+            hljs.highlight(code, {
+              language: props.lang,
+            }).value
+          }
+          autoFocus={false}
+          padding={20}
+          disabled={true}
+          textareaId="post-code-viewer"
+          className="post-code-wrapper"
+          style={{ lineHeight: 1.5 }}
+        />
+      </div>
     </div>
   );
 }
