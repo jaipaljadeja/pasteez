@@ -24,6 +24,7 @@ const userSchema = mongoose.Schema(
     },
     about: {
       type: String,
+      default: "Hey, i am a pasteez user!",
     },
     isAdmin: {
       type: Boolean,
