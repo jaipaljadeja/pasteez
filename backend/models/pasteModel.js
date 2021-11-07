@@ -15,6 +15,10 @@ const pasteSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    lang: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

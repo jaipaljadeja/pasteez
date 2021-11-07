@@ -7,8 +7,8 @@ const getPosts = asyncHandler(async (req, res) => {
 });
 
 const createPost = asyncHandler(async (req, res) => {
-  const { caption, encryptedCode } = req.body;
-  if (!caption || !encryptedCode) {
+  const { caption, encryptedCode, lang } = req.body;
+  if (!caption || !encryptedCode || !lang) {
     res.status(400);
     throw new Error("Please provide all the required fields");
   } else {
@@ -16,6 +16,7 @@ const createPost = asyncHandler(async (req, res) => {
       username: req.user.username,
       caption,
       encryptedCode,
+      lang,
     });
     const createdPost = await post.save();
     res.status(201).json(createdPost);
@@ -32,7 +33,7 @@ const getPostByID = asyncHandler(async (req, res) => {
 });
 
 const updatePost = asyncHandler(async (req, res) => {
-  const { caption, encryptedCode } = req.body;
+  const { caption, encryptedCode, lang } = req.body;
 
   const post = await Post.findById(req.params.id);
   if (post.username !== req.user.username) {
@@ -43,6 +44,7 @@ const updatePost = asyncHandler(async (req, res) => {
   if (post) {
     post.caption = caption;
     post.encryptedCode = encryptedCode;
+    post.lang = lang;
 
     const updatedPost = await post.save();
     res.json(updatedPost);
