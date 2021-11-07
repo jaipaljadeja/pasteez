@@ -1,7 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 export default function Profile({ containerVariants }) {
+  const [allPosts, setAllPosts] = useState([]);
+
+  const posts = [
+    {
+      id: 1,
+      caption: "Today i am sharing a python code to generate a fibonacci series using recursion. I have tried my best to keep it as efficent as possible!",
+      encryptedCode:""
+    },
+    {
+      id: 2,
+      caption: "Today i am sharing a python code to generate a fibonacci series using recursion. I have tried my best to keep it as efficent as possible!",
+      encryptedCode:""
+    }
+  ]
+
+  useEffect(() => {
+    setAllPosts(posts)
+  }, [])
+
   return (
     <motion.div
       className="main-container"
@@ -49,33 +68,52 @@ export default function Profile({ containerVariants }) {
       <div className="profile-main">
         <div className="profile-posts">
           <h2>Posts</h2>
-          <div className="post-container">
-            <div className="post-container-top">
-              <div className="small-profile-image-container">
-                <img
-                  src={'https://i.imgur.com/MVN67Dv.jpg'}
-                  alt="profile-pic"
-                  className="small-profile-header-pic"
-                />
+          {allPosts.length !== 0 ? (
+                allPosts.map((post) => (
+                  <Post
+                    id={post.id}
+                    caption={post.caption}
+                    encryptedCode={post.encryptedCode}
+                  />
+                ))
+          ) : (
+              <div>
+                Wow, such empty!
               </div>
-              <ul>
-                <li>
-                  <ul>
-                    <li>Bhavya Gosai</li>
-                    <li>@bbSempai</li>
-                  </ul>
-                </li>
-                <li>
-                  Today i am sharing a python code to generate a fibonacci
-                  series using recursion.
-                </li>
-              </ul>
-            </div>
-            <div className="post-container-main"></div>
-          </div>
+          )}
         </div>
         <div className="profile-posts-list"></div>
       </div>
     </motion.div>
+  );
+}
+
+function Post(props) {
+  return (
+    <div className="post-container">
+      <div className="post-container-top">
+        <div className="small-profile-image-container">
+          <img
+            src={'https://i.imgur.com/MVN67Dv.jpg'}
+            alt="profile-pic"
+            className="small-profile-header-pic"
+          />
+        </div>
+        <ul>
+          <li>
+            <ul>
+              <li>Bhavya Gosai</li>
+              <li>@bbSempai</li>
+            </ul>
+          </li>
+          <li>
+            <p>
+              {props.caption}
+            </p>
+          </li>
+        </ul>
+      </div>
+      <div className="post-container-main"></div>
+    </div>
   );
 }
