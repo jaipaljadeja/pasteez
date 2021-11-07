@@ -6,7 +6,7 @@ const generateToken = require("../utils/generateToken");
 const registerUser = asyncHandler(async (req, res) => {
   // Get all the userinfo from the request body
   const { name, username, email, password } = req.body;
-
+  const profileIcon = `https://avatars.dicebear.com/api/adventurer-neutral/${username}.svg`;
   // Finds if the username or email matches from the database
   const userExist = await User.findOne({
     $or: [{ email: email }, { username: username }],
@@ -24,6 +24,7 @@ const registerUser = asyncHandler(async (req, res) => {
     username,
     email,
     password,
+    profileIcon,
   });
 
   // If registration is successful resturns the userinfo with a access token
@@ -34,7 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
       username: user.username,
       isAdmin: user.isAdmin,
       email: user.email,
-      token: generateToken(user._id),
+      token: generateToken(user._id, user.username),
     });
   } else {
     res.status(400);
@@ -58,7 +59,7 @@ const authUser = asyncHandler(async (req, res) => {
       username: user.username,
       isAdmin: user.isAdmin,
       email: user.email,
-      token: generateToken(user._id),
+      token: generateToken(user._id, user.username),
     });
   } else {
     res.status(400); // Bad Request
@@ -66,4 +67,17 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser, authUser };
+const getUserDetails = asyncHandler(async (req, res) => {
+  const username = req.params.username;
+  const user = await User.findOne({ username: username }).select(
+    "name username about profileIcon"
+  );
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404);
+    throw new Error("User Not Found");
+  }
+});
+
+module.exports = { registerUser, authUser, getUserDetails };

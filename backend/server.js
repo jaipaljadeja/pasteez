@@ -52,6 +52,12 @@ app.use("/api/users", userRoutes);
 //   "password": "jaipal"
 // }
 
+// --------------------- @GET /api/users/:username ---------------------
+// --> Description: gives public details of a user
+// --> Authorization required?:false
+// --> Body: None
+// --> Returns: {"_id", "name", "username", "about", "profileIcon"}
+
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -66,6 +72,7 @@ app.use("/api/pastes", pasteRoutes);
 // --> Description: Get all pastes of a user
 // --> Authorization required?: true
 // --> Body: none
+// --> Returns: [{"_id", "username", "title", "encryptedCode", "lang"}, ...]
 
 // --------------------- @POST /api/pastes/create ---------------------
 // --> Description: create a paste for a user
@@ -73,13 +80,16 @@ app.use("/api/pastes", pasteRoutes);
 // --> Body:
 // {
 //   "title": "My third public paste",
-//   "encryptedCode": "R1FXTDY2VzViWTFLOG53NTFTYU9xY0ZlTm9pUnBydllNVlpKdGNpOE5DNXdzNXRrYVE2anpQYUlSQVIyRElEZVUrdDY="
+//   "encryptedCode": "R1FXTDY2VzViWTFLOG53NTFTYU9xY0ZlTm9pUnBydllNVlpKdGNpOE5DNXdzNXRrYVE2anpQYUlSQVIyRElEZVUrdDY=",
+//   "lang": "javascript"
 // }
+// --> Returns: {"_id", "username", "title", "encryptedCode", "lang"}
 
 // --------------------- @GET /api/pastes/:id ---------------------
 // --> Description: get a specific paste of a user
 // --> Authorization required?: true
 // --> Body: none
+// --> Returns: {"_id", "username", "title", "encryptedCode", "lang"}
 
 // --------------------- @PUT /api/pastes/:id ---------------------
 // --> Description: updates a specific paste of a user
@@ -88,12 +98,15 @@ app.use("/api/pastes", pasteRoutes);
 // {
 //   "title": "This title has been updated by user",
 //   "encryptedCode": "R1FXTDY2VzViWTFLOG53NTFTYU9xY0ZlTm9pUnBydllNVlpKdGNpOE5DNXdzNXRrYVE2anpQYUlSQVIyRElEZVUrdDY="
+//   "lang": "javascript"
 // }
+// --> Returns: { "message" }
 
 // --------------------- @DELETE /api/pastes/:id ---------------------
 // --> Description: deletes a specific paste of a user
 // --> Authorization required?: true
 // --> Body: None
+// --> Returns: { "message" }
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -117,12 +130,15 @@ app.use("/api/posts", postRoutes);
 // {
 //   "caption": "My first post",
 //   "encryptedCode": "R1FXTDY2VzViWTFLOG53NTFTYU9xY0ZlTm9pUnBydllNVlpKdGNpOE5DNXdzNXRrYVE2anpQYUlSQVIyRElEZVUrdDY="
+//   "lang": "javascript"
 // }
+// --> Returns: [{"_id", "username", "caption", "encryptedCode", "lang"}, ...]
 
 // --------------------- @GET /api/posts/:id ---------------------
 // --> Description: get a specific post for a user
 // --> Authorization required?: false
 // --> Body: none
+// --> Returns: {"_id", "username", "caption", "encryptedCode", "lang"}
 
 // --------------------- @PUT /api/posts/:id ---------------------
 // --> Description: update the post of a user
@@ -131,12 +147,15 @@ app.use("/api/posts", postRoutes);
 // {
 //   "caption": "My first post",
 //   "encryptedCode": "R1FXTDY2VzViWTFLOG53NTFTYU9xY0ZlTm9pUnBydllNVlpKdGNpOE5DNXdzNXRrYVE2anpQYUlSQVIyRElEZVUrdDY="
+//   "lang": "javascript"
 // }
+// --> Returns: { "message" }
 
 // --------------------- @DELETE /api/posts/:id ---------------------
 // --> Description: delete the post of a user
 // --> Authorization required?: true
 // --> Body: none
+// --> Returns: { "message" }
 
 app.use(notFound);
 app.use(errorHandler);

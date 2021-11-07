@@ -7,8 +7,8 @@ const getPastes = asyncHandler(async (req, res) => {
 });
 
 const createPaste = asyncHandler(async (req, res) => {
-  const { title, encryptedCode } = req.body;
-  if (!title || !encryptedCode) {
+  const { title, encryptedCode, lang } = req.body;
+  if (!title || !encryptedCode || !lang) {
     res.status(400);
     throw new Error("Please provide all the required fields");
   } else {
@@ -16,6 +16,7 @@ const createPaste = asyncHandler(async (req, res) => {
       username: req.user.username,
       title,
       encryptedCode,
+      lang,
     });
 
     const createdPaste = await paste.save();
@@ -37,7 +38,7 @@ const getPasteByID = asyncHandler(async (req, res) => {
 });
 
 const updatePaste = asyncHandler(async (req, res) => {
-  const { title, encryptedCode } = req.body;
+  const { title, encryptedCode, lang } = req.body;
 
   const paste = await Paste.findById(req.params.id);
   if (paste.username !== req.user.username) {
@@ -48,6 +49,7 @@ const updatePaste = asyncHandler(async (req, res) => {
   if (paste) {
     paste.title = title;
     paste.encryptedCode = encryptedCode;
+    paste.lang = lang;
 
     const updatedPaste = await paste.save();
     res.json(updatedPaste);
