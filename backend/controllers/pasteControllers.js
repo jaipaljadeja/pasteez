@@ -2,21 +2,20 @@ const asyncHandler = require("express-async-handler");
 const Paste = require("../models/pasteModel");
 
 const getPastes = asyncHandler(async (req, res) => {
-  const pastes = await Paste.find({ userId: req.user._id });
+  const pastes = await Paste.find({ username: req.user.username });
   res.json(pastes);
 });
 
 const createPaste = asyncHandler(async (req, res) => {
-  const { title, encryptedCode, type } = req.body;
-  if (!title || !encryptedCode || !type) {
+  const { title, encryptedCode } = req.body;
+  if (!title || !encryptedCode) {
     res.status(400);
     throw new Error("Please provide all the required fields");
   } else {
     const paste = new Paste({
-      userId: req.user._id,
+      username: req.user.username,
       title,
       encryptedCode,
-      type,
     });
 
     const createdPaste = await paste.save();
@@ -26,7 +25,10 @@ const createPaste = asyncHandler(async (req, res) => {
 
 const getPasteByID = asyncHandler(async (req, res) => {
   const paste = await Paste.findById(req.params.id);
-
+  if (paste.username !== req.user.username) {
+    res.status(401);
+    throw new Error("You can't perform this action!");
+  }
   if (paste) {
     res.json(paste);
   } else {
@@ -35,10 +37,10 @@ const getPasteByID = asyncHandler(async (req, res) => {
 });
 
 const updatePaste = asyncHandler(async (req, res) => {
-  const { title, encryptedCode, type } = req.body;
+  const { title, encryptedCode } = req.body;
 
   const paste = await Paste.findById(req.params.id);
-  if (paste.userId.toString() !== req.user._id.toString()) {
+  if (paste.username !== req.user.username) {
     res.status(401);
     throw new Error("You can't perform this action!");
   }
@@ -46,7 +48,6 @@ const updatePaste = asyncHandler(async (req, res) => {
   if (paste) {
     paste.title = title;
     paste.encryptedCode = encryptedCode;
-    paste.type = type;
 
     const updatedPaste = await paste.save();
     res.json(updatedPaste);
@@ -58,7 +59,7 @@ const updatePaste = asyncHandler(async (req, res) => {
 
 const deletePaste = asyncHandler(async (req, res) => {
   const paste = await Paste.findById(req.params.id);
-  if (paste.userId.toString() !== req.user._id.toString()) {
+  if (paste.username !== req.user.username) {
     res.status(401);
     throw new Error("You can't perform this action!");
   }
