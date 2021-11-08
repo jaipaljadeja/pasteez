@@ -75,7 +75,7 @@
 }
 
 .code-editor-wrapper {
-  font-family: "Fira code", "Fira Mono", monospace;
+  font-family: 'Fira code', 'Fira Mono', monospace;
   font-size: 15px;
   min-width: 42em;
   max-width: 60em;
@@ -225,7 +225,7 @@
 /* Home Page */
 
 .Typewriter__wrapper {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 3em;
 }
@@ -372,7 +372,32 @@
 .contents-right ul li:nth-child(2) {
   font-size: 0.9em;
   font-weight: 300;
+  justify-self: flex-end;
 }
+.contents-right .edit-btn {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  margin-right: 10px;
+  width: 3.3em;
+  height: 3.3em;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0);
+  transition: 0.5s;
+  /* border: 1px solid white; */
+}
+
+.contents-right .edit-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.contents-right .edit-btn i{
+  font-size: 1.3em;
+}
+
 
 .profile-header-lower {
   border-radius: 0 0 15px 15px;
@@ -423,7 +448,13 @@
 .post-container-top {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   /* border: 1px solid white; */
+}
+
+.data-container {
+  display: flex;
+  align-items: center;
 }
 
 .small-profile-image-container {
@@ -465,6 +496,51 @@
   /* border: 1px solid white; */
 }
 
+.button-container {
+  display: flex;
+}
+
+.post-container-top .post-edit-btn {
+  position: relative;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-top: 10px; */
+  margin-right: 10px;
+  width: 3.3em;
+  height: 3.3em;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0);
+  transition: 0.5s;
+  /* border: 1px solid white; */
+}
+
+.post-container-top .post-edit-btn.trash {
+  position: relative;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-top: 10px; */
+  margin-right: 10px;
+  width: 3.3em;
+  height: 3.3em;
+  border-radius: 50%;
+  color: #ff3232bb;
+  background-color: rgba(255, 255, 255, 0);
+  transition: 0.5s;
+  /* border: 1px solid white; */
+}
+
+.post-container-top .post-edit-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.post-container-top .post-edit-btn i{
+  font-size: 1.3em;
+}
+
 .post-container-main {
   margin-left: 5em;
   margin-top: 1em;
@@ -476,11 +552,16 @@
 }
 
 .post-code-wrapper {
-  font-family: "Fira code", "Fira Mono", monospace;
+  font-family: 'Fira code', 'Fira Mono', monospace;
   font-size: 15px;
   border-radius: 12px;
   overflow-wrap: break-word;
   letter-spacing: 0.5px;
+}
+
+.no-posts {
+  margin-top: 2em;
+  text-align: center;
 }
 
 /* Profile Page End */

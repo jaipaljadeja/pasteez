@@ -1,17 +1,18 @@
-import React from "react";
-import { AnimatePresence } from "framer-motion";
-import { Route, Switch, useLocation } from "react-router-dom";
+import React from 'react';
+import { AnimatePresence } from 'framer-motion';
+import LoadingBar from 'react-redux-loading-bar';
+import { Route, Switch, useLocation } from 'react-router-dom';
 
-import Footer from "./layouts/Footer";
-import Editor from "./layouts/Editor";
-import Home from "./layouts/Home";
-import Login from "./layouts/Login";
-import Signup from "./layouts/Signup";
-import Navbar from "./layouts/Navbar";
-import Profile from "./layouts/Profile";
+import Footer from './layouts/Footer';
+import Editor from './layouts/Editor';
+import Home from './layouts/Home';
+import Login from './layouts/Login';
+import Signup from './layouts/Signup';
+import Navbar from './layouts/Navbar';
+import Profile from './layouts/Profile';
 
-import "react-dropdown/style.css";
-import "./App.css";
+import 'react-dropdown/style.css';
+import './App.css';
 
 function App() {
   // To let Framer motion know when routes are changed
@@ -20,25 +21,26 @@ function App() {
   // Routes Animation Variant
   const containerVariants = {
     hidden: {
-      x: "100vw",
+      x: '100vw',
     },
     visible: {
       x: 0,
       transition: {
-        type: "spring",
+        type: 'spring',
         bounce: 0.3,
       },
     },
     exit: {
-      x: "-100vw",
+      x: '-100vw',
       transition: {
-        ease: "easeInOut",
+        ease: 'easeInOut',
       },
     },
   };
 
   return (
     <>
+      <LoadingBar style={{ backgroundColor: 'white' }} showFastActions />
       <Navbar />
       <AnimatePresence exitBeforeEnter>
         <Switch location={location} key={location.key}>
@@ -55,11 +57,11 @@ function App() {
             <Login containerVariants={containerVariants} />
           </Route>
           <Route exact path="/:username">
-            <Profile containerVariants={containerVariants} />
+            <Profile />
           </Route>
           <Route path="*">
             <div className="main-container">
-              <h1 style={{ textAlign: "center", color: "white" }}>
+              <h1 style={{ textAlign: 'center', color: 'white' }}>
                 Oops! Are you lost babygirl?
               </h1>
             </div>
