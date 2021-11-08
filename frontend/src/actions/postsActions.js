@@ -104,17 +104,31 @@ export const deletePostAction = (id) => async (dispatch, getState) => {
       userLogin: { userInfo },
     } = getState();
 
+    // get the posts from current postList state
+    const {
+      postList: { posts },
+    } = getState();
+
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
-    const { data } = await axios.delete(`/api/posts/${id}`, config);
+    posts.splice(
+      posts.findIndex((post) => post._id === id),
+      1
+    );
 
+    const { data } = await axios.delete(`/api/posts/${id}`, config);
     dispatch({
       type: POSTS_DELETE_SUCCESS,
       payload: data,
+    });
+    // add the new post to the current postList state
+    dispatch({
+      type: POSTS_LIST_SUCCESS,
+      payload: [...posts],
     });
 
     return Promise.resolve(true);

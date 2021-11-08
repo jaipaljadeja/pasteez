@@ -29,7 +29,15 @@ export default function PostEditor() {
   console.log(post);
 
   const handlePostSubmit = () => {
-    console.log("post submit called");
+    if (data.caption === "" || data.code === "") {
+      toast.error("Please fill all the fields", {
+        style: {
+          fontFamily: "Monospace",
+          marginTop: "15px",
+        },
+      });
+      return;
+    }
     toast.promise(
       dispatch(
         createPostAction(
