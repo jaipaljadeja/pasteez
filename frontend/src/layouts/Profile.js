@@ -1,39 +1,76 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { useDispatch, useSelector } from "react-redux";
-import { listPosts } from "../actions/postsActions";
-import Editor from "react-simple-code-editor";
-import { decodeURL } from "../utils/UrlUtils";
-import { useParams } from "react-router-dom";
-import "./styles/agate.css";
-import axios from "axios";
-const hljs = require("highlight.js");
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { useDispatch, useSelector } from 'react-redux';
+import { listPosts } from '../actions/postsActions';
+import Editor from 'react-simple-code-editor';
+import { decodeURL } from '../utils/UrlUtils';
+import { useParams, useHistory } from 'react-router-dom';
+import './styles/agate.css';
+import axios from 'axios';
+const hljs = require('highlight.js');
 
-export default function Profile({ containerVariants, match }) {
+export default function Profile() {
+  // const history = useHistory();
+
   const dispatch = useDispatch();
+
   const postList = useSelector((state) => state.postList);
-  const { posts, error, loading } = postList;
+  const { posts, error } = postList;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const [paramsUser, setParamsUser] = useState({
-    name: "",
+    name: '',
     profileIcon:
-      "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
-    username: "",
-    about: "",
+      'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
+    username: '',
+    about: '',
   });
+
+  const [userExist, setUserExist] = useState(false);
+  const [isProfileUser, setIsProfileUser] = useState(false);
+
   const { username } = useParams();
 
   useEffect(() => {
-    const fetchParamsUser = async () => {
-      const { data } = await axios.get(`/api/users/${username}`);
-      setParamsUser(data);
+    const checkIfProfileUser = () => {
+      if (userInfo.username === username) setIsProfileUser(true);
+      else setIsProfileUser(false);
     };
+    const fetchParamsUser = async () => {
+      try {
+        const { data } = await axios.get(`/api/users/${username}`);
+        setUserExist(true);
+        setParamsUser(data);
+      } catch (error) {
+        setUserExist(false);
+      }
+    };
+    checkIfProfileUser();
     fetchParamsUser();
     dispatch(listPosts(username));
   }, [username, dispatch]);
+
+  const containerVariants = {
+    hidden: {
+      x: '100vw',
+    },
+    visible: {
+      x: 0,
+      transition: {
+        type: 'spring',
+        bounce: 0.3,
+        delay: 0.5,
+      },
+    },
+    exit: {
+      x: '-100vw',
+      transition: {
+        ease: 'easeInOut',
+      },
+    },
+  };
 
   return (
     <motion.div
@@ -52,12 +89,19 @@ export default function Profile({ containerVariants, match }) {
           />
         </div>
         <div className="profile-header-upper">
-          <div className="contents-left"></div>
+          <div className="contents-left" />
           <div className="contents-right">
             <ul>
-              <li>{paramsUser?.name}</li>
-              <li>@{paramsUser?.username}</li>
+              <li>
+                {userExist === true ? paramsUser?.name : "User doesn't exist"}
+              </li>
+              <li>@{username}</li>
             </ul>
+            {isProfileUser && (
+              <div className="btn edit-btn">
+                <i className="fas fa-pencil" />
+              </div>
+            )}
           </div>
         </div>
         <div className="profile-header-lower">
@@ -71,20 +115,25 @@ export default function Profile({ containerVariants, match }) {
       <div className="profile-main">
         <div className="profile-posts">
           <h2>Posts</h2>
-          {posts?.length !== 0 ? (
-            posts?.map((post) => (
-              <Post
-                key={post._id}
-                caption={post.caption}
-                encryptedCode={post.encryptedCode}
-                username={post.username}
-                decryptedCode={decodeURL(post.encryptedCode)}
-                lang={post.lang}
-                paramsUser={paramsUser}
-              />
-            ))
+          {error !== null ? (
+            posts?.length !== 0 ? (
+              posts?.map((post) => (
+                <Post
+                  key={post._id}
+                  caption={post.caption}
+                  encryptedCode={post.encryptedCode}
+                  username={post.username}
+                  userState={isProfileUser}
+                  decryptedCode={decodeURL(post.encryptedCode)}
+                  lang={post.lang}
+                  paramsUser={paramsUser}
+                />
+              ))
+            ) : (
+              <p className="no-posts">Wow, such empty!</p>
+            )
           ) : (
-            <p>No posts yet</p>
+            <p className="no-posts">Please try again!!</p>
           )}
         </div>
         <div className="profile-posts-list"></div>
@@ -97,24 +146,39 @@ function Post(props) {
   return (
     <div className="post-container">
       <div className="post-container-top">
-        <div className="small-profile-image-container">
-          <img
-            src={props.paramsUser.profileIcon}
-            alt="profile-pic"
-            className="small-profile-header-pic"
-          />
+        <div className="data-container">
+          <div className="small-profile-image-container">
+            <img
+              src={props.paramsUser.profileIcon}
+              alt="profile-pic"
+              className="small-profile-header-pic"
+            />
+          </div>
+          <ul>
+            <li>
+              <ul>
+                <li>{props.paramsUser.name}</li>
+                <li>@{props.username}</li>
+              </ul>
+            </li>
+            <li>
+              <p>{props.caption}</p>
+            </li>
+          </ul>
         </div>
-        <ul>
-          <li>
-            <ul>
-              <li>{props.paramsUser.name}</li>
-              <li>@{props.username}</li>
-            </ul>
-          </li>
-          <li>
-            <p>{props.caption}</p>
-          </li>
-        </ul>
+        {props.userState && (
+          <div className="button-container">
+            <div className="btn post-edit-btn trash">
+              <i className="fas fa-trash" />
+            </div>
+            <div className="btn post-edit-btn">
+              <i className="fas fa-pencil" />
+            </div>
+            <div className="btn post-edit-btn">
+              <i className="fas fa-clipboard" />
+            </div>
+          </div>
+        )}
       </div>
       <div className="post-container-main">
         <Editor
