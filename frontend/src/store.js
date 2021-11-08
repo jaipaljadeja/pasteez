@@ -6,7 +6,10 @@ import {
 } from 'react-redux-loading-bar';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
-import { postListReducer } from './reducers/postsReducers';
+import { postCreateReducer,
+  postDeleteReducer,
+  postListReducer,
+  postUpdateReducer, } from './reducers/postsReducers';
 
 const reducer = combineReducers({
   // this will contain our reducers
@@ -14,6 +17,9 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   postList: postListReducer,
   loadingBar: loadingBarReducer,
+  postCreate: postCreateReducer,
+  postDelete: postDeleteReducer,
+  postUpdate: postUpdateReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

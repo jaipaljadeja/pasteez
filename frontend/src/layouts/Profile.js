@@ -4,14 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listPosts } from '../actions/postsActions';
 import Editor from 'react-simple-code-editor';
 import { decodeURL } from '../utils/UrlUtils';
-import { useParams, useHistory } from 'react-router-dom';
-import './styles/agate.css';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 const hljs = require('highlight.js');
 
-export default function Profile() {
-  // const history = useHistory();
-
+export default function Profile({ containerVariants, setShowModal }) {
   const dispatch = useDispatch();
 
   const postList = useSelector((state) => state.postList);
@@ -114,27 +111,41 @@ export default function Profile() {
 
       <div className="profile-main">
         <div className="profile-posts">
-          <h2>Posts</h2>
-          {error !== null ? (
-            posts?.length !== 0 ? (
-              posts?.map((post) => (
-                <Post
-                  key={post._id}
-                  caption={post.caption}
-                  encryptedCode={post.encryptedCode}
-                  username={post.username}
-                  userState={isProfileUser}
-                  decryptedCode={decodeURL(post.encryptedCode)}
-                  lang={post.lang}
-                  paramsUser={paramsUser}
-                />
-              ))
+          <div className="posts-header">
+            <h2>Posts</h2>
+            <button
+              onClick={() => {
+                var bodyElement = document.getElementsByTagName('BODY')[0];
+                bodyElement.style.overflow = 'hidden';
+                setShowModal(true);
+              }}
+              className="btn create-post-btn"
+            >
+              <i className="fas fa-plus"></i> Create Post
+            </button>
+          </div>
+          <div className="posts-section">
+            {error !== null ? (
+              posts?.length !== 0 ? (
+                posts?.map((post) => (
+                  <Post
+                    key={post._id}
+                    caption={post.caption}
+                    encryptedCode={post.encryptedCode}
+                    username={post.username}
+                    userState={isProfileUser}
+                    decryptedCode={decodeURL(post.encryptedCode)}
+                    lang={post.lang}
+                    paramsUser={paramsUser}
+                  />
+                ))
+              ) : (
+                <p className="no-posts">Wow, such empty!</p>
+              )
             ) : (
-              <p className="no-posts">Wow, such empty!</p>
-            )
-          ) : (
-            <p className="no-posts">Please try again!!</p>
-          )}
+              <p className="no-posts">Please try again!!</p>
+            )}
+          </div>
         </div>
         <div className="profile-posts-list"></div>
       </div>
