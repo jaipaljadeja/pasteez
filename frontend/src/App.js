@@ -13,6 +13,8 @@ import Modal from "./components/Modal";
 
 import "react-dropdown/style.css";
 import "./App.css";
+import { ThemeSwitcherProvider } from "react-css-theme-switcher";
+import { syntaxStyles } from "./config/config";
 
 function App() {
   // To let Framer motion know when routes are changed
@@ -60,10 +62,16 @@ function App() {
             <Login containerVariants={containerVariants} />
           </Route>
           <Route exact path="/:username">
-            <Profile
-              containerVariants={containerVariants}
-              setShowModal={setShowModal}
-            />
+            <ThemeSwitcherProvider
+              defaultTheme="agate"
+              themeMap={syntaxStyles}
+              insertionPoint={document.getElementById("inject-styles-here")}
+            >
+              <Profile
+                containerVariants={containerVariants}
+                setShowModal={setShowModal}
+              />
+            </ThemeSwitcherProvider>
           </Route>
           <Route path="*">
             <div className="main-container">
