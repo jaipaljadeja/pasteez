@@ -8,14 +8,16 @@ const registerUser = asyncHandler(async (req, res) => {
   const { name, username, email, password } = req.body;
   const profileIcon = `https://avatars.dicebear.com/api/adventurer-neutral/${username}.svg`;
   // Finds if the username or email matches from the database
-  const userExist = await User.findOne({
-    $or: [{ email: email }, { username: username }],
-  });
+  const userEmailExist = await User.findOne({ email: email });
+  const userUsernameExist = await User.findOne({ username: username });
 
   // Check if the user already exists in the database
-  if (userExist) {
+  if (userEmailExist) {
     res.status(400);
-    throw new Error("User Already Exist");
+    throw new Error("Email Already Exist");
+  } else if (userUsernameExist) {
+    res.status(400);
+    throw new Error("Username Already Exist");
   }
 
   // Registers the user in database if it doesnt exist

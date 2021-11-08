@@ -403,6 +403,17 @@
   /* border: 1px solid black; */
 }
 
+.posts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 1px solid black; */
+}
+
+.create-post-btn {
+  height: 35px;
+}
+
 .profile-posts-list {
   display: flex;
   width: 30%;
@@ -469,7 +480,6 @@
   margin-left: 5em;
   margin-top: 1em;
   border-radius: 12px;
-  min-height: 100px;
   /* border: 1px solid white; */
   box-shadow: rgba(0, 0, 0, 0.6) 2px 10px 50px;
   background: rgba(0, 0, 0);
@@ -484,3 +494,58 @@
 }
 
 /* Profile Page End */
+
+/* MODAL CSS */
+
+.modal-backdrop {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 2;
+  max-width: calc(100vw);
+  max-height: calc(100vh);
+  overflow-y: auto;
+}
+
+.post-modal {
+  position: absolute;
+  top: 200px;
+}
+
+#code-editor::placeholder {
+  color: white;
+  opacity: 0.5;
+}
+
+.modal-backdrop::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.modal-backdrop {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.caption-box::placeholder {
+  color: white;
+  opacity: 0.5;
+}
+
+.caption-box:-ms-input-placeholder {
+  color: white;
+  opacity: 0.5;
+}
+
+.caption-box::-ms-input-placeholder {
+  color: white;
+  opacity: 0.5;
+}
+
+/* MODAL CSS END*/

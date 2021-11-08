@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Route, Switch, useLocation } from "react-router-dom";
 
@@ -9,6 +9,7 @@ import Login from "./layouts/Login";
 import Signup from "./layouts/Signup";
 import Navbar from "./layouts/Navbar";
 import Profile from "./layouts/Profile";
+import Modal from "./components/Modal";
 
 import "react-dropdown/style.css";
 import "./App.css";
@@ -16,6 +17,9 @@ import "./App.css";
 function App() {
   // To let Framer motion know when routes are changed
   const location = useLocation();
+
+  // State for the modal
+  const [showModal, setShowModal] = useState(false);
 
   // Routes Animation Variant
   const containerVariants = {
@@ -39,6 +43,7 @@ function App() {
 
   return (
     <>
+      <Modal showModal={showModal} setShowModal={setShowModal} />
       <Navbar />
       <AnimatePresence exitBeforeEnter>
         <Switch location={location} key={location.key}>
@@ -55,7 +60,10 @@ function App() {
             <Login containerVariants={containerVariants} />
           </Route>
           <Route exact path="/:username">
-            <Profile containerVariants={containerVariants} />
+            <Profile
+              containerVariants={containerVariants}
+              setShowModal={setShowModal}
+            />
           </Route>
           <Route path="*">
             <div className="main-container">
