@@ -9,6 +9,10 @@ module.exports.generateURL = (data) => {
   }&code=${base64.encode(aes256.encrypt(key, data.code))}`;
   return urlContent;
 };
+// to generate  encrypted code
+module.exports.generateEncryptedCode = (code) => {
+  return base64.encode(aes256.encrypt(key, code));
+};
 
 // Function to generate password protected shareable URL with encryption of code
 module.exports.generateURLwithPass = (input, pass) =>

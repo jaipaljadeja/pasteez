@@ -27,6 +27,7 @@ export const listPosts = (username) => async (dispatch, getState) => {
       type: POSTS_LIST_SUCCESS,
       payload: data,
     });
+    return Promise.resolve(true);
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -36,6 +37,7 @@ export const listPosts = (username) => async (dispatch, getState) => {
       type: POSTS_LIST_FAIL,
       payload: message,
     });
+    return Promise.reject(error.response.data.message);
   }
 };
 
@@ -48,6 +50,11 @@ export const createPostAction =
 
       const {
         userLogin: { userInfo },
+      } = getState();
+
+      // get the posts from current postList state
+      const {
+        postList: { posts },
       } = getState();
 
       const config = {
@@ -66,6 +73,14 @@ export const createPostAction =
         type: POSTS_CREATE_SUCCESS,
         payload: data,
       });
+
+      // add the new post to the current postList state
+      dispatch({
+        type: POSTS_LIST_SUCCESS,
+        payload: [...posts, data],
+      });
+
+      return Promise.resolve(true);
     } catch (error) {
       const message =
         error.response && error.response.data.message
@@ -75,6 +90,7 @@ export const createPostAction =
         type: POSTS_CREATE_FAIL,
         payload: message,
       });
+      return Promise.reject(error.response.data.message);
     }
   };
 
@@ -100,6 +116,8 @@ export const deletePostAction = (id) => async (dispatch, getState) => {
       type: POSTS_DELETE_SUCCESS,
       payload: data,
     });
+
+    return Promise.resolve(true);
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -109,6 +127,8 @@ export const deletePostAction = (id) => async (dispatch, getState) => {
       type: POSTS_DELETE_FAIL,
       payload: message,
     });
+
+    return Promise.reject(error.response.data.message);
   }
 };
 
@@ -140,6 +160,8 @@ export const updatePostAction =
         type: POSTS_UPDATE_SUCCESS,
         payload: data,
       });
+
+      return Promise.resolve(true);
     } catch (error) {
       const message =
         error.response && error.response.data.message
@@ -149,5 +171,7 @@ export const updatePostAction =
         type: POSTS_UPDATE_FAIL,
         payload: message,
       });
+
+      return Promise.reject(error.response.data.message);
     }
   };
