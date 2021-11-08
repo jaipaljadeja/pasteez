@@ -9,7 +9,7 @@ import "./styles/agate.css";
 import axios from "axios";
 const hljs = require("highlight.js");
 
-export default function Profile({ containerVariants, match }) {
+export default function Profile({ containerVariants, setShowModal }) {
   const dispatch = useDispatch();
   const postList = useSelector((state) => state.postList);
   const { posts, error, loading } = postList;
@@ -70,22 +70,36 @@ export default function Profile({ containerVariants, match }) {
 
       <div className="profile-main">
         <div className="profile-posts">
-          <h2>Posts</h2>
-          {posts?.length !== 0 ? (
-            posts?.map((post) => (
-              <Post
-                key={post._id}
-                caption={post.caption}
-                encryptedCode={post.encryptedCode}
-                username={post.username}
-                decryptedCode={decodeURL(post.encryptedCode)}
-                lang={post.lang}
-                paramsUser={paramsUser}
-              />
-            ))
-          ) : (
-            <p>No posts yet</p>
-          )}
+          <div className="posts-header">
+            <h2>Posts</h2>
+            <button
+              onClick={() => {
+                var bodyElement = document.getElementsByTagName("BODY")[0];
+                bodyElement.style.overflow = "hidden";
+                setShowModal(true);
+              }}
+              className="btn create-post-btn"
+            >
+              <i className="fas fa-plus"></i> Create Post
+            </button>
+          </div>
+          <div className="posts-section">
+            {posts?.length !== 0 ? (
+              posts?.map((post) => (
+                <Post
+                  key={post._id}
+                  caption={post.caption}
+                  encryptedCode={post.encryptedCode}
+                  username={post.username}
+                  decryptedCode={decodeURL(post.encryptedCode)}
+                  lang={post.lang}
+                  paramsUser={paramsUser}
+                />
+              ))
+            ) : (
+              <p>No posts yet</p>
+            )}
+          </div>
         </div>
         <div className="profile-posts-list"></div>
       </div>
