@@ -1,20 +1,21 @@
-import React, { useState } from "react";
-import { AnimatePresence } from "framer-motion";
-import { Route, Switch, useLocation } from "react-router-dom";
+import React, { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import LoadingBar from 'react-redux-loading-bar';
+import { Route, Switch, useLocation } from 'react-router-dom';
 
-import Footer from "./layouts/Footer";
-import Editor from "./layouts/Editor";
-import Home from "./layouts/Home";
-import Login from "./layouts/Login";
-import Signup from "./layouts/Signup";
-import Navbar from "./layouts/Navbar";
-import Profile from "./layouts/Profile";
-import Modal from "./components/Modal";
+import Footer from './layouts/Footer';
+import Editor from './layouts/Editor';
+import Home from './layouts/Home';
+import Login from './layouts/Login';
+import Signup from './layouts/Signup';
+import Navbar from './layouts/Navbar';
+import Profile from './layouts/Profile';
+import Modal from './components/Modal';
 
-import "react-dropdown/style.css";
-import "./App.css";
-import { ThemeSwitcherProvider } from "react-css-theme-switcher";
-import { syntaxStyles } from "./config/config";
+import 'react-dropdown/style.css';
+import './App.css';
+import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
+import { syntaxStyles } from './config/config';
 
 function App() {
   // To let Framer motion know when routes are changed
@@ -66,12 +67,9 @@ function App() {
             <ThemeSwitcherProvider
               defaultTheme="agate"
               themeMap={syntaxStyles}
-              insertionPoint={document.getElementById("inject-styles-here")}
+              insertionPoint={document.getElementById('inject-styles-here')}
             >
-              <Profile
-                containerVariants={containerVariants}
-                setShowModal={setShowModal}
-              />
+              <Profile setShowModal={setShowModal} />
             </ThemeSwitcherProvider>
           </Route>
           <Route path="*">

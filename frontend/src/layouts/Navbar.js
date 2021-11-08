@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../actions/userActions";
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../actions/userActions';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -31,7 +31,18 @@ export default function Navbar() {
             </li>
             <li>
               <Link to={`/${userInfo.username}`}>
-                <i style={{ fontSize: 30 }} className="fas fa-user-circle" />
+                {/* <i style={{ fontSize: 30 }} className="fas fa-user-circle" /> */}
+                <img
+                  src={userInfo.profileIcon}
+                  alt="profile-pic"
+                  id="navbar-profile-icon"
+                  style={{
+                    height: '30px',
+                    borderRadius: '50%',
+                    border: '1.6px solid white',
+                    transition: '0.2s ease',
+                  }}
+                />
               </Link>
             </li>
           </ul>

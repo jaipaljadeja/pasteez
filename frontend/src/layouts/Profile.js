@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 const hljs = require('highlight.js');
 
-export default function Profile({ containerVariants, setShowModal }) {
+export default function Profile({ setShowModal }) {
   const dispatch = useDispatch();
 
   const postList = useSelector((state) => state.postList);
@@ -32,8 +32,10 @@ export default function Profile({ containerVariants, setShowModal }) {
 
   useEffect(() => {
     const checkIfProfileUser = () => {
-      if (userInfo.username === username) setIsProfileUser(true);
-      else setIsProfileUser(false);
+      if (userInfo !== null) {
+        if (userInfo.username === username) setIsProfileUser(true);
+        else setIsProfileUser(false);
+      }
     };
     const fetchParamsUser = async () => {
       try {
@@ -47,7 +49,7 @@ export default function Profile({ containerVariants, setShowModal }) {
     checkIfProfileUser();
     fetchParamsUser();
     dispatch(listPosts(username));
-  }, [username, dispatch]);
+  }, [username, dispatch, userInfo]);
 
   const containerVariants = {
     hidden: {
@@ -113,16 +115,18 @@ export default function Profile({ containerVariants, setShowModal }) {
         <div className="profile-posts">
           <div className="posts-header">
             <h2>Posts</h2>
-            <button
-              onClick={() => {
-                var bodyElement = document.getElementsByTagName('BODY')[0];
-                bodyElement.style.overflow = 'hidden';
-                setShowModal(true);
-              }}
-              className="btn create-post-btn"
-            >
-              <i className="fas fa-plus"></i> Create Post
-            </button>
+            {isProfileUser && (
+              <button
+                onClick={() => {
+                  var bodyElement = document.getElementsByTagName('BODY')[0];
+                  bodyElement.style.overflow = 'hidden';
+                  setShowModal(true);
+                }}
+                className="btn create-post-btn"
+              >
+                <i className="fas fa-plus"></i> Create Post
+              </button>
+            )}
           </div>
           <div className="posts-section">
             {error !== null ? (
