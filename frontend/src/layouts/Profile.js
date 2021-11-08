@@ -5,7 +5,6 @@ import { listPosts } from "../actions/postsActions";
 import Editor from "react-simple-code-editor";
 import { decodeURL } from "../utils/UrlUtils";
 import { useParams } from "react-router-dom";
-import "./styles/agate.css";
 import axios from "axios";
 const hljs = require("highlight.js");
 
