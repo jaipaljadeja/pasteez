@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { useDispatch, useSelector } from 'react-redux';
-import { listPosts } from '../actions/postsActions';
-import Editor from 'react-simple-code-editor';
-import { decodeURL } from '../utils/UrlUtils';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-const hljs = require('highlight.js');
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { listPosts } from "../actions/postsActions";
+import Editor from "react-simple-code-editor";
+import { decodeURL } from "../utils/UrlUtils";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+const hljs = require("highlight.js");
 
 export default function Profile({ setShowModal }) {
   const dispatch = useDispatch();
@@ -18,11 +18,11 @@ export default function Profile({ setShowModal }) {
   const { userInfo } = userLogin;
 
   const [paramsUser, setParamsUser] = useState({
-    name: '',
+    name: "",
     profileIcon:
-      'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-    username: '',
-    about: '',
+      "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+    username: "",
+    about: "",
   });
 
   const [userExist, setUserExist] = useState(false);
@@ -33,8 +33,11 @@ export default function Profile({ setShowModal }) {
   useEffect(() => {
     const checkIfProfileUser = () => {
       if (userInfo !== null) {
-        if (userInfo.username === username) setIsProfileUser(true);
-        else setIsProfileUser(false);
+        if (userInfo.username === username) {
+          setIsProfileUser(true);
+        } else {
+          setIsProfileUser(false);
+        }
       }
     };
     const fetchParamsUser = async () => {
@@ -53,20 +56,20 @@ export default function Profile({ setShowModal }) {
 
   const containerVariants = {
     hidden: {
-      x: '100vw',
+      x: "100vw",
     },
     visible: {
       x: 0,
       transition: {
-        type: 'spring',
+        type: "spring",
         bounce: 0.3,
         delay: 0.5,
       },
     },
     exit: {
-      x: '-100vw',
+      x: "-100vw",
       transition: {
-        ease: 'easeInOut',
+        ease: "easeInOut",
       },
     },
   };
@@ -118,8 +121,8 @@ export default function Profile({ setShowModal }) {
             {isProfileUser && (
               <button
                 onClick={() => {
-                  var bodyElement = document.getElementsByTagName('BODY')[0];
-                  bodyElement.style.overflow = 'hidden';
+                  var bodyElement = document.getElementsByTagName("BODY")[0];
+                  bodyElement.style.overflow = "hidden";
                   setShowModal(true);
                 }}
                 className="btn create-post-btn"
@@ -158,8 +161,74 @@ export default function Profile({ setShowModal }) {
 }
 
 function Post(props) {
+  useEffect(() => {
+    const postContainer = document.getElementsByClassName("post-container");
+    const topPostContainer =
+      document.getElementsByClassName("post-container-top");
+    const mainPostContainer = document.getElementsByClassName(
+      "post-container-main"
+    );
+    if (props.userState) {
+      for (var i = 0; i < postContainer.length; i++) {
+        postContainer[i].classList.add("post-container-user-state-enabled");
+      }
+      for (i = 0; i < topPostContainer.length; i++) {
+        topPostContainer[i].classList.add(
+          "post-container-top-user-state-enabled"
+        );
+      }
+      for (i = 0; i < mainPostContainer.length; i++) {
+        mainPostContainer[i].classList.add(
+          "post-container-main-user-state-enabled"
+        );
+      }
+    } else {
+      if (
+        postContainer[0].classList.contains("post-container-user-state-enabled")
+      )
+        for (i = 0; i < postContainer.length; i++) {
+          postContainer[i].classList.remove(
+            "post-container-user-state-enabled"
+          );
+        }
+      if (
+        topPostContainer[0].classList.contains(
+          "post-container-top-user-state-enabled"
+        )
+      )
+        for (i = 0; i < topPostContainer.length; i++) {
+          topPostContainer[i].classList.remove(
+            "post-container-top-user-state-enabled"
+          );
+        }
+      if (
+        mainPostContainer[0].classList.contains(
+          "post-container-main-user-state-enabled"
+        )
+      )
+        for (i = 0; i < mainPostContainer.length; i++) {
+          mainPostContainer[i].classList.remove(
+            "post-container-main-user-state-enabled"
+          );
+        }
+    }
+  }, [props.userState]);
+
   return (
     <div className="post-container">
+      {props.userState && (
+        <div className="button-container">
+          <div className="btn post-edit-btn trash">
+            <i className="fas fa-trash" />
+          </div>
+          <div className="btn post-edit-btn edit">
+            <i className="fas fa-pencil" />
+          </div>
+          <div className="btn post-edit-btn clipboard">
+            <i className="fas fa-clipboard" />
+          </div>
+        </div>
+      )}
       <div className="post-container-top">
         <div className="data-container">
           <div className="small-profile-image-container">
@@ -181,19 +250,6 @@ function Post(props) {
             </li>
           </ul>
         </div>
-        {props.userState && (
-          <div className="button-container">
-            <div className="btn post-edit-btn trash">
-              <i className="fas fa-trash" />
-            </div>
-            <div className="btn post-edit-btn">
-              <i className="fas fa-pencil" />
-            </div>
-            <div className="btn post-edit-btn">
-              <i className="fas fa-clipboard" />
-            </div>
-          </div>
-        )}
       </div>
       <div className="post-container-main">
         <Editor
