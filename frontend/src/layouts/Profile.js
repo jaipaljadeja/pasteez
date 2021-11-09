@@ -7,9 +7,12 @@ import { decodeURL } from "../utils/UrlUtils";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import Modal from "../components/Modal";
+import PostEditor from "../components/PostEditor";
+import DeletePostAlert from "../components/DeletePostAlert";
 const hljs = require("highlight.js");
 
-export default function Profile({ setShowModal }) {
+export default function Profile() {
   const dispatch = useDispatch();
 
   const postList = useSelector((state) => state.postList);
@@ -28,6 +31,10 @@ export default function Profile({ setShowModal }) {
 
   const [userExist, setUserExist] = useState(false);
   const [isProfileUser, setIsProfileUser] = useState(false);
+
+  // State for the Post modal
+  const [showPostModal, setShowPostModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const { username } = useParams();
 
@@ -77,6 +84,12 @@ export default function Profile({ setShowModal }) {
 
   return (
     <>
+      <Modal showModal={showPostModal} setShowModal={setShowPostModal}>
+        <PostEditor />
+      </Modal>
+      <Modal showModal={showDeleteModal} setShowModal={setShowDeleteModal}>
+        <DeletePostAlert />
+      </Modal>
       <Toaster />
       <motion.div
         className="main-container"
@@ -126,7 +139,7 @@ export default function Profile({ setShowModal }) {
                   onClick={() => {
                     var bodyElement = document.getElementsByTagName("BODY")[0];
                     bodyElement.style.overflow = "hidden";
-                    setShowModal(true);
+                    setShowPostModal(true);
                   }}
                   className="btn create-post-btn"
                 >
@@ -145,6 +158,7 @@ export default function Profile({ setShowModal }) {
                       encryptedCode={post.encryptedCode}
                       username={post.username}
                       userState={isProfileUser}
+                      deleteAlertModalState={setShowDeleteModal}
                       decryptedCode={decodeURL(post.encryptedCode)}
                       lang={post.lang}
                       paramsUser={paramsUser}
@@ -168,26 +182,30 @@ export default function Profile({ setShowModal }) {
 function Post(props) {
   const dispatch = useDispatch();
 
+  // State for the Delete Alert modal
+  // const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const postDelete = useSelector((state) => state.postDelete);
   const { error } = postDelete;
 
   const postDeleteHandler = (postId) => {
-    if (window.confirm("Are you sure?")) {
-      toast.promise(
-        dispatch(deletePostAction(postId)),
-        {
-          loading: "Deleting...", //when posting
-          success: "Post Deleted", //if post is success
-          error: `${error || "Failed to delete!"}`, //when post is failed
-        },
-        {
-          style: {
-            fontFamily: "Monospace",
-            marginTop: "15px",
-          },
-        }
-      );
-    }
+    props.deleteAlertModalState(true);
+    // if (window.confirm("Are you sure?")) {
+    //   toast.promise(
+    //     dispatch(deletePostAction(postId)),
+    //     {
+    //       loading: "Deleting...", //when posting
+    //       success: "Post Deleted", //if post is success
+    //       error: `${error || "Failed to delete!"}`, //when post is failed
+    //     },
+    //     {
+    //       style: {
+    //         fontFamily: "Monospace",
+    //         marginTop: "15px",
+    //       },
+    //     }
+    //   );
+    // }
   };
 
   const codeCopyHandler = (code) => {
@@ -204,77 +222,79 @@ function Post(props) {
     });
   };
   return (
-    <div className="post-container">
-      {props.userState ? (
-        <div className="button-container">
-          <div
-            className="btn post-edit-btn trash"
-            title={"delete post"}
-            onClick={() => postDeleteHandler(props.postId)}
-          >
-            <i className="fas fa-trash" />
+    <>
+      <div className="post-container">
+        {props.userState ? (
+          <div className="button-container">
+            <div
+              className="btn post-edit-btn trash"
+              title={"delete post"}
+              onClick={() => postDeleteHandler(props.postId)}
+            >
+              <i className="fas fa-trash" />
+            </div>
+            <div className="btn post-edit-btn edit" title={"edit post"}>
+              <i className="fas fa-pencil" />
+            </div>
+            <div
+              className="btn post-edit-btn clipboard"
+              title={"copy code"}
+              onClick={() => codeCopyHandler(props.decryptedCode)}
+            >
+              <i className="fas fa-clipboard" />
+            </div>
           </div>
-          <div className="btn post-edit-btn edit" title={"edit post"}>
-            <i className="fas fa-pencil" />
+        ) : (
+          <div className="button-container">
+            <div
+              className="btn post-edit-btn clipboard"
+              title={"copy code"}
+              onClick={() => codeCopyHandler(props.decryptedCode)}
+            >
+              <i className="fas fa-clipboard" />
+            </div>
           </div>
-          <div
-            className="btn post-edit-btn clipboard"
-            title={"copy code"}
-            onClick={() => codeCopyHandler(props.decryptedCode)}
-          >
-            <i className="fas fa-clipboard" />
-          </div>
-        </div>
-      ) : (
-        <div className="button-container">
-          <div
-            className="btn post-edit-btn clipboard"
-            title={"copy code"}
-            onClick={() => codeCopyHandler(props.decryptedCode)}
-          >
-            <i className="fas fa-clipboard" />
-          </div>
-        </div>
-      )}
+        )}
 
-      <div className="post-container-top">
-        <div className="data-container">
-          <div className="small-profile-image-container">
-            <img
-              src={props.paramsUser.profileIcon}
-              alt="profile-pic"
-              className="small-profile-header-pic"
-            />
+        <div className="post-container-top">
+          <div className="data-container">
+            <div className="small-profile-image-container">
+              <img
+                src={props.paramsUser.profileIcon}
+                alt="profile-pic"
+                className="small-profile-header-pic"
+              />
+            </div>
+            <ul>
+              <li>
+                <ul>
+                  <li>{props.paramsUser.name}</li>
+                  <li>@{props.username}</li>
+                </ul>
+              </li>
+              <li>
+                <p>{props.caption}</p>
+              </li>
+            </ul>
           </div>
-          <ul>
-            <li>
-              <ul>
-                <li>{props.paramsUser.name}</li>
-                <li>@{props.username}</li>
-              </ul>
-            </li>
-            <li>
-              <p>{props.caption}</p>
-            </li>
-          </ul>
+        </div>
+        <div className="post-container-main">
+          <Editor
+            value={props.decryptedCode}
+            highlight={(code) =>
+              hljs.highlight(code, {
+                language: props.lang,
+              }).value
+            }
+            autoFocus={false}
+            padding={20}
+            disabled={true}
+            textareaId="post-code-viewer"
+            className="post-code-wrapper"
+            style={{ lineHeight: 1.5 }}
+          />
         </div>
       </div>
-      <div className="post-container-main">
-        <Editor
-          value={props.decryptedCode}
-          highlight={(code) =>
-            hljs.highlight(code, {
-              language: props.lang,
-            }).value
-          }
-          autoFocus={false}
-          padding={20}
-          disabled={true}
-          textareaId="post-code-viewer"
-          className="post-code-wrapper"
-          style={{ lineHeight: 1.5 }}
-        />
-      </div>
-    </div>
+    </>
   );
 }
