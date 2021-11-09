@@ -103,7 +103,7 @@ export default function Profile({ setShowModal }) {
                 <li>@{username}</li>
               </ul>
               {isProfileUser && (
-                <div className="btn edit-btn">
+                <div className="btn edit-btn" title={"edit profile"}>
                   <i className="fas fa-pencil" />
                 </div>
               )}
@@ -166,59 +166,6 @@ export default function Profile({ setShowModal }) {
 }
 
 function Post(props) {
-  useEffect(() => {
-    const postContainer = document.getElementsByClassName("post-container");
-    const topPostContainer =
-      document.getElementsByClassName("post-container-top");
-    const mainPostContainer = document.getElementsByClassName(
-      "post-container-main"
-    );
-    if (props.userState) {
-      for (var i = 0; i < postContainer.length; i++) {
-        postContainer[i].classList.add("post-container-user-state-enabled");
-      }
-      for (i = 0; i < topPostContainer.length; i++) {
-        topPostContainer[i].classList.add(
-          "post-container-top-user-state-enabled"
-        );
-      }
-      for (i = 0; i < mainPostContainer.length; i++) {
-        mainPostContainer[i].classList.add(
-          "post-container-main-user-state-enabled"
-        );
-      }
-    } else {
-      if (
-        postContainer[0].classList.contains("post-container-user-state-enabled")
-      )
-        for (i = 0; i < postContainer.length; i++) {
-          postContainer[i].classList.remove(
-            "post-container-user-state-enabled"
-          );
-        }
-      if (
-        topPostContainer[0].classList.contains(
-          "post-container-top-user-state-enabled"
-        )
-      )
-        for (i = 0; i < topPostContainer.length; i++) {
-          topPostContainer[i].classList.remove(
-            "post-container-top-user-state-enabled"
-          );
-        }
-      if (
-        mainPostContainer[0].classList.contains(
-          "post-container-main-user-state-enabled"
-        )
-      )
-        for (i = 0; i < mainPostContainer.length; i++) {
-          mainPostContainer[i].classList.remove(
-            "post-container-main-user-state-enabled"
-          );
-        }
-    }
-  }, [props.userState]);
-
   const dispatch = useDispatch();
 
   const postDelete = useSelector((state) => state.postDelete);
@@ -258,25 +205,38 @@ function Post(props) {
   };
   return (
     <div className="post-container">
-      {props.userState && (
+      {props.userState ? (
         <div className="button-container">
           <div
             className="btn post-edit-btn trash"
+            title={"delete post"}
             onClick={() => postDeleteHandler(props.postId)}
           >
             <i className="fas fa-trash" />
           </div>
-          <div className="btn post-edit-btn edit">
+          <div className="btn post-edit-btn edit" title={"edit post"}>
             <i className="fas fa-pencil" />
           </div>
           <div
             className="btn post-edit-btn clipboard"
+            title={"copy code"}
+            onClick={() => codeCopyHandler(props.decryptedCode)}
+          >
+            <i className="fas fa-clipboard" />
+          </div>
+        </div>
+      ) : (
+        <div className="button-container">
+          <div
+            className="btn post-edit-btn clipboard"
+            title={"copy code"}
             onClick={() => codeCopyHandler(props.decryptedCode)}
           >
             <i className="fas fa-clipboard" />
           </div>
         </div>
       )}
+
       <div className="post-container-top">
         <div className="data-container">
           <div className="small-profile-image-container">
