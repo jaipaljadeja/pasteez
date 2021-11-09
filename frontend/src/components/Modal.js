@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import PostEditor from "./PostEditor";
+// import PostEditor from "./PostEditor";
 import { Toaster } from "react-hot-toast";
 
 const backdrop = {
@@ -8,7 +8,7 @@ const backdrop = {
   hidden: { opacity: 0 },
 };
 
-const Modal = ({ showModal, setShowModal }) => {
+const Modal = ({ showModal, setShowModal, children }) => {
   useEffect(() => {
     if (showModal) {
       document
@@ -36,7 +36,8 @@ const Modal = ({ showModal, setShowModal }) => {
           >
             <Toaster />
             <motion.div className="post-modal">
-              <PostEditor />
+              {/* <PostEditor /> */}
+              {children}
             </motion.div>
           </motion.div>
         </>

@@ -1,53 +1,47 @@
-import React, { useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
-import LoadingBar from 'react-redux-loading-bar';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import React from "react";
+import { AnimatePresence } from "framer-motion";
+import LoadingBar from "react-redux-loading-bar";
+import { Route, Switch, useLocation } from "react-router-dom";
+import Footer from "./layouts/Footer";
+import Editor from "./layouts/Editor";
+import Home from "./layouts/Home";
+import Login from "./layouts/Login";
+import Signup from "./layouts/Signup";
+import Navbar from "./layouts/Navbar";
+import Profile from "./layouts/Profile";
 
-import Footer from './layouts/Footer';
-import Editor from './layouts/Editor';
-import Home from './layouts/Home';
-import Login from './layouts/Login';
-import Signup from './layouts/Signup';
-import Navbar from './layouts/Navbar';
-import Profile from './layouts/Profile';
-import Modal from './components/Modal';
-
-import 'react-dropdown/style.css';
-import './App.css';
-import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
-import { syntaxStyles } from './config/config';
+import "react-dropdown/style.css";
+import "./App.css";
+import { ThemeSwitcherProvider } from "react-css-theme-switcher";
+import { syntaxStyles } from "./config/config";
 
 function App() {
   // To let Framer motion know when routes are changed
   const location = useLocation();
 
-  // State for the modal
-  const [showModal, setShowModal] = useState(false);
-
   // Routes Animation Variant
   const containerVariants = {
     hidden: {
-      x: '100vw',
+      x: "100vw",
     },
     visible: {
       x: 0,
       transition: {
-        type: 'spring',
+        type: "spring",
         bounce: 0.3,
       },
     },
     exit: {
-      x: '-100vw',
+      x: "-100vw",
       transition: {
-        ease: 'easeInOut',
+        ease: "easeInOut",
       },
     },
   };
 
   return (
     <>
-      <LoadingBar style={{ backgroundColor: 'white' }} showFastActions />
-      <Modal showModal={showModal} setShowModal={setShowModal} />
+      <LoadingBar style={{ backgroundColor: "white" }} showFastActions />
       <Navbar />
       <AnimatePresence exitBeforeEnter>
         <Switch location={location} key={location.key}>
@@ -67,14 +61,14 @@ function App() {
             <ThemeSwitcherProvider
               defaultTheme="agate"
               themeMap={syntaxStyles}
-              insertionPoint={document.getElementById('inject-styles-here')}
+              insertionPoint={document.getElementById("inject-styles-here")}
             >
-              <Profile setShowModal={setShowModal} />
+              <Profile />
             </ThemeSwitcherProvider>
           </Route>
           <Route path="*">
             <div className="main-container">
-              <h1 style={{ textAlign: 'center', color: 'white' }}>
+              <h1 style={{ textAlign: "center", color: "white" }}>
                 Oops! Are you lost babygirl?
               </h1>
             </div>
