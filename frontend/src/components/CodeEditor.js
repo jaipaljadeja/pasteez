@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Dropdown from "react-dropdown";
 import Editor from "react-simple-code-editor";
 import { useThemeSwitcher } from "react-css-theme-switcher";
@@ -10,6 +11,9 @@ import ColorPicker from "./ColorPicker";
 const hljs = require("highlight.js");
 
 export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   // This is required to use multiple CSS Files
   const { switcher, themes } = useThemeSwitcher();
 
@@ -77,6 +81,8 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
       });
     }
   };
+
+  const setPassword = () => {};
 
   const codeCopyHandler = (code) => {
     navigator.clipboard.writeText(code);
@@ -196,12 +202,23 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
         >
           <i className="fas fa-clipboard" />
         </div>
+        {userInfo && (
+          <div
+            className="btn post-edit-btn save"
+            title={"save paste"}
+            // onClick={() => codeCopyHandler(data.code)}
+          >
+            <i className="fas fa-save" />
+          </div>
+        )}
+      </div>
+      <div className="button-container editor password">
         <div
-          className="btn post-edit-btn save"
-          title={"save paste"}
-          // onClick={() => codeCopyHandler(data.code)}
+          className="btn post-edit-btn password"
+          title={"set password"}
+          onClick={() => setPassword()}
         >
-          <i className="fas fa-save" />
+          <i className="fas fa-lock" />
         </div>
       </div>
     </div>
