@@ -75,7 +75,7 @@
 }
 
 .code-editor-wrapper {
-  font-family: 'Fira code', 'Fira Mono', monospace;
+  font-family: "Fira code", "Fira Mono", monospace;
   font-size: 15px;
   min-width: 42em;
   max-width: 60em;
@@ -225,7 +225,7 @@
 /* Home Page */
 
 .Typewriter__wrapper {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 3em;
 }
@@ -535,6 +535,16 @@
   /* border: 1px solid white; */
 }
 
+.button-container.editor.password {
+  position: relative;
+  right: 4.8em;
+  top: 0.4em;
+  align-self: flex-end;
+  z-index: 1;
+  display: flex;
+  /* border: 1px solid white; */
+}
+
 .button-container .post-edit-btn.edit {
   position: relative;
   right: 0;
@@ -600,6 +610,30 @@
   /* border: 1px solid white; */
 }
 
+.button-container .post-edit-btn.password {
+  position: relative;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-top: 1em; */
+  /* margin-right: 10px; */
+  width: 3.3em;
+  height: 3.3em;
+  border-radius: 50%;
+  /* background-color: rgba(255, 255, 255, 0); */
+  /* background-color: rgba(61, 237, 151, 0.25); */
+  background-color: rgba(255, 255, 255, 0.6);
+  color: rgba(0, 0, 0, 0.9);
+  transition: 0.5s;
+  /* border: 1px solid white; */
+}
+
+.button-container .post-edit-btn.password:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: rgba(0, 0, 0);
+}
+
 .button-container .post-edit-btn:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
@@ -625,7 +659,7 @@
 } */
 
 .post-code-wrapper {
-  font-family: 'Fira code', 'Fira Mono', monospace;
+  font-family: "Fira code", "Fira Mono", monospace;
   font-size: 15px;
   border-radius: 12px;
   overflow-wrap: break-word;
@@ -642,6 +676,7 @@
 /* MODAL CSS */
 
 .modal-backdrop {
+  position: relative;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -650,11 +685,23 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.75);
+  /* background-color: rgba(0, 0, 0, 0.3); */
+  /* backdrop-filter: blur(2px); */
   z-index: 2;
   max-width: calc(100vw);
   max-height: calc(100vh);
   overflow-y: auto;
+}
+
+.modal-bg-blur {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  /* background-color: rgba(0, 0, 0, 0.3); */
+  backdrop-filter: blur(1.5px);
+  -webkit-backdrop-filter: blur(1.5px);
+  z-index: -1;
 }
 
 .post-modal {
@@ -693,3 +740,45 @@
 }
 
 /* MODAL CSS END*/
+
+/* Delete Alert CSS START */
+
+.delete-alert-container {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  /* background: linear-gradient(90deg, #d0f4ff 0%, #2b8389 100%); */
+  /* background: linear-gradient(107.56deg, #4cc8c8 0%, #202033 100%); */
+  /* filter: blur(-10px); */
+  box-shadow: rgb(0 0 0 / 60%) 2px 10px 50px;
+  /* background-color: rgba(0, 0, 0, 0.65); */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(15px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  padding: 2em;
+}
+
+.btn.delete {
+  height: 3em;
+  width: 7em;
+  font-size: 1.05em;
+}
+
+.btn.delete.yes {
+  margin-right: 1em;
+  background: rgb(255, 32, 32, 0.5);
+}
+
+.btn.delete.yes:hover {
+  background: rgb(255, 32, 32, 0.6);
+}
+
+.btn.delete.no {
+  margin-left: 1em;
+}
+
+/* Delete Alert CSS END */

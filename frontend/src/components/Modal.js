@@ -12,9 +12,9 @@ const Modal = ({ showModal, setShowModal, children }) => {
   useEffect(() => {
     if (showModal) {
       document
-        .getElementsByClassName("modal-backdrop")[0]
+        .getElementsByClassName("modal-bg-blur")[0]
         .addEventListener("click", (e) => {
-          if (e.target.className !== "modal-backdrop") {
+          if (e.target.className !== "modal-bg-blur") {
           } else {
             setShowModal(false);
             var bodyElement = document.getElementsByTagName("BODY")[0];
@@ -35,6 +35,7 @@ const Modal = ({ showModal, setShowModal, children }) => {
             exit="exit"
           >
             <Toaster />
+            <div className="modal-bg-blur" />
             <motion.div className="post-modal">
               {/* <PostEditor /> */}
               {children}
