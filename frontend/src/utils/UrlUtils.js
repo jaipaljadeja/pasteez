@@ -28,28 +28,30 @@ module.exports.generateURLwithPass = (data, pass) => {
   return urlContent;
 };
 // Function to decrypt code from URL
-module.exports.decodeURL = (input, pass) => {
+module.exports.decodeURL = (input, pass, isPassCorrectHandler) => {
   if (input) {
     if (pass) {
       try {
-        console.log("encryptedcode: ", input);
-        console.log("password: ", pass);
+        // console.log("encryptedcode: ", input);
+        // console.log("password: ", pass);
         const base64Decode = base64.decode(input);
-        console.log(base64Decode);
+        // console.log(base64Decode);
         const aes256Decode = aes256.decrypt(pass, base64Decode);
-        console.log(aes256Decode);
+        // console.log(aes256Decode);
         const aes256DecodeWithoutPassphrase = aes256Decode.slice(0, -12);
-        console.log(aes256DecodeWithoutPassphrase);
+        // console.log(aes256DecodeWithoutPassphrase);
         const base64Decode2 = base64.decode(aes256DecodeWithoutPassphrase);
-        console.log(base64Decode2);
+        // console.log(base64Decode2);
         if (aes256Decode.slice(-12) !== passphrase) {
+          isPassCorrectHandler(false);
           return codeExample;
         } else {
+          isPassCorrectHandler(true);
           return aes256.decrypt(key, base64Decode2);
         }
         // console.log(aes256.decrypt(pass || key, base64.decode(input)));
       } catch (e) {
-        console.log(e);
+        isPassCorrectHandler(false);
         return codeExample;
       }
     } else {
