@@ -26,6 +26,10 @@ function App() {
     },
     visible: {
       x: 0,
+      transition: {
+        type: "spring",
+        bounce: 0.3,
+      },
     },
     exit: {
       x: "-100vw",

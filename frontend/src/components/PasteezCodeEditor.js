@@ -7,6 +7,9 @@ export default function PasteezCodeEditor({
   data,
   setData,
   syntaxStyles,
+  setShowPasswordModal,
+  setPassword,
+  password,
 }) {
   return (
     <ThemeSwitcherProvider
@@ -19,6 +22,9 @@ export default function PasteezCodeEditor({
         syntaxStyles={syntaxStyles}
         data={data}
         setData={setData}
+        setShowPasswordModal={setShowPasswordModal}
+        setPassword={setPassword}
+        password={password}
       />
     </ThemeSwitcherProvider>
   );
