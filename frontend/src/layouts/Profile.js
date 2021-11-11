@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePostAction, listPosts } from "../actions/postsActions";
+import { listPosts } from "../actions/postsActions";
 import Editor from "react-simple-code-editor";
 import { decodeURL } from "../utils/UrlUtils";
 import { useParams } from "react-router-dom";
@@ -35,6 +35,7 @@ export default function Profile() {
   // State for the Post modal
   const [showPostModal, setShowPostModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deletePostId, setDeletePostId] = useState("");
 
   const { username } = useParams();
 
@@ -85,10 +86,13 @@ export default function Profile() {
   return (
     <>
       <Modal showModal={showPostModal} setShowModal={setShowPostModal}>
-        <PostEditor />
+        <PostEditor setShowPostModal={setShowPostModal} />
       </Modal>
       <Modal showModal={showDeleteModal} setShowModal={setShowDeleteModal}>
-        <DeletePostAlert />
+        <DeletePostAlert
+          postId={deletePostId}
+          setShowDeleteModal={setShowDeleteModal}
+        />
       </Modal>
       <Toaster />
       <motion.div
@@ -159,6 +163,7 @@ export default function Profile() {
                       username={post.username}
                       userState={isProfileUser}
                       deleteAlertModalState={setShowDeleteModal}
+                      setDeletePostId={setDeletePostId}
                       decryptedCode={decodeURL(post.encryptedCode)}
                       lang={post.lang}
                       paramsUser={paramsUser}
@@ -180,32 +185,11 @@ export default function Profile() {
 }
 
 function Post(props) {
-  const dispatch = useDispatch();
-
-  // State for the Delete Alert modal
-  // const [showDeleteModal, setShowDeleteModal] = useState(false);
-
-  const postDelete = useSelector((state) => state.postDelete);
-  const { error } = postDelete;
-
   const postDeleteHandler = (postId) => {
+    var bodyElement = document.getElementsByTagName("BODY")[0];
+    bodyElement.style.overflow = "hidden";
+    props.setDeletePostId(postId);
     props.deleteAlertModalState(true);
-    // if (window.confirm("Are you sure?")) {
-    //   toast.promise(
-    //     dispatch(deletePostAction(postId)),
-    //     {
-    //       loading: "Deleting...", //when posting
-    //       success: "Post Deleted", //if post is success
-    //       error: `${error || "Failed to delete!"}`, //when post is failed
-    //     },
-    //     {
-    //       style: {
-    //         fontFamily: "Monospace",
-    //         marginTop: "15px",
-    //       },
-    //     }
-    //   );
-    // }
   };
 
   const codeCopyHandler = (code) => {
