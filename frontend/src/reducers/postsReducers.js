@@ -11,6 +11,7 @@ import {
   POSTS_LIST_FAIL,
   POSTS_LIST_REQUEST,
   POSTS_LIST_SUCCESS,
+  POSTS_REMOVEALL_SUCCESS,
 } from "../constants/postsConstants";
 
 export const postListReducer = (state = { posts: [] }, action) => {
@@ -21,6 +22,8 @@ export const postListReducer = (state = { posts: [] }, action) => {
       return { loading: false, posts: action.payload };
     case POSTS_LIST_FAIL:
       return { loading: false, error: action.payload };
+    case POSTS_REMOVEALL_SUCCESS:
+      return { loading: true, posts: [] };
 
     default:
       return state;
