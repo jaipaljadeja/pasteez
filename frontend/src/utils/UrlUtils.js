@@ -1,6 +1,7 @@
 const aes256 = require("aes256");
 const base64 = require("base-64");
 const { key, passphrase } = require("../config/config").base;
+let { codeExample } = require("../config/config").examples;
 
 // Function to generate shareable URL with encryption of code
 module.exports.generateURL = (data) => {
@@ -42,21 +43,21 @@ module.exports.decodeURL = (input, pass) => {
         const base64Decode2 = base64.decode(aes256DecodeWithoutPassphrase);
         console.log(base64Decode2);
         if (aes256Decode.slice(-12) !== passphrase) {
-          return "Wrong Password";
+          return codeExample;
         } else {
           return aes256.decrypt(key, base64Decode2);
         }
         // console.log(aes256.decrypt(pass || key, base64.decode(input)));
       } catch (e) {
         console.log(e);
-        return "Wrong Password";
+        return codeExample;
       }
     } else {
       try {
         return aes256.decrypt(key, base64.decode(input));
       } catch (e) {
         console.log(e);
-        return "";
+        return codeExample;
       }
     }
   } else return "";

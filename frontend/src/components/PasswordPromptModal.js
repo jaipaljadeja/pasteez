@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import { decodeURL } from "../utils/UrlUtils";
+let { codeExample } = require("../config/config").examples;
 
 export default function PasswordPromptModal({
   data,
@@ -57,7 +58,7 @@ export default function PasswordPromptModal({
             console.log(password);
             const decryptedCode = decodeURL(data.encryptedCode, password);
             setData({ ...data, code: decryptedCode });
-            if (decryptedCode === "Wrong Password") {
+            if (decryptedCode === codeExample) {
               toast.error("Wrong Password", {
                 style: {
                   fontFamily: "Monospace",
@@ -75,11 +76,10 @@ export default function PasswordPromptModal({
                   secondary: "#FFFFFF",
                 },
               });
+              var bodyElement = document.getElementsByTagName("BODY")[0];
+              bodyElement.style.overflow = "unset";
+              setShowPasswordPrompt(false);
             }
-
-            var bodyElement = document.getElementsByTagName("BODY")[0];
-            bodyElement.style.overflow = "unset";
-            setShowPasswordPrompt(false);
           }}
           className="btn delete yes"
         >

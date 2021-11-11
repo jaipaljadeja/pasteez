@@ -80,6 +80,10 @@ export default function PasswordModal({ setPassword, setShowPasswordModal }) {
         </button>
         <button
           onClick={() => {
+            var unlockIcon = document.getElementById("unlockIcon");
+            var lockIcon = document.getElementById("lockIcon");
+            unlockIcon.style.display = "block";
+            lockIcon.style.display = "none";
             setPassword(null);
             setShowPasswordModal(false);
             var bodyElement = document.getElementsByTagName("BODY")[0];
