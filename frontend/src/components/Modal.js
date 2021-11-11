@@ -4,10 +4,25 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Toaster } from "react-hot-toast";
 
 const backdrop = {
-  visible: { opacity: 1 },
+  visible: {
+    opacity: 1,
+    transition: {
+      ease: "easeInOut",
+    },
+  },
   hidden: { opacity: 0 },
 };
 
+const backdropBlur = {
+  visible: {
+    backdropFilter: "blur(1.5px)",
+    transition: {
+      duration: 0.5,
+      ease: "easeIn",
+    },
+  },
+  hidden: { backdropFilter: "blur(0px)" },
+};
 const Modal = ({ showModal, setShowModal, children }) => {
   useEffect(() => {
     if (showModal) {
@@ -35,8 +50,8 @@ const Modal = ({ showModal, setShowModal, children }) => {
             exit="exit"
           >
             <Toaster />
-            <div className="modal-bg-blur" />
-            <motion.div className="post-modal">
+            <motion.div className="modal-bg-blur" variants={backdropBlur} />
+            <motion.div className="post-modal" variants={backdrop}>
               {/* <PostEditor /> */}
               {children}
             </motion.div>
