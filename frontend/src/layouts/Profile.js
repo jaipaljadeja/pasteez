@@ -39,6 +39,34 @@ export default function Profile() {
 
   const { username } = useParams();
 
+  const sortPosts = (a, b) => {
+    console.log(a);
+    var date1 = a.props.date;
+    var date2 = b.props.date;
+    var dateString1 =
+      date1.slice(5, 7) +
+      "/" +
+      date1.slice(8, 10) +
+      "/" +
+      date1.slice(0, 4) +
+      " " +
+      date1.slice(11, 19) +
+      " UTC";
+
+    var dateString2 =
+      date2.slice(5, 7) +
+      "/" +
+      date2.slice(8, 10) +
+      "/" +
+      date2.slice(0, 4) +
+      " " +
+      date2.slice(11, 19) +
+      " UTC";
+
+    return new Date(dateString2) - new Date(dateString1);
+    // return b - a;
+  };
+
   useEffect(() => {
     const checkIfProfileUser = () => {
       if (userInfo !== null) {
@@ -154,21 +182,24 @@ export default function Profile() {
             <div className="posts-section">
               {error !== null ? (
                 posts?.length !== 0 ? (
-                  posts?.map((post) => (
-                    <Post
-                      key={post._id}
-                      postId={post._id}
-                      caption={post.caption}
-                      encryptedCode={post.encryptedCode}
-                      username={post.username}
-                      userState={isProfileUser}
-                      deleteAlertModalState={setShowDeleteModal}
-                      setDeletePostId={setDeletePostId}
-                      decryptedCode={decodeURL(post.encryptedCode)}
-                      lang={post.lang}
-                      paramsUser={paramsUser}
-                    />
-                  ))
+                  posts
+                    ?.map((post) => (
+                      <Post
+                        key={post._id}
+                        postId={post._id}
+                        caption={post.caption}
+                        encryptedCode={post.encryptedCode}
+                        username={post.username}
+                        userState={isProfileUser}
+                        deleteAlertModalState={setShowDeleteModal}
+                        setDeletePostId={setDeletePostId}
+                        decryptedCode={decodeURL(post.encryptedCode)}
+                        lang={post.lang}
+                        date={post.createdAt}
+                        paramsUser={paramsUser}
+                      />
+                    ))
+                    .sort(sortPosts)
                 ) : (
                   <p className="no-posts">Wow, such empty!</p>
                 )
@@ -185,12 +216,76 @@ export default function Profile() {
 }
 
 function Post(props) {
+  const [formatDate, setFormatDate] = useState();
+  const [time, setTime] = useState();
+  const [meridiem, setMeridiem] = useState();
+
   const postDeleteHandler = (postId) => {
     var bodyElement = document.getElementsByTagName("BODY")[0];
     bodyElement.style.overflow = "hidden";
     props.setDeletePostId(postId);
     props.deleteAlertModalState(true);
   };
+
+  const dayOfWeek = {
+    0: "Sun",
+    1: "Mon",
+    2: "Tue",
+    3: "Wed",
+    4: "Thu",
+    5: "Fri",
+    6: "Sat",
+  };
+
+  const monthOfYear = {
+    0: "Jan",
+    1: "Feb",
+    2: "Mar",
+    3: "Apr",
+    4: "May",
+    5: "Jun",
+    6: "Jul",
+    7: "Aug",
+    8: "Sep",
+    9: "Oct",
+    10: "Nov",
+    11: "Dec",
+  };
+
+  useEffect(() => {
+    var dateString =
+      props.date.slice(5, 7) +
+      "/" +
+      props.date.slice(8, 10) +
+      "/" +
+      props.date.slice(0, 4) +
+      " " +
+      props.date.slice(11, 19) +
+      " UTC";
+
+    var date = new Date(dateString);
+
+    let hour = date.getHours() % 12;
+    if (hour === 0) {
+      hour = 12;
+    }
+    const hours = hour.toString().length === 1 ? "0".concat(hour) : hour;
+    const minutes =
+      date.getMinutes().toString().length === 1
+        ? "0".concat(date.getMinutes())
+        : date.getMinutes();
+    const Time = `${hours}:${minutes}`;
+    const Meridiem = date.getHours() >= 12 ? "PM" : "AM";
+    const displayDate = `${dayOfWeek[date.getDay()]}, ${
+      date.getDate().toString().length === 1
+        ? "0".concat(date.getDate())
+        : date.getDate()
+    } ${monthOfYear[date.getMonth()]} ${date.getFullYear()}`;
+
+    setTime(Time);
+    setMeridiem(Meridiem);
+    setFormatDate(displayDate);
+  }, [props.date]);
 
   const codeCopyHandler = (code) => {
     navigator.clipboard.writeText(code);
@@ -239,7 +334,6 @@ function Post(props) {
             </div>
           </div>
         )}
-
         <div className="post-container-top">
           <div className="data-container">
             <div className="small-profile-image-container">
@@ -278,6 +372,9 @@ function Post(props) {
             style={{ lineHeight: 1.5 }}
           />
         </div>
+        <p className="date">
+          {time} {meridiem} | {formatDate}
+        </p>
       </div>
     </>
   );
