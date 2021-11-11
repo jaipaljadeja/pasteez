@@ -62,8 +62,6 @@ export default function CodeEditor({
 
   // When a user clicks copy url button
   const handleCopyUrl = () => {
-    console.log(data);
-    console.log(password);
     const currentURL = window.location.origin.toLowerCase() + "/editor";
     if (data.code !== "") {
       if (data.isProtected !== "false" || password !== null) {

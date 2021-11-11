@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import { decodeURL } from "../utils/UrlUtils";
-let { codeExample } = require("../config/config").examples;
 
 export default function PasswordPromptModal({
   data,
@@ -35,7 +34,6 @@ export default function PasswordPromptModal({
         spellCheck="false"
         autoComplete="off"
         onChange={(e) => {
-          console.log(e.target.value);
           setPassword(e.target.value);
         }}
         style={{
@@ -53,19 +51,24 @@ export default function PasswordPromptModal({
       <div style={{ display: "flex", marginTop: "10px" }}>
         <button
           onClick={() => {
-            console.log("decrypt button cliocked");
-            console.log(data);
-            console.log(password);
-            const decryptedCode = decodeURL(data.encryptedCode, password);
-            setData({ ...data, code: decryptedCode });
-            if (decryptedCode === codeExample) {
+            let isPassCorrect = undefined;
+            function isPassCorrectHandler(value) {
+              isPassCorrect = value;
+            }
+            const decryptedCode = decodeURL(
+              data.encryptedCode,
+              password,
+              isPassCorrectHandler
+            );
+            if (isPassCorrect === false) {
               toast.error("Wrong Password", {
                 style: {
                   fontFamily: "Monospace",
                   marginTop: "15px",
                 },
               });
-            } else {
+            } else if (isPassCorrect === true) {
+              setData({ ...data, code: decryptedCode });
               toast.success("Code Decrypted!", {
                 style: {
                   fontFamily: "Monospace",
