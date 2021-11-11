@@ -11,6 +11,7 @@ import {
   POSTS_LIST_FAIL,
   POSTS_LIST_REQUEST,
   POSTS_LIST_SUCCESS,
+  POSTS_REMOVEALL_SUCCESS,
 } from "../constants/postsConstants";
 
 import axios from "axios";
@@ -189,3 +190,20 @@ export const updatePostAction =
       return Promise.reject(error.response.data.message);
     }
   };
+
+export const removeStatePosts = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: POSTS_REMOVEALL_SUCCESS,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: POSTS_DELETE_FAIL,
+      payload: message,
+    });
+  }
+};

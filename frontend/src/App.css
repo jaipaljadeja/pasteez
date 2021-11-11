@@ -75,7 +75,7 @@
 }
 
 .code-editor-wrapper {
-  font-family: 'Fira code', 'Fira Mono', monospace;
+  font-family: "Fira code", "Fira Mono", monospace;
   font-size: 15px;
   min-width: 42em;
   max-width: 60em;
@@ -225,7 +225,7 @@
 /* Home Page */
 
 .Typewriter__wrapper {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 3em;
 }
@@ -625,7 +625,7 @@
 } */
 
 .post-code-wrapper {
-  font-family: 'Fira code', 'Fira Mono', monospace;
+  font-family: "Fira code", "Fira Mono", monospace;
   font-size: 15px;
   border-radius: 12px;
   overflow-wrap: break-word;
@@ -693,3 +693,20 @@
 }
 
 /* MODAL CSS END*/
+
+/* DELETE MODAL CSS */
+
+.delete-modal-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.75);
+  height: 120px;
+  width: 300px;
+}
+
+.delete-modal-title {
+  color: white;
+}
+/* DELETE MODAL END */

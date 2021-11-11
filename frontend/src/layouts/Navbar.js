@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions";
 import { Link } from "react-router-dom";
+import { removeStatePosts } from "../actions/postsActions";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -9,6 +10,7 @@ export default function Navbar() {
   const { userInfo } = userLogin;
 
   const logoutHandler = () => {
+    dispatch(removeStatePosts());
     dispatch(logout());
   };
 
