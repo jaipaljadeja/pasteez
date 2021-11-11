@@ -343,11 +343,41 @@
   overflow: hidden;
 }
 
+.profile-image-container.modal {
+  position: relative;
+  left: 0em;
+  top: 0;
+  border-radius: 50%;
+  display: flex;
+  transform: translateY(0);
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.profile-image-container.modal:hover::after {
+  position: absolute;
+  transition: 0.1s;
+  content: "change";
+  cursor: pointer;
+}
+
+.profile-image-container.modal:hover {
+  background: rgb(255, 255, 255, 0.5);
+  transition: 0.1s;
+}
+
 .profile-image-container img {
   width: 10em;
   height: 10em;
   border-radius: 50%;
   border: 2.5px solid white;
+}
+
+.profile-image-container img:hover {
+  opacity: 0.5;
+  transition: 0.1s;
+  cursor: pointer;
 }
 
 .contents-right {
@@ -830,3 +860,53 @@
   font-family: "Fira code", "Fira Mono", monospace;
 }
 /* Password Modal CSS end*/
+
+/* Edit Profile Modal Start */
+
+.edit-profile-container {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  /* background: linear-gradient(90deg, #d0f4ff 0%, #2b8389 100%); */
+  /* background: linear-gradient(107.56deg, #4cc8c8 0%, #202033 100%); */
+  /* filter: blur(-10px); */
+  box-shadow: rgb(0 0 0 / 60%) 2px 10px 50px;
+  /* background-color: rgba(0, 0, 0, 0.65); */
+  backdrop-filter: unset;
+  -webkit-backdrop-filter: blur(15px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5em;
+  padding: 2em;
+}
+
+.label {
+  font-size: 0.8em;
+  /* font-weight: 300; */
+}
+
+.input-box {
+  border-radius: "5px";
+  border: "none";
+  background: "rgba(0, 0, 0, 0.5)";
+  outline: "none";
+  color: "white";
+  padding: "0px 10px";
+  width: "24em";
+}
+
+.btn.update {
+  height: 3em;
+  width: 7em;
+  font-size: 1.05em;
+  margin-right: 1em;
+  background: rgba(51, 180, 255, 0.5);
+}
+
+.btn.update:hover {
+  background: rgba(51, 180, 255, 0.6);
+}
+
+/* Edit Profile Modal End */
