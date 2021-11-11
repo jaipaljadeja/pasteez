@@ -84,7 +84,7 @@ export default function PostUpdater({
   };
 
   return (
-    <div className="post-editor">
+    <div className="post-editor" style={{ marginBottom: "5em" }}>
       <p
         style={{
           fontSize: "3.5rem",

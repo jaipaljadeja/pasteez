@@ -77,7 +77,7 @@ export default function PostEditor({ setShowPostModal }) {
   };
 
   return (
-    <div className="post-editor">
+    <div className="post-editor" style={{ marginBottom: "5em" }}>
       <p
         style={{
           fontSize: "3.5rem",

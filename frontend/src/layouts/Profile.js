@@ -245,6 +245,8 @@ function Post(props) {
               className="btn post-edit-btn edit"
               title={"edit post"}
               onClick={() => {
+                var bodyElement = document.getElementsByTagName("BODY")[0];
+                bodyElement.style.overflow = "hidden";
                 props.setPostData({
                   caption: props.caption,
                   lang: props.lang,
