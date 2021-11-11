@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { languages } from "../config/config";
 import { createPostAction } from "../actions/postsActions";
 import { generateEncryptedCode } from "../utils/UrlUtils";
+import { motion } from "framer-motion";
 const hljs = require("highlight.js");
 
 export default function PostEditor({ setShowPostModal }) {
@@ -26,7 +27,16 @@ export default function PostEditor({ setShowPostModal }) {
     setData({ ...data, lang: lang });
   };
 
-  console.log(post);
+  const backdropBlur = {
+    visible: {
+      backdropFilter: "blur(15px)",
+      transition: {
+        duration: 0.5,
+        ease: "easeIn",
+      },
+    },
+    hidden: { backdropFilter: "blur(0px)" },
+  };
 
   const handlePostSubmit = () => {
     if (data.caption === "" || data.code === "") {
@@ -76,7 +86,8 @@ export default function PostEditor({ setShowPostModal }) {
           opacity: "0.1",
         }}
       ></p>
-      <div
+      <motion.div
+        variants={backdropBlur}
         className="pasteez-editor"
         style={{
           // background: "linear-gradient(90deg, #d0f4ff 0%, #2b8389 100%)",
@@ -84,7 +95,6 @@ export default function PostEditor({ setShowPostModal }) {
           boxShadow: "rgba(0, 0, 0, 0.6) 2px 10px 50px",
           marginTop: "10px",
           border: "1px solid rgba(255, 255, 255, 0.2)",
-          backdropFilter: "blur(15px)",
         }}
       >
         <div className="exportableFrame">
@@ -179,7 +189,7 @@ export default function PostEditor({ setShowPostModal }) {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

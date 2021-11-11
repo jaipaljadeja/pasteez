@@ -2,6 +2,7 @@ import React from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { deletePostAction } from "../actions/postsActions";
+import { motion } from "framer-motion";
 
 export default function DeletePostAlert({ postId, setShowDeleteModal }) {
   const dispatch = useDispatch();
@@ -9,9 +10,20 @@ export default function DeletePostAlert({ postId, setShowDeleteModal }) {
   const postDelete = useSelector((state) => state.postDelete);
   const { error } = postDelete;
 
+  const backdropBlur = {
+    visible: {
+      backdropFilter: "blur(5px)",
+      transition: {
+        duration: 0.5,
+        ease: "easeIn",
+      },
+    },
+    hidden: { backdropFilter: "blur(0px)" },
+  };
+
   return (
     // <div className="delete-alert-container">
-    <div className="delete-alert-container">
+    <motion.div variants={backdropBlur} className="delete-alert-container">
       <p style={{ fontWeight: "500", fontSize: "1.4em", marginBottom: "1em" }}>
         Are you sure you want to delete this post?
       </p>
@@ -54,7 +66,7 @@ export default function DeletePostAlert({ postId, setShowDeleteModal }) {
           NO
         </button>
       </div>
-    </div>
+    </motion.div>
     // </div>
   );
 }

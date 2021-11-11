@@ -100,7 +100,7 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
 
   return (
     <div style={{ display: "flex" }}>
-      <div className="pasteez-editor">
+      <div className="pasteez-editor" style={{ marginLeft: "74.9px" }}>
         <div
           className="exportableFrame"
           style={{
@@ -202,6 +202,13 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
         >
           <i className="fas fa-clipboard" />
         </div>
+        <div
+          className="btn post-edit-btn password"
+          title={"set password"}
+          onClick={() => setPassword()}
+        >
+          <i className="fas fa-lock" />
+        </div>
         {userInfo && (
           <div
             className="btn post-edit-btn save"
@@ -212,7 +219,7 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
           </div>
         )}
       </div>
-      <div className="button-container editor password">
+      {/* <div className="button-container editor password">
         <div
           className="btn post-edit-btn password"
           title={"set password"}
@@ -220,7 +227,7 @@ export default function CodeEditor({ languages, data, setData, syntaxStyles }) {
         >
           <i className="fas fa-lock" />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
