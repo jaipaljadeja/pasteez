@@ -15,7 +15,7 @@ const backdrop = {
 
 const backdropBlur = {
   visible: {
-    backdropFilter: "blur(1.5px)",
+    backdropFilter: "blur(2.5px)",
     transition: {
       duration: 0.5,
       ease: "easeIn",

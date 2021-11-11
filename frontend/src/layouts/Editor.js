@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PasteezCodeEditor from "../components/PasteezCodeEditor";
 import { decodeURL } from "../utils/UrlUtils";
 import { syntaxStyles, languages } from "../config/config";
 import { motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
+import Modal from "../components/Modal";
+import PasswordModal from "../components/PasswordModal";
+import PasswordPromptModal from "../components/PasswordPromptModal";
 let {
   titleExample,
   codeExample,
@@ -20,9 +23,16 @@ function Editor({ containerVariants }) {
   const paramLang = url.searchParams.get("lang");
   const paramStyle = url.searchParams.get("style");
   const encryptedCode = url.searchParams.get("code");
-  const decryptedCode = decodeURL(encryptedCode);
+  const isProtected = url.searchParams.get("isProtected") || "false";
+  let decryptedCode = undefined;
+
+  const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
 
   // Setting default values for the query params if they are present
+  if (encryptedCode && isProtected === "false" && isProtected !== null) {
+    decryptedCode = decodeURL(encryptedCode);
+    codeExample = decryptedCode;
+  }
   if (paramTitle) {
     titleExample = paramTitle;
   }
@@ -32,9 +42,6 @@ function Editor({ containerVariants }) {
   if (paramStyle) {
     syntaxStyleExample = paramStyle;
   }
-  if (encryptedCode) {
-    codeExample = decryptedCode;
-  }
 
   // Setting state for the all the values
   const [data, setData] = useState({
@@ -43,10 +50,37 @@ function Editor({ containerVariants }) {
     syntaxStyle: syntaxStyleExample,
     title: titleExample,
     framebg: defaultFrameBG,
+    isProtected: isProtected,
+    encryptedCode: encryptedCode,
   });
+
+  useEffect(() => {
+    if (encryptedCode && isProtected === "true" && isProtected !== null) {
+      setShowPasswordPrompt(true);
+    }
+  }, [encryptedCode, isProtected]);
+
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [password, setPassword] = useState(null);
 
   return (
     <>
+      <Modal showModal={showPasswordModal} setShowModal={setShowPasswordModal}>
+        <PasswordModal
+          setPassword={setPassword}
+          setShowPasswordModal={setShowPasswordModal}
+        />
+      </Modal>
+      <Modal
+        showModal={showPasswordPrompt}
+        setShowModal={setShowPasswordPrompt}
+      >
+        <PasswordPromptModal
+          data={data}
+          setData={setData}
+          setShowPasswordPrompt={setShowPasswordPrompt}
+        />
+      </Modal>
       <Toaster />
       <motion.div
         className="main-container"
@@ -60,6 +94,9 @@ function Editor({ containerVariants }) {
           syntaxStyles={syntaxStyles}
           data={data}
           setData={setData}
+          setShowPasswordModal={setShowPasswordModal}
+          setPassword={setPassword}
+          password={password}
         />
       </motion.div>
     </>

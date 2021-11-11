@@ -14,7 +14,7 @@ export default function PostEditor({ setShowPostModal }) {
   const dispatch = useDispatch();
 
   const postCreate = useSelector((state) => state.postCreate);
-  const { error, post } = postCreate;
+  const { error } = postCreate;
 
   // This is required to use multiple CSS Files
   const [data, setData] = useState({
