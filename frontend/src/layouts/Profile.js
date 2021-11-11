@@ -10,6 +10,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Modal from "../components/Modal";
 import PostEditor from "../components/PostEditor";
 import DeletePostAlert from "../components/DeletePostAlert";
+import PostUpdater from "../components/PostUpdater";
 const hljs = require("highlight.js");
 
 export default function Profile() {
@@ -83,10 +84,31 @@ export default function Profile() {
     },
   };
 
+  const [postData, setPostData] = useState({
+    caption: "",
+    lang: "javascript",
+    code: "",
+    id: "",
+  });
+
+  const [showPostUpdaterModal, setShowPostUpdaterModal] = useState(false);
+
   return (
     <>
       <Modal showModal={showPostModal} setShowModal={setShowPostModal}>
         <PostEditor setShowPostModal={setShowPostModal} />
+      </Modal>
+      <Modal
+        showModal={showPostUpdaterModal}
+        setShowModal={setShowPostUpdaterModal}
+      >
+        <PostUpdater
+          setShowPostUpdaterModal={setShowPostUpdaterModal}
+          caption={postData.caption}
+          lang={postData.lang}
+          code={postData.code}
+          postId={postData.id}
+        />
       </Modal>
       <Modal showModal={showDeleteModal} setShowModal={setShowDeleteModal}>
         <DeletePostAlert
@@ -163,9 +185,11 @@ export default function Profile() {
                       username={post.username}
                       userState={isProfileUser}
                       deleteAlertModalState={setShowDeleteModal}
+                      setShowPostUpdaterModal={setShowPostUpdaterModal}
                       setDeletePostId={setDeletePostId}
                       decryptedCode={decodeURL(post.encryptedCode)}
                       lang={post.lang}
+                      setPostData={setPostData}
                       paramsUser={paramsUser}
                     />
                   ))
@@ -217,7 +241,19 @@ function Post(props) {
             >
               <i className="fas fa-trash" />
             </div>
-            <div className="btn post-edit-btn edit" title={"edit post"}>
+            <div
+              className="btn post-edit-btn edit"
+              title={"edit post"}
+              onClick={() => {
+                props.setPostData({
+                  caption: props.caption,
+                  lang: props.lang,
+                  code: props.decryptedCode,
+                  id: props.postId,
+                });
+                props.setShowPostUpdaterModal(true);
+              }}
+            >
               <i className="fas fa-pencil" />
             </div>
             <div

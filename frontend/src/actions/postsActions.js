@@ -158,6 +158,10 @@ export const updatePostAction =
         userLogin: { userInfo },
       } = getState();
 
+      const {
+        postList: { posts },
+      } = getState();
+
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -174,6 +178,23 @@ export const updatePostAction =
       dispatch({
         type: POSTS_UPDATE_SUCCESS,
         payload: data,
+      });
+
+      const updatedPostList = posts.map((obj) => {
+        if (obj._id === id) {
+          console.log(obj);
+          console.log(data);
+          return data;
+        } else {
+          return obj;
+        }
+      });
+
+      console.log(updatedPostList);
+      // add the new post to the current postList state
+      dispatch({
+        type: POSTS_LIST_SUCCESS,
+        payload: updatedPostList,
       });
 
       return Promise.resolve(true);
