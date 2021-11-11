@@ -11,6 +11,7 @@ import Modal from "../components/Modal";
 import PostEditor from "../components/PostEditor";
 import DeletePostAlert from "../components/DeletePostAlert";
 import PostUpdater from "../components/PostUpdater";
+import ProfileUpdater from "../components/ProfileUpdater";
 const hljs = require("highlight.js");
 
 export default function Profile() {
@@ -36,6 +37,9 @@ export default function Profile() {
   // State for the Post modal
   const [showPostModal, setShowPostModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showPostUpdaterModal, setShowPostUpdaterModal] = useState(false);
+  const [showProfileUpdaterModal, setShowProfileUpdaterModal] = useState(false);
+
   const [deletePostId, setDeletePostId] = useState("");
 
   const { username } = useParams();
@@ -118,8 +122,6 @@ export default function Profile() {
     id: "",
   });
 
-  const [showPostUpdaterModal, setShowPostUpdaterModal] = useState(false);
-
   return (
     <>
       <Modal showModal={showPostModal} setShowModal={setShowPostModal}>
@@ -141,6 +143,15 @@ export default function Profile() {
         <DeletePostAlert
           postId={deletePostId}
           setShowDeleteModal={setShowDeleteModal}
+        />
+      </Modal>
+      <Modal
+        showModal={showProfileUpdaterModal}
+        setShowModal={setShowProfileUpdaterModal}
+      >
+        <ProfileUpdater
+          setShowProfileUpdaterModal={setShowProfileUpdaterModal}
+          userInfo={userInfo}
         />
       </Modal>
       <Toaster />
@@ -169,7 +180,15 @@ export default function Profile() {
                 <li>@{username}</li>
               </ul>
               {isProfileUser && (
-                <div className="btn edit-btn" title={"edit profile"}>
+                <div
+                  className="btn edit-btn"
+                  title={"edit profile"}
+                  onClick={() => {
+                    var bodyElement = document.getElementsByTagName("BODY")[0];
+                    bodyElement.style.overflow = "hidden";
+                    setShowProfileUpdaterModal(true);
+                  }}
+                >
                   <i className="fas fa-pencil" />
                 </div>
               )}

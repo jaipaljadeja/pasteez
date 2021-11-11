@@ -53,6 +53,10 @@ export default function DeletePostAlert({ postId, setShowDeleteModal }) {
           }}
           className="btn delete yes"
         >
+          <i
+            className="fas fa-trash"
+            style={{ fontSize: "12px", marginRight: "1em" }}
+          />
           YES
         </button>
         <button
@@ -63,6 +67,10 @@ export default function DeletePostAlert({ postId, setShowDeleteModal }) {
           }}
           className="btn delete no"
         >
+          <i
+            className="far fa-times"
+            style={{ fontSize: "12px", marginRight: "1em" }}
+          />
           NO
         </button>
       </div>
