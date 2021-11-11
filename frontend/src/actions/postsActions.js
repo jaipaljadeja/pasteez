@@ -191,7 +191,7 @@ export const updatePostAction =
       });
 
       console.log(updatedPostList);
-      // add the new post to the current postList state
+      // update the post in the postList state
       dispatch({
         type: POSTS_LIST_SUCCESS,
         payload: updatedPostList,
