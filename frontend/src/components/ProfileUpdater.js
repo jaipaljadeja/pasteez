@@ -18,6 +18,8 @@ export default function ProfileUpdater({ setShowProfileUpdaterModal }) {
   const [about, setAbout] = useState(userInfo.about);
   const [profileIcon, setProfileIcon] = useState(userInfo.profileIcon);
 
+  // const [imageURL, setImageURL] = React.useState("");
+
   const backdropBlur = {
     visible: {
       backdropFilter: "blur(15px)",
@@ -28,6 +30,17 @@ export default function ProfileUpdater({ setShowProfileUpdaterModal }) {
     },
     hidden: { backdropFilter: "blur(0px)" },
   };
+
+  // const uploadImage = (event) => {
+  //   if (event.target.files && event.target.files[0]) {
+  //     let img = event.target.files[0];
+  //     setImageURL(URL.createObjectURL(img));
+  //     console.log(imageURL);
+  //     // this.setState({
+  //     //   image: URL.createObjectURL(img),
+  //     // });
+  //   }
+  // };
 
   return (
     <motion.div variants={backdropBlur} className="edit-profile-container">
@@ -54,8 +67,10 @@ export default function ProfileUpdater({ setShowProfileUpdaterModal }) {
               src={profileIcon}
               alt="profile-pic"
               className="profile-header-pic"
+              // onClick={uploadImage}
             />
           </div>
+          {/* <input type="file" name="myImage" onChange={uploadImage} /> */}
           {/* <p
             style={{
               marginTop: "1em",
