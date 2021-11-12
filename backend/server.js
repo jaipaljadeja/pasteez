@@ -58,6 +58,12 @@ app.use("/api/users", userRoutes);
 // --> Body: None
 // --> Returns: {"_id", "name", "username", "about", "profileIcon"}
 
+// --------------------- @POST /api/users/profile ---------------------
+// --> Description: updates the profile of the user
+// --> Authorization required?:true
+// --> Body: { "name", "email", "profileIcon", "about"}
+// --> Returns: updated userInfo
+
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

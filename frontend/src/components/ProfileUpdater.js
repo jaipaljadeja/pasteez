@@ -1,17 +1,22 @@
-import React from "react";
-import toast from "react-hot-toast";
-// import { useDispatch, useSelector } from "react-redux";
-// import { deletePostAction } from "../actions/postsActions";
+import React, { useState } from "react";
+// import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+
 import { motion } from "framer-motion";
+import { updateProfile } from "../actions/userActions";
 
-export default function ProfileUpdater({
-  setShowProfileUpdaterModal,
-  userInfo,
-}) {
-  //   const dispatch = useDispatch();
+export default function ProfileUpdater({ setShowProfileUpdaterModal }) {
+  const dispatch = useDispatch();
 
-  //   const postDelete = useSelector((state) => state.postDelete);
-  //   const { error } = postDelete;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  // const userUpdate = useSelector((state) => state.userUpdate);
+  // const { loading, error } = userUpdate;
+
+  const [name, setName] = useState(userInfo.name);
+  const [about, setAbout] = useState(userInfo.about);
+  const [profileIcon, setProfileIcon] = useState(userInfo.profileIcon);
 
   // const [imageURL, setImageURL] = React.useState("");
 
@@ -59,7 +64,7 @@ export default function ProfileUpdater({
         <div style={{ marginRight: "5em" }}>
           <div className="profile-image-container modal">
             <img
-              src={userInfo.profileIcon}
+              src={profileIcon}
               alt="profile-pic"
               className="profile-header-pic"
               // onClick={uploadImage}
@@ -82,8 +87,11 @@ export default function ProfileUpdater({
           <input
             type="text"
             className="input-box name"
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
             spellCheck={false}
-            defaultValue={userInfo.name}
+            defaultValue={name}
             style={{
               borderRadius: "5px",
               border: "none",
@@ -103,7 +111,10 @@ export default function ProfileUpdater({
             type="text"
             className="input-box name"
             spellCheck={false}
-            defaultValue={userInfo.about}
+            onChange={(e) => {
+              setAbout(e.target.value);
+            }}
+            defaultValue={about}
             style={{
               borderRadius: "5px",
               border: "none",
@@ -120,28 +131,12 @@ export default function ProfileUpdater({
       </div>
       <div style={{ display: "flex", marginTop: "2em" }}>
         <button
-          //   onClick={() => {
-          //     toast
-          //       .promise(
-          //         dispatch(deletePostAction(postId)),
-          //         {
-          //           loading: "Deleting...", //when posting
-          //           success: "Post Deleted", //if post is success
-          //           error: `${error || "Failed to delete!"}`, //when post is failed
-          //         },
-          //         {
-          //           style: {
-          //             fontFamily: "Monospace",
-          //             marginTop: "15px",
-          //           },
-          //         }
-          //       )
-          //       .then(() => {
-          //         setShowDeleteModal(false);
-          //         var bodyElement = document.getElementsByTagName("BODY")[0];
-          //         bodyElement.style.overflow = "unset";
-          //       });
-          //   }}
+          onClick={() => {
+            dispatch(updateProfile({ name, about }));
+            setShowProfileUpdaterModal(false);
+            var bodyElement = document.getElementsByTagName("BODY")[0];
+            bodyElement.style.overflow = "unset";
+          }}
           className="btn update"
         >
           <i

@@ -190,7 +190,6 @@ export const updatePostAction =
         }
       });
 
-      console.log(updatedPostList);
       // update the post in the postList state
       dispatch({
         type: POSTS_LIST_SUCCESS,

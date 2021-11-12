@@ -151,7 +151,6 @@ export default function Profile() {
       >
         <ProfileUpdater
           setShowProfileUpdaterModal={setShowProfileUpdaterModal}
-          userInfo={userInfo}
         />
       </Modal>
       <Toaster />
