@@ -74,6 +74,7 @@ function Editor({ containerVariants }) {
       <Modal
         showModal={showPasswordPrompt}
         setShowModal={setShowPasswordPrompt}
+        closeModalUponLoosingFocus={false}
       >
         <PasswordPromptModal
           data={data}

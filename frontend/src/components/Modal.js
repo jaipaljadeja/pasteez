@@ -23,7 +23,12 @@ const backdropBlur = {
   },
   hidden: { backdropFilter: "blur(0px)" },
 };
-const Modal = ({ showModal, setShowModal, children }) => {
+const Modal = ({
+  showModal,
+  setShowModal,
+  children,
+  closeModalUponLoosingFocus,
+}) => {
   useEffect(() => {
     if (showModal) {
       document
@@ -31,13 +36,15 @@ const Modal = ({ showModal, setShowModal, children }) => {
         .addEventListener("click", (e) => {
           if (e.target.className !== "modal-bg-blur") {
           } else {
-            setShowModal(false);
-            var bodyElement = document.getElementsByTagName("BODY")[0];
-            bodyElement.style.overflow = "unset";
+            if (closeModalUponLoosingFocus) {
+              setShowModal(false);
+              var bodyElement = document.getElementsByTagName("BODY")[0];
+              bodyElement.style.overflow = "unset";
+            }
           }
         });
     }
-  }, [showModal, setShowModal]);
+  }, [showModal, setShowModal, closeModalUponLoosingFocus]);
   return (
     <AnimatePresence exitBeforeEnter>
       {showModal && (
@@ -60,6 +67,10 @@ const Modal = ({ showModal, setShowModal, children }) => {
       )}
     </AnimatePresence>
   );
+};
+
+Modal.defaultProps = {
+  closeModalUponLoosingFocus: true,
 };
 
 export default Modal;
