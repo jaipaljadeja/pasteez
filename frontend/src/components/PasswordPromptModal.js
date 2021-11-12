@@ -61,6 +61,20 @@ export default function PasswordPromptModal({
               isPassCorrectHandler
             );
             if (isPassCorrect === false) {
+              document
+                .getElementsByClassName("password-modal-container")[0]
+                .classList.add("on-click");
+
+              setTimeout(() => {
+                if (
+                  document
+                    .getElementsByClassName("password-modal-container")[0]
+                    .classList.contains("on-click")
+                )
+                  document
+                    .getElementsByClassName("password-modal-container")[0]
+                    .classList.remove("on-click");
+              }, 1000);
               toast.error("Wrong Password", {
                 style: {
                   fontFamily: "Monospace",
@@ -88,7 +102,7 @@ export default function PasswordPromptModal({
         >
           <i className="far fa-unlock" style={{ fontSize: "13px" }}></i> Decrypt
         </button>
-        <button
+        {/* <button
           onClick={() => {
             setPassword(null);
             var bodyElement = document.getElementsByTagName("BODY")[0];
@@ -99,7 +113,7 @@ export default function PasswordPromptModal({
           style={{ marginLeft: "0px", width: "10em" }}
         >
           <i className="far fa-times" style={{ fontSize: "13px" }}></i> Close
-        </button>
+        </button> */}
       </div>
     </motion.div>
     // </div>
