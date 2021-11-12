@@ -75,7 +75,7 @@ export default function ProfileUpdater({ setShowProfileUpdaterModal }) {
             onChange={(e) => {
               setName(e.target.value);
             }}
-            spellCheck={false}
+            spellCheck="false"
             defaultValue={name}
             style={{
               borderRadius: "5px",
@@ -95,7 +95,7 @@ export default function ProfileUpdater({ setShowProfileUpdaterModal }) {
           <textarea
             type="text"
             className="input-box name"
-            spellCheck={false}
+            spellCheck="false"
             onChange={(e) => {
               setAbout(e.target.value);
             }}
