@@ -84,4 +84,34 @@ const getUserDetails = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser, authUser, getUserDetails };
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.profileIcon = req.body.profileIcon || user.profileIcon;
+    user.about = req.body.about || user.about;
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      username: updatedUser.username,
+      isAdmin: updatedUser.isAdmin,
+      email: updatedUser.email,
+      profileIcon: updatedUser.profileIcon,
+      about: updatedUser.about,
+      token: generateToken(updatedUser._id, updatedUser.username),
+    });
+  } else {
+    res.status(404);
+    throw new Error("User Not Found");
+  }
+});
+
+module.exports = { registerUser, authUser, getUserDetails, updateUserProfile };

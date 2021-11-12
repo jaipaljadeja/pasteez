@@ -1,15 +1,21 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 import {
   loadingBarMiddleware,
   loadingBarReducer,
-} from 'react-redux-loading-bar';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
-import { postCreateReducer,
+} from "react-redux-loading-bar";
+import { composeWithDevTools } from "redux-devtools-extension";
+import {
+  userLoginReducer,
+  userRegisterReducer,
+  userUpdateReducer,
+} from "./reducers/userReducers";
+import {
+  postCreateReducer,
   postDeleteReducer,
   postListReducer,
-  postUpdateReducer, } from './reducers/postsReducers';
+  postUpdateReducer,
+} from "./reducers/postsReducers";
 
 const reducer = combineReducers({
   // this will contain our reducers
@@ -20,10 +26,11 @@ const reducer = combineReducers({
   postCreate: postCreateReducer,
   postDelete: postDeleteReducer,
   postUpdate: postUpdateReducer,
+  userUpdate: userUpdateReducer,
 });
 
-const userInfoFromStorage = localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo'))
+const userInfoFromStorage = localStorage.getItem("userInfo")
+  ? JSON.parse(localStorage.getItem("userInfo"))
   : null;
 
 const intialState = {
@@ -39,7 +46,7 @@ const store = createStore(
     applyMiddleware(
       ...middleware,
       loadingBarMiddleware({
-        promiseTypeSuffixes: ['REQUEST', 'SUCCESS', 'FAIL'],
+        promiseTypeSuffixes: ["REQUEST", "SUCCESS", "FAIL"],
       })
     )
   )
