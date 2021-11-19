@@ -1,19 +1,15 @@
 Pasteez | Paste Bin
 
-first in the root directory
-run
+To Run
 
-```npm i```
+In Terminal 1:
 
-then 
+1. run `cd server`
+2. run `npm i`
+3. run `npm start`
 
-```cd frontend```
+In Terminal 2:
 
-```npm i```
-
-to run the project
-
-cd to the root directory
-
-```npm run dev```
-
+1. run `cd client`
+2. run `npm i`
+3. run `npm start`
