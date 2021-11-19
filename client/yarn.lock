@@ -1741,6 +1741,14 @@
     "estree-walker" "^1.0.1"
     "picomatch" "^2.2.2"
 
+"@simonwep/pickr@^1.8.2":
+  "integrity" "sha512-/l5w8BIkrpP6n1xsetx9MWPWlU6OblN5YgZZphxan0Tq4BByTCETL6lyIeY8lagalS2Nbt4F2W034KHLIiunKA=="
+  "resolved" "https://registry.npmjs.org/@simonwep/pickr/-/pickr-1.8.2.tgz"
+  "version" "1.8.2"
+  dependencies:
+    "core-js" "^3.15.1"
+    "nanopop" "^2.1.0"
+
 "@sinonjs/commons@^1.7.0":
   "integrity" "sha512-xkNcLAn/wZaX14RPlwizcKicDk9G3F8m2nU3L7Ukm5zBgTwiT0wsoFAHx9Jq56fJA1z/7uKGtCRu16sOUCLIHQ=="
   "resolved" "https://registry.npmjs.org/@sinonjs/commons/-/commons-1.8.3.tgz"
@@ -3543,7 +3551,7 @@
   optionalDependencies:
     "fsevents" "^1.2.7"
 
-"chokidar@^3.4.1":
+"chokidar@^3.4.1", "chokidar@>=3.0.0 <4.0.0":
   "integrity" "sha512-ekGhOnNVPgT77r4K/U3GDhu+FQ2S8TnK/s2KbIGXi0SZWuwkZ2QNyfWdZW+TVfn84DpEP7rLeCt2UI6bJ8GwbQ=="
   "resolved" "https://registry.npmjs.org/chokidar/-/chokidar-3.5.2.tgz"
   "version" "3.5.2"
@@ -3883,7 +3891,7 @@
   "resolved" "https://registry.npmjs.org/core-js/-/core-js-2.6.12.tgz"
   "version" "2.6.12"
 
-"core-js@^3.6.5":
+"core-js@^3.15.1", "core-js@^3.6.5":
   "integrity" "sha512-tReEhtMReZaPFVw7dajMx0vlsz3oOb8ajgPoHVYGxr8ErnZ6PcYEvvmjGmXlfpnxpkYSdOQttjB+MvVbCGfvLw=="
   "resolved" "https://registry.npmjs.org/core-js/-/core-js-3.18.3.tgz"
   "version" "3.18.3"
@@ -7960,6 +7968,11 @@
     "snapdragon" "^0.8.1"
     "to-regex" "^3.0.1"
 
+"nanopop@^2.1.0":
+  "integrity" "sha512-jGTwpFRexSH+fxappnGQtN9dspgE2ipa1aOjtR24igG0pv6JCxImIAmrLRHX+zUF5+1wtsFVbKyfP51kIGAVNw=="
+  "resolved" "https://registry.npmjs.org/nanopop/-/nanopop-2.1.0.tgz"
+  "version" "2.1.0"
+
 "native-url@^0.2.6":
   "integrity" "sha512-k4bDC87WtgrdD362gZz6zoiXQrl40kYlBmpfmSjwRO1VU0V5ccwJTlxuE72F6m3V0vc1xOf6n3UCP9QyerRqmA=="
   "resolved" "https://registry.npmjs.org/native-url/-/native-url-0.2.6.tgz"
@@ -10356,6 +10369,13 @@
     "neo-async" "^2.6.2"
     "schema-utils" "^3.0.0"
     "semver" "^7.3.2"
+
+"sass@^1.3.0", "sass@^1.43.4":
+  "integrity" "sha512-/ptG7KE9lxpGSYiXn7Ar+lKOv37xfWsZRtFYal2QHNigyVQDx685VFT/h7ejVr+R8w7H4tmUgtulsKl5YpveOg=="
+  "resolved" "https://registry.npmjs.org/sass/-/sass-1.43.4.tgz"
+  "version" "1.43.4"
+  dependencies:
+    "chokidar" ">=3.0.0 <4.0.0"
 
 "sax@~1.2.4":
   "integrity" "sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw=="

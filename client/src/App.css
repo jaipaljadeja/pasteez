@@ -354,13 +354,13 @@
   justify-content: center;
   overflow: hidden;
 }
-
+/* 
 .profile-image-container.modal:hover::after {
   position: absolute;
   transition: 0.1s;
   content: "change";
   cursor: pointer;
-}
+} */
 
 .profile-image-container.modal:hover {
   background: rgb(255, 255, 255, 0.5);
@@ -374,11 +374,11 @@
   border: 2.5px solid white;
 }
 
-.profile-image-container img:hover {
+/* .profile-image-container img:hover {
   opacity: 0.5;
   transition: 0.1s;
   cursor: pointer;
-}
+} */
 
 .contents-right {
   display: flex;
