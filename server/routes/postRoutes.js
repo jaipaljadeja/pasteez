@@ -5,7 +5,7 @@ const {
   getPostByID,
   updatePost,
   deletePost,
-} = require("../controllers/PostControllers");
+} = require("../controllers/postControllers");
 const { protect } = require("../middlewares/authMiddleware");
 const router = express.Router();
 

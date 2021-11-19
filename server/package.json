@@ -1,10 +1,14 @@
 {
   "name": "pasteez",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  },
   "description": "pastebin",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon backend/server.js",
+    "start": "node server.js",
     "dev": "concurrently \"cd backend && npm start\" \"cd frontend && npm start\" "
   },
   "author": "theramencoders",
