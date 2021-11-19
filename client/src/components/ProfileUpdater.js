@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import toast from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
 import { motion } from "framer-motion";
@@ -136,6 +136,16 @@ export default function ProfileUpdater({ setShowProfileUpdaterModal }) {
             setShowProfileUpdaterModal(false);
             var bodyElement = document.getElementsByTagName("BODY")[0];
             bodyElement.style.overflow = "unset";
+            toast.success("Profile Updated!", {
+              style: {
+                fontFamily: "Monospace",
+                marginTop: "15px",
+              },
+              iconTheme: {
+                primary: "#33b4ff",
+                secondary: "#FFFFFF",
+              },
+            });
           }}
           className="btn update"
         >
