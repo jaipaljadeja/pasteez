@@ -22,7 +22,9 @@ export const listPosts = (username) => async (dispatch, getState) => {
       type: POSTS_LIST_REQUEST,
     });
 
-    const { data } = await axios.get(`/api/posts/user/${username}`);
+    const { data } = await axios.get(
+      `https://pasteez.herokuapp.com/api/posts/user/${username}`
+    );
 
     dispatch({
       type: POSTS_LIST_SUCCESS,
@@ -66,7 +68,7 @@ export const createPostAction =
       };
 
       const { data } = await axios.post(
-        `/api/posts/create`,
+        `https://pasteez.herokuapp.com/api/posts/create`,
         { caption, encryptedCode, lang },
         config
       );
@@ -121,7 +123,10 @@ export const deletePostAction = (id) => async (dispatch, getState) => {
       1
     );
 
-    const { data } = await axios.delete(`/api/posts/${id}`, config);
+    const { data } = await axios.delete(
+      `https://pasteez.herokuapp.com/api/posts/${id}`,
+      config
+    );
     dispatch({
       type: POSTS_DELETE_SUCCESS,
       payload: data,
@@ -170,7 +175,7 @@ export const updatePostAction =
       };
 
       const { data } = await axios.put(
-        `/api/posts/${id}`,
+        `https://pasteez.herokuapp.com/api/posts/${id}`,
         { caption, encryptedCode, lang },
         config
       );
