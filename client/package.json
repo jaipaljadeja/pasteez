@@ -2,7 +2,7 @@
   "name": "pasteez",
   "version": "1.0.0",
   "private": true,
-  "proxy": "https://pasteez.herokuapp.com/",
+  "proxy": "https://pasteez-backend.jaipaljadeja.com/",
   "dependencies": {
     "@babel/core": "^7.15.8",
     "@simonwep/pickr": "^1.8.2",
