@@ -23,7 +23,7 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      "https://pasteez.herokuapp.com/api/users/login",
+      "https://pasteez-backend.jaipaljadeja.com/api/users/login",
       {
         email,
         password,
@@ -64,7 +64,7 @@ export const register =
         },
       };
       const { data } = await axios.post(
-        "https://pasteez.herokuapp.com/api/users/signup",
+        "https://pasteez-backend.jaipaljadeja.com/api/users/signup",
         {
           name,
           username,
@@ -107,7 +107,7 @@ export const updateProfile = (user) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.post(
-      "https://pasteez.herokuapp.com/api/users/profile",
+      "https://pasteez-backend.jaipaljadeja.com/api/users/profile",
       user,
       config
     );

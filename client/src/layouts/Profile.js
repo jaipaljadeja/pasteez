@@ -84,7 +84,7 @@ export default function Profile() {
     const fetchParamsUser = async () => {
       try {
         const { data } = await axios.get(
-          `https://pasteez.herokuapp.com/api/users/${username}`
+          `https://pasteez-backend.jaipaljadeja.com/api/users/${username}`
         );
         setUserExist(true);
         setParamsUser(data);

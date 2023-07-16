@@ -23,7 +23,7 @@ export const listPosts = (username) => async (dispatch, getState) => {
     });
 
     const { data } = await axios.get(
-      `https://pasteez.herokuapp.com/api/posts/user/${username}`
+      `https://pasteez-backend.jaipaljadeja.com/api/posts/user/${username}`
     );
 
     dispatch({
@@ -68,7 +68,7 @@ export const createPostAction =
       };
 
       const { data } = await axios.post(
-        `https://pasteez.herokuapp.com/api/posts/create`,
+        `https://pasteez-backend.jaipaljadeja.com/api/posts/create`,
         { caption, encryptedCode, lang },
         config
       );
@@ -124,7 +124,7 @@ export const deletePostAction = (id) => async (dispatch, getState) => {
     );
 
     const { data } = await axios.delete(
-      `https://pasteez.herokuapp.com/api/posts/${id}`,
+      `https://pasteez-backend.jaipaljadeja.com/api/posts/${id}`,
       config
     );
     dispatch({
@@ -175,7 +175,7 @@ export const updatePostAction =
       };
 
       const { data } = await axios.put(
-        `https://pasteez.herokuapp.com/api/posts/${id}`,
+        `https://pasteez-backend.jaipaljadeja.com/api/posts/${id}`,
         { caption, encryptedCode, lang },
         config
       );
