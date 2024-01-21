@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { motion } from "framer-motion";
 import { updateProfile } from "../actions/userActions";
+import { generatePfpUrl } from "../utils/ImageUtils";
 
 export default function ProfileUpdater({ setShowProfileUpdaterModal }) {
   const dispatch = useDispatch();
@@ -16,7 +17,9 @@ export default function ProfileUpdater({ setShowProfileUpdaterModal }) {
 
   const [name, setName] = useState(userInfo.name);
   const [about, setAbout] = useState(userInfo.about);
-  const [profileIcon, setProfileIcon] = useState(userInfo.profileIcon);
+  const [profileIcon, setProfileIcon] = useState(
+    generatePfpUrl(userInfo.username)
+  );
 
   // const [imageURL, setImageURL] = React.useState("");
 

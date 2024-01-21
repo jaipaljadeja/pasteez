@@ -12,6 +12,7 @@ import PostEditor from "../components/PostEditor";
 import DeletePostAlert from "../components/DeletePostAlert";
 import PostUpdater from "../components/PostUpdater";
 import ProfileUpdater from "../components/ProfileUpdater";
+import { generatePfpUrl } from "../utils/ImageUtils";
 const hljs = require("highlight.js");
 
 export default function Profile() {
@@ -166,7 +167,7 @@ export default function Profile() {
         <div className="profile-header">
           <div className="profile-image-container">
             <img
-              src={paramsUser?.profileIcon}
+              src={generatePfpUrl(paramsUser?.username)}
               alt="profile-pic"
               className="profile-header-pic"
             />
@@ -395,7 +396,7 @@ function Post(props) {
           <div className="data-container">
             <div className="small-profile-image-container">
               <img
-                src={props.paramsUser.profileIcon}
+                src={generatePfpUrl(props.paramsUser.username)}
                 alt="profile-pic"
                 className="small-profile-header-pic"
               />
