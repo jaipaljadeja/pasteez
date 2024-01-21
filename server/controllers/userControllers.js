@@ -6,7 +6,7 @@ const generateToken = require("../utils/generateToken");
 const registerUser = asyncHandler(async (req, res) => {
   // Get all the userinfo from the request body
   const { name, username, email, password } = req.body;
-  const profileIcon = `https://avatars.dicebear.com/api/adventurer-neutral/${username}.svg`;
+  const profileIcon = `https://api.dicebear.com/7.x/micah/svg?backgroundColor=b6e3f4,c0aede,d1d4f9&backgroundType=gradientLinear,solid&seed=${username}`;
   // Finds if the username or email matches from the database
   const userEmailExist = await User.findOne({ email: email });
   const userUsernameExist = await User.findOne({ username: username });

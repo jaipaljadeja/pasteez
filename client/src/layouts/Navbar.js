@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions";
 import { Link } from "react-router-dom";
 import { removeStatePosts } from "../actions/postsActions";
+import { generatePfpUrl } from "../utils/ImageUtils";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ export default function Navbar() {
               <Link to={`/${userInfo.username}`}>
                 {/* <i style={{ fontSize: 30 }} className="fas fa-user-circle" /> */}
                 <img
-                  src={userInfo.profileIcon}
+                  src={generatePfpUrl(userInfo.username)}
                   alt="profile-pic"
                   id="navbar-profile-icon"
                   style={{
